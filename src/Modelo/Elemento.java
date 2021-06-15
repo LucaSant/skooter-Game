@@ -21,6 +21,9 @@ public abstract class Elemento implements Serializable {
     protected Posicao pPosicao;
     protected boolean bTransponivel; /*Pode passar por cima?*/
     protected boolean bMortal;       /*Se encostar, morre?*/
+    
+
+    protected boolean item;
        
     protected Elemento(String sNomeImagePNG) {
         this.pPosicao = new Posicao(1, 1);
@@ -53,6 +56,15 @@ public abstract class Elemento implements Serializable {
     public boolean setPosicao(int linha, int coluna) {
         return pPosicao.setPosicao(linha, coluna);
     }
+
+    public  boolean isItem(){
+        return this.item;
+    }
+
+    public boolean isbMortal() {
+        return bMortal;
+    }
+
 
     public boolean moveUp() {
         return this.pPosicao.moveUp();

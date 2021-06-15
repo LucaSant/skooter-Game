@@ -32,6 +32,12 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
         this.setSize(Consts.RES * Consts.CELL_SIDE + getInsets().left + getInsets().right,
                 Consts.RES * Consts.CELL_SIDE + getInsets().top + getInsets().bottom);
 
+        /*
+
+        eElements = cControle.getFase().getElem();
+        hHero = eElements.get(0);
+        */
+
         /*Este array vai guardar os elementos graficos*/
         eElementos = new ArrayList<Elemento>(100);
 
@@ -60,11 +66,11 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     }
 
 /*--------------------------------------------------*/
-    public void addElemento(Elemento umElemento) {
+   /* public void addElemento(Elemento umElemento) { // vai ser exclusivo da classe fase
         eElementos.add(umElemento);
-    }
+    }*/
 
-    public void removeElemento(Elemento umElemento) {
+    public void removeElemento(Elemento umElemento) { //exclusivo da classe Tela, os elementos da fase são o estado inicial, não podendo excluir elementos
         eElementos.remove(umElemento);
     }
 
@@ -83,7 +89,8 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             for (int j = 0; j < Consts.RES; j++) {
                 try {
                     /*Linha para alterar o background*/
-                    Image newImage = Toolkit.getDefaultToolkit().getImage(new java.io.File(".").getCanonicalPath() + Consts.PATH + "background.png");
+                    //trocar "background.png" por cControle.getFase().getBackground());
+                    Image newImage = Toolkit.getDefaultToolkit().getImage(new java.io.File(".").getCanonicalPath() + Consts.PATH + "background.png"); 
                     g2.drawImage(newImage,j*Consts.CELL_SIDE, i*Consts.CELL_SIDE, Consts.CELL_SIDE, Consts.CELL_SIDE, null);
 
                 } catch (IOException ex) {
@@ -96,6 +103,8 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
         if (!this.eElementos.isEmpty()) {
             this.cControle.desenhaTudo(eElementos);
             this.cControle.processaTudo(eElementos);
+            this.cControle.checkLives(eElementos); //o processamento checa a vida do heroi
+            this.cControle.nextFase(hHero, cControle.getFase()); // checa se pode ir para a próxima fase
         }
 
         g.dispose();
@@ -143,6 +152,8 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             hHero.voltaAUltimaPosicao();
         }
 
+
+
         this.setTitle("-> Cell: " + (hHero.getPosicao().getColuna()) + ", " + (hHero.getPosicao().getLinha()));
     }
 
@@ -159,7 +170,9 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
         /*Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava*/
         if (!cControle.ehPosicaoValida(this.eElementos,hHero.getPosicao())) {
             hHero.voltaAUltimaPosicao();
-        }         
+        }
+        
+    
          
         repaint();
     }

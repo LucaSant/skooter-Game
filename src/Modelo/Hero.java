@@ -15,11 +15,36 @@ import javax.swing.JPanel;
  * @author Junio
  */
 public class Hero extends Elemento implements Serializable{
+
+    private int collectedItens;
+    private int lives;
+
+   
+
     public Hero(String sNomeImagePNG) {
         super(sNomeImagePNG);
+        this.lives = 3;
+        this.collectedItens = 0;
     }
 
     public void voltaAUltimaPosicao(){
         this.pPosicao.volta();
+    }
+
+
+    public int getCollectedItens() {
+        return collectedItens;
+    }
+
+    public void setCollectedItens(int collectedItens) {
+        this.collectedItens = collectedItens;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
     }
 }
