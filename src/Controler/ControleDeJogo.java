@@ -17,7 +17,7 @@ public class ControleDeJogo {
 
     public ControleDeJogo(){
         this.killedHero = false;
-        setAllfases(new ArrayList<Fase>(5));
+        setAllfases(new ArrayList<Fase>(4));
         fase = getAllfases().get(0);
     }
 
@@ -69,9 +69,10 @@ public class ControleDeJogo {
             
             if(hHero.getLives() == 0){
                 this.setFase(0);
-                e.remove(hHero);
+                hHero.setLives(0);
             }
-            e = this.getFase().getElem();
+            hHero.setCollectedItens(0);
+            this.getFase().setAllElementos(e, hHero);
             setKilledHero(false);
         }    
     }

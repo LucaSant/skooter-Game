@@ -44,8 +44,9 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     
         /*Cria eElementos adiciona elementos*/
         /*O protagonista (heroi) necessariamente precisa estar na posicao 0 do array*/
+        /*
         hHero = new Hero("skooter_hero.png"); /* https://www.online-image-editor.com/ */
-        hHero.setPosicao(0, 7);
+        /*hHero.setPosicao(0, 7);
         this.addElemento(hHero);
         
         CoronaVirus cTeste = new CoronaVirus("robo_azul.png");
@@ -62,11 +63,12 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
         
         Caveira cCaveira = new Caveira("caveira.png");
         cCaveira.setPosicao(10, 9);
-        this.addElemento(cCaveira);        
+        this.addElemento(cCaveira);  
+        */
     }
 
 /*--------------------------------------------------*/
-   /* public void addElemento(Elemento umElemento) { // vai ser exclusivo da classe fase
+    /*public void addElemento(Elemento umElemento) { // vai ser exclusivo da classe fase
         eElementos.add(umElemento);
     }*/
 

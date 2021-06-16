@@ -26,6 +26,10 @@ public class Fase {
         }
     }
 
+    public void setAllElementos(Elemento eElemento){
+        
+    }
+
     public int getnFase() {
         return nFase;
     }
