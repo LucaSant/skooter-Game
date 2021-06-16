@@ -11,7 +11,7 @@ public class Item extends Elemento implements Serializable {
         super("fruta.png");
         this.setPosicao(linha, coluna);
     }
-    
+
     public void autoDesenho() {
         super.autoDesenho();
     }

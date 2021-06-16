@@ -8,14 +8,12 @@ import Modelo.Hero;
 public class Fase {
 
     private int nFase;
-    private ArrayList<Elemento> elem;
     private int nItens;
     private int nViloes;
     private String background;
 
     public Fase(int fase, String backgroung){
         this.setnFase(fase);
-        this.elem = new ArrayList<Elemento>(121);
         this.setnItens(0);
         this.setnViloes(0);
         this.setBackground(background);
@@ -34,7 +32,7 @@ public class Fase {
     }
 
     public void setAllElementos(ArrayList<Elemento> e, Hero hero){
-        
+     
     }
 
     public int getnFase() {
@@ -43,14 +41,6 @@ public class Fase {
 
     private void setnFase(int nFase) {
         this.nFase = nFase;
-    }
-
-    public ArrayList<Elemento> getElem() {
-        return elem;
-    }
-
-    public void setElem(ArrayList<Elemento> elem) {
-        this.elem = elem;
     }
 
     public int getnItens() {
