@@ -1,14 +1,15 @@
 package Modelo;
 
+import java.io.Serializable;
 import Auxiliar.Desenhador;
 import Controler.Tela;
 import java.awt.Graphics;
 import java.io.Serializable;
 
-public class Item extends Elemento implements Serializable {
-
-    public Item(int linha, int coluna) {
-        super("fruta.png");
+public class BlocoVerdeMovivel extends Elemento implements Serializable{
+    
+    public BlocoVerdeMovivel(int linha, int coluna) {
+        super("blocoverdelosango.png");
         this.setPosicao(linha, coluna);
     }
     

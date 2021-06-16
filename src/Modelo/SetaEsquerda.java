@@ -5,10 +5,10 @@ import Controler.Tela;
 import java.awt.Graphics;
 import java.io.Serializable;
 
-public class Item extends Elemento implements Serializable {
+public class SetaEsquerda extends Elemento implements Serializable {
 
-    public Item(int linha, int coluna) {
-        super("fruta.png");
+    public SetaEsquerda(int linha, int coluna) {
+        super("seta-esquerda.png");
         this.setPosicao(linha, coluna);
     }
     

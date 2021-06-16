@@ -3,30 +3,37 @@ package Controler;
 import java.util.ArrayList;
 
 import Modelo.Elemento;
+import Modelo.Hero;
 
 public class Fase {
 
     private int nFase;
     private ArrayList<Elemento> elem;
     private int nItens;
+    private int nViloes;
     private String background;
 
     public Fase(int fase, String backgroung){
         this.setnFase(fase);
         this.elem = new ArrayList<Elemento>(121);
         this.setnItens(0);
+        this.setnViloes(0);
         this.setBackground(background);
     }
 
 
-    public void addElement(Elemento umElemento){
+    public void addElement(ArrayList <Elemento> elem, Elemento umElemento){
         elem.add(umElemento);
         if(umElemento.isItem()){
             this.setnItens(this.getnItens() + 1);
         }
+        if(umElemento.isbMortal()){
+            this.setnItens(this.getnViloes() + 1);
+        }
+
     }
 
-    public void setAllElementos(Elemento eElemento){
+    public void setAllElementos(ArrayList<Elemento> e, Hero hero){
         
     }
 
@@ -52,6 +59,14 @@ public class Fase {
 
     public void setnItens(int nItens) {
         this.nItens = nItens;
+    }
+    
+    public int getnViloes() {
+        return nViloes;
+    }
+
+    public void setnViloes(int nViloes) {
+        this.nViloes = nViloes;
     }
 
     public String getBackground() {
