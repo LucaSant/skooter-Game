@@ -12,7 +12,7 @@ public class Fase {
     private int nViloes;
     private String background;
 
-    public Fase(int fase, String backgroung){
+    public Fase(int fase, String background){
         this.setnFase(fase);
         this.setnItens(0);
         this.setnViloes(0);
