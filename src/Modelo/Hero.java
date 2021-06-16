@@ -19,10 +19,9 @@ public class Hero extends Elemento implements Serializable{
     private int collectedItens;
     private int lives;
 
-   
-
-    public Hero(String sNomeImagePNG) {
-        super(sNomeImagePNG);
+    public Hero(int linha, int coluna) {
+        super("heroi.png");
+        this.setPosicao(linha, coluna);
         this.lives = 3;
         this.collectedItens = 0;
     }
@@ -30,7 +29,6 @@ public class Hero extends Elemento implements Serializable{
     public void voltaAUltimaPosicao(){
         this.pPosicao.volta();
     }
-
 
     public int getCollectedItens() {
         return collectedItens;
