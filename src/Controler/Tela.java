@@ -8,6 +8,8 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.*;
 import java.util.zip.*;
+
+
 /**
  *
  * @author junio
@@ -37,9 +39,13 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
         eElements = cControle.getFase().getElem();
         hHero = eElements.get(0);
         */
+        hHero = new Hero(0,0);
+        hHero.setCollectedItens(0);
+        hHero.setLives(3);
 
         /*Este array vai guardar os elementos graficos*/
         eElementos = new ArrayList<Elemento>(100);
+        cControle.getFase().setAllElementos(eElementos, hHero);
 
     
         /*Cria eElementos adiciona elementos*/
@@ -91,8 +97,8 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             for (int j = 0; j < Consts.RES; j++) {
                 try {
                     /*Linha para alterar o background*/
-                    //trocar "background.png" por cControle.getFase().getBackground());
-                    Image newImage = Toolkit.getDefaultToolkit().getImage(new java.io.File(".").getCanonicalPath() + Consts.PATH + "background.png"); 
+                    String bg =  cControle.getFase().getBackground();
+                    Image newImage = Toolkit.getDefaultToolkit().getImage(new java.io.File(".").getCanonicalPath() + Consts.PATH + bg); 
                     g2.drawImage(newImage,j*Consts.CELL_SIDE, i*Consts.CELL_SIDE, Consts.CELL_SIDE, Consts.CELL_SIDE, null);
 
                 } catch (IOException ex) {
@@ -138,7 +144,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             hHero.moveLeft();
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             hHero.moveRight();
-        } else if (e.getKeyCode() == KeyEvent.VK_R) {
+        }/* else if (e.getKeyCode() == KeyEvent.VK_R) {
             this.eElementos.clear();
             hHero = new Hero("vacina.png");
             hHero.setPosicao(0, 7);
@@ -147,7 +153,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             CoronaVirus cTeste = new CoronaVirus("carro_azul.png");
             cTeste.setPosicao(5, 5);
             this.addElemento(cTeste);
-        }
+        }*/
         
         /*Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava*/
         if (!cControle.ehPosicaoValida(this.eElementos,hHero.getPosicao())) {

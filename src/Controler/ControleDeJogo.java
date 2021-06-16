@@ -4,7 +4,7 @@ import Modelo.Elemento;
 import Modelo.Hero;
 import Auxiliar.Posicao;
 import java.util.ArrayList;
-
+import Fases.*;
 /**
  *
  * @author junio
@@ -18,7 +18,10 @@ public class ControleDeJogo {
     public ControleDeJogo(){
         this.killedHero = false;
         setAllfases(new ArrayList<Fase>(4));
+
+        Allfases.add(new FaseOne());
         fase = getAllfases().get(0);
+        //this.getAllfases().get(0).setAllElementos(, umElemento);
     }
 
 

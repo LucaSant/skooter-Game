@@ -1,11 +1,18 @@
 package Modelo;
 
-public class Item extends Elemento {
+import Auxiliar.Desenhador;
+import Controler.Tela;
+import java.awt.Graphics;
+import java.io.Serializable;
 
-    public Item(String sNomeImagePNG){
-        super(sNomeImagePNG);
-        this.item = true;
-        
+public class Item extends Elemento implements Serializable {
 
+    public Item(int linha, int coluna) {
+        super("fruta.png");
+        this.setPosicao(linha, coluna);
+    }
+
+    public void autoDesenho() {
+        super.autoDesenho();
     }
 }
