@@ -108,10 +108,18 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
         }
         
         /*Aqui podem ser inseridos novos processamentos de controle*/
+        
+        for(int i = 1; i < 5; i++) {
+            if(!cControle.ehPosicaoValidaVilao(eElementos, i)) {
+                eElementos.get(i).getPosicao().volta();
+                eElementos.get(i).direcao();
+            }
+        }
+        
         if (!this.eElementos.isEmpty()) {
             this.cControle.desenhaTudo(eElementos);
             this.cControle.processaTudo(eElementos);
-            //this.cControle.checkLives(eElementos); //o processamento checa a vida do heroi
+            this.cControle.checkLives(eElementos); //o processamento checa a vida do heroi
             this.cControle.nextFase(eElementos, cControle.getFase()); // checa se pode ir para a próxima fase
         }
 
@@ -138,12 +146,16 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
         /*Movimento do heroi via teclado*/
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             hHero.moveUp();
+            cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             hHero.moveDown();
+            cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             hHero.moveLeft();
+            cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             hHero.moveRight();
+            cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
         }/* else if (e.getKeyCode() == KeyEvent.VK_R) {
             this.eElementos.clear();
             hHero = new Hero("vacina.png");
@@ -180,8 +192,8 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             hHero.voltaAUltimaPosicao();
         }
         
-    
-         
+        cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
+        
         repaint();
     }
 

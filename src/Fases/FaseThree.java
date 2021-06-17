@@ -20,21 +20,21 @@ public class FaseThree extends Fase{
     }
 
     @Override
-    public void setAllElementos(ArrayList<Elemento> e, Hero hero) { //Ajeita os elementos para a Fase 1
+    public void setAllElementos(ArrayList<Elemento> e, Hero hero) { //Ajeita os elementos para a Fase 3
         e.clear();
         
         e.add(hero);
         hero.setPosicao(5, 5);
 
-        this.addElement(e, new Item(5, 0));
-        this.addElement(e, new Item(5, 2));
-        this.addElement(e, new Item(5, 8));
-        this.addElement(e, new Item(5, 10));
-
         this.addElement(e, new Vilao(0, 5));
         this.addElement(e, new Vilao(2, 5));
         this.addElement(e, new Vilao(8, 5));
         this.addElement(e, new Vilao(10, 5));
+
+        this.addElement(e, new Item(5, 0));
+        this.addElement(e, new Item(5, 2));
+        this.addElement(e, new Item(5, 8));
+        this.addElement(e, new Item(5, 10));
 
         this.addElement(e, new BlocoVermelhoMovivel(1, 1));
         this.addElement(e, new BlocoVermelhoMovivel(1, 2));

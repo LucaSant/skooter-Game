@@ -18,15 +18,15 @@ public class FaseOne extends Fase {
         e.add(hero);
         hero.setPosicao(4, 4);
         
+        this.addElement(e, new Vilao(2, 0));
+        this.addElement(e, new Vilao(0, 9));
+        this.addElement(e, new Vilao(10, 1));
+        this.addElement(e, new Vilao(10, 9));
+        
         this.addElement(e, new Item(0, 0));
         this.addElement(e, new Item(0, 10));
         this.addElement(e, new Item(10, 0));
         this.addElement(e, new Item(10, 10));
-        
-        this.addElement(e, new Vilao(2, 0));
-        this.addElement(e, new Vilao(0, 1));
-        this.addElement(e, new Vilao(10, 1));
-        this.addElement(e, new Vilao(10, 9));
         
         this.addElement(e, new BlocoVermelho(1, 1));
         this.addElement(e, new BlocoVermelho(1, 3));

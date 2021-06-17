@@ -7,7 +7,7 @@ import Modelo.*;
 public class FaseTwo extends Fase {
     
     public FaseTwo(){
-        super(2, "fundo.png");
+        super(2, "fundo2.png");
     }
 
     @Override
@@ -17,15 +17,15 @@ public class FaseTwo extends Fase {
         e.add(hero);
         hero.setPosicao(5, 5);
         
-        this.addElement(e, new Item(1, 5));
-        this.addElement(e, new Item(5, 1));
-        this.addElement(e, new Item(5, 9));
-        this.addElement(e, new Item(9, 5));
-        
         this.addElement(e, new Vilao(1, 1));
         this.addElement(e, new Vilao(1, 9));
         this.addElement(e, new Vilao(9, 1));
         this.addElement(e, new Vilao(9, 9));
+        
+        this.addElement(e, new Item(1, 5));
+        this.addElement(e, new Item(5, 1));
+        this.addElement(e, new Item(5, 9));
+        this.addElement(e, new Item(9, 5));
         
         this.addElement(e, new BlocoVermelho(1, 3));
         this.addElement(e, new BlocoVermelho(1, 7));
@@ -84,6 +84,7 @@ public class FaseTwo extends Fase {
         this.addElement(e, new SetaAcima(7, 6));
         this.addElement(e, new SetaAcima(7, 8));
         this.addElement(e, new SetaAcima(7, 10));
+        
         this.setnItens(this.numberOfItens(e));
     }
 
