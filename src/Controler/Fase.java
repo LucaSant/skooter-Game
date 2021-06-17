@@ -22,8 +22,11 @@ public class Fase {
 
     public void addElement(ArrayList <Elemento> elem, Elemento umElemento){
         elem.add(umElemento);
-        if(umElemento.isbMortal() == true){
-            this.setnItens(this.getnViloes() + 1);
+        if(umElemento.isMortal() == true){
+            this.setnViloes(this.getnViloes() + 1);
+        }
+        if(umElemento.isMortal() == true){
+            this.setnItens(this.getnItens() + 1);
         }
 
     }

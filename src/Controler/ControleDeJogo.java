@@ -10,7 +10,7 @@ public class ControleDeJogo {
     private boolean killedHero;
     private ArrayList<Fase> Allfases;
     private Fase fase;
-
+    
     public ControleDeJogo(){
         this.killedHero = false;
         setAllfases(new ArrayList<Fase>(4));
@@ -38,13 +38,13 @@ public class ControleDeJogo {
             /*Verifica se o heroi se sobrepoe ao i-ésimo elemento*/
             if(hHero.getPosicao().estaNaMesmaPosicao(eTemp.getPosicao())){
                 /*Nem todos os elementos podem ser transpostos pelo heroi*/
-                if(eTemp.isbMortal()){
+                if(eTemp.isMortal()){
                     hHero.setLives(hHero.getLives() - 1);
                     this.killedHero = true;
                 }else{
                     this.killedHero = false;
                 }
-                if(eTemp.isbTransponivel())
+                if(eTemp.isTransponivel())
                     e.remove(eTemp);
                 if(eTemp.isItem() == true){
                     hHero.setCollectedItens(hHero.getCollectedItens() + 1);
@@ -58,24 +58,39 @@ public class ControleDeJogo {
             }
         }
     }
+    
     public boolean ehPosicaoValida(ArrayList<Elemento> e, Posicao p){
         Elemento eTemp;
         /*Validacao da posicao de todos os elementos com relacao a Posicao p*/
         for(int i = 1; i < e.size(); i++){ /*Olha todos os elementos*/
             eTemp = e.get(i); /*Pega o i-esimo elemento do jogo*/
-            if(!eTemp.isbTransponivel())
+            if(!eTemp.isTransponivel())
                 if(eTemp.getPosicao().estaNaMesmaPosicao(p))
                     return false; /*A posicao p é invalida, pois ha um elemento (i-esimo eTemp) intransponivel lá*/
         }
         return true;
     }
     
-    public boolean ehPosicaoValidaVilao(ArrayList<Elemento> e, int vilao) {
-        Elemento vilaoTemp;
-        vilaoTemp = e.get(vilao);
-        
-        for(int i = 5; i < e.size(); i++) {
-            if(e.get(i).getPosicao().getLinha() == vilaoTemp.getPosicao().getLinha() && e.get(i).getPosicao().getColuna() == vilaoTemp.getPosicao().getColuna()) {
+    public boolean ehPosicaoValidaVilao(ArrayList<Elemento> e, Posicao p) {
+        Elemento eTemp;
+        int qtdViloes;
+        qtdViloes = getFase().getnViloes() + 1;
+        for(int i = qtdViloes; i < e.size(); i++) {
+            eTemp = e.get(i);
+            if(eTemp.getPosicao().estaNaMesmaPosicao(p)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean ehPosicaoValidaEmpurravel(ArrayList<Elemento> e, Elemento b) {
+        Elemento eTemp;
+        int mesmoElemento;
+        mesmoElemento = e.indexOf(b);
+        for(int i = 1; i < e.size(); i++) {
+            eTemp = e.get(i);
+            if(eTemp.getPosicao().estaNaMesmaPosicao(b.getPosicao()) && i != mesmoElemento) {
                 return false;
             }
         }
@@ -84,9 +99,9 @@ public class ControleDeJogo {
     
     public void movimentoSeta(ArrayList<Elemento> e, Posicao p, Hero h) {
         Elemento eTemp;
-        for(int i = 5; i < e.size(); i++) {
+        for(int i = getFase().getnViloes()+1; i < e.size(); i++) {
             eTemp = e.get(i);
-            if(eTemp.getPosicao().getColuna() == p.getColuna() && eTemp.getPosicao().getLinha() == p.getLinha()) {
+            if(eTemp.getPosicao().estaNaMesmaPosicao(p)) {
                 //System.out.println(eTemp.getClass().getCanonicalName()); //Debug
                 switch(eTemp.getClass().getCanonicalName()) {
                     case "Modelo.SetaAbaixo":
@@ -109,7 +124,7 @@ public class ControleDeJogo {
             }
         }
     }
-
+    
     public void checkLives(ArrayList<Elemento> e){
         
         if(this.isKilledHero() == true){
@@ -132,7 +147,7 @@ public class ControleDeJogo {
             if(this.getFase().getnFase() == 4) {
             //Fim de jogo e agradecimentos
             }
-            
+            System.out.println("Você completou a fase " + this.getFase().getnFase() + "!");
             this.setFase(getFase().getnFase());  //como o número da fase começa em 1 e as posições em 0     
             hHero.setCollectedItens(0);              //então não é preciso colocar + 1               
             this.getFase().setAllElementos(elem, hHero);

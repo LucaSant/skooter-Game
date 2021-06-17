@@ -9,7 +9,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Random;
 import javax.swing.ImageIcon;
 
 /**
@@ -21,12 +20,9 @@ public abstract class Elemento implements Serializable {
     protected ImageIcon iImage;
     protected Posicao pPosicao;
     protected boolean bTransponivel; /*Pode passar por cima?*/
+    protected boolean bEmpurravel;   /*Pode empurrar?*/
     protected boolean bMortal;       /*Se encostar, morre?*/
     protected boolean bItem;         /*É um item?*/
-    protected boolean bVilao;         /*É um vilão?*/
-    
-    Random rand = new Random(); //Para uso dos vilões
-    private int mv;
        
     protected Elemento(String sNomeImagePNG) {
         this.pPosicao = new Posicao(1, 1);
@@ -49,11 +45,11 @@ public abstract class Elemento implements Serializable {
         return pPosicao;
     }
 
-    public boolean isbTransponivel() {
+    public boolean isTransponivel() {
         return bTransponivel;
     }
 
-    public void setbTransponivel(boolean bTransponivel) {
+    public void setTransponivel(boolean bTransponivel) {
         this.bTransponivel = bTransponivel;
     }
 
@@ -65,8 +61,12 @@ public abstract class Elemento implements Serializable {
         return this.bItem;
     }
 
-    public boolean isbMortal() {
+    public boolean isMortal() {
         return bMortal;
+    }
+
+    public boolean isEmpurravel() {
+        return bEmpurravel;
     }
 
     public boolean moveUp() {
@@ -87,44 +87,5 @@ public abstract class Elemento implements Serializable {
     
    public void autoDesenho(){
         Desenhador.desenhar(this.iImage, pPosicao.getColuna(), pPosicao.getLinha());        
-    }
-   
-   //Para que o vilão possa se mover aleatoriamente
-   public void direcao() {
-        mv = rand.nextInt(4);
-        switch(mv) {
-            case 0:
-                if(this.getPosicao().getLinha() == 10) {
-                    direcao();
-                }
-                else {
-                    this.moveDown();
-                }
-                break;
-            case 1:
-                if(this.getPosicao().getLinha() == 0) {
-                    direcao();
-                }
-                else {
-                    this.moveUp();
-                }
-                break;
-            case 2:
-                if(this.getPosicao().getColuna() == 10) {
-                    direcao();
-                }
-                else {
-                    this.moveRight();
-                }
-                break;
-            case 3:
-                if(this.getPosicao().getColuna() == 0) {
-                    direcao();
-                }
-                else {
-                    this.moveLeft();
-                }
-                break;
-        }
     }
 }
