@@ -23,16 +23,36 @@ public class Vilao extends Elemento implements Serializable {
         mv = rand.nextInt(4);
         switch(mv) {
             case 0:
-                this.setPosicao(pPosicao.getLinha(), pPosicao.getColuna()+1);
+                if(this.getPosicao().getLinha() == 10) {
+                    this.autoDesenho();
+                }
+                else {
+                    this.moveDown();
+                }
                 break;
             case 1:
-                this.setPosicao(pPosicao.getLinha()+1, pPosicao.getColuna());
+                if(this.getPosicao().getLinha() == 0) {
+                    this.autoDesenho();
+                }
+                else {
+                    this.moveUp();
+                }
                 break;
             case 2:
-                this.setPosicao(pPosicao.getLinha(), pPosicao.getColuna()-1);
+                if(this.getPosicao().getColuna() == 10) {
+                    this.autoDesenho();
+                }
+                else {
+                    this.moveRight();
+                }
                 break;
             case 3:
-                this.setPosicao(pPosicao.getLinha()-1, pPosicao.getColuna());
+                if(this.getPosicao().getColuna() == 0) {
+                    this.autoDesenho();
+                }
+                else {
+                    this.moveLeft();
+                }
                 break;
         }
     }

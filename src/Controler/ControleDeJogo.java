@@ -52,7 +52,7 @@ public class ControleDeJogo {
                     } */
                 }
 
-                if(eTemp.isbMortal() == true){
+                if(eTemp.isbMortal()){
                     hHero.setLives(hHero.getLives() - 1);
                     this.killedHero = true;
                 }else{
@@ -72,6 +72,15 @@ public class ControleDeJogo {
         }
         return true;
     }
+    
+    /*public boolean ehPosicaoValidaVilao(ArrayList<Elemento> e, int linha, int coluna) {
+        for(int i = 1; i < e.size(); i++) {
+            if(e.get(i).getPosicao().getLinha() == linha && e.get(i).getPosicao().getColuna() == coluna) {
+                return false;
+            }
+        }
+        return true;
+    }*/
 
     public void checkLives(ArrayList<Elemento> e){
         
