@@ -84,6 +84,7 @@ public class FaseTwo extends Fase {
         this.addElement(e, new SetaAcima(7, 6));
         this.addElement(e, new SetaAcima(7, 8));
         this.addElement(e, new SetaAcima(7, 10));
+        this.setnItens(this.numberOfItens(e));
     }
 
     

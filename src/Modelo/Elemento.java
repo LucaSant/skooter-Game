@@ -28,7 +28,7 @@ public abstract class Elemento implements Serializable {
         this.pPosicao = new Posicao(1, 1);
         this.bTransponivel = true;
         this.bMortal = false;
-        this.bItem = false;
+        //this.bItem = false;
         try {   /*Procurar imagem para usar*/
             iImage = new ImageIcon(new java.io.File(".").getCanonicalPath() + Consts.PATH + sNomeImagePNG);
             Image img = iImage.getImage();

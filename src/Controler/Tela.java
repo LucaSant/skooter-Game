@@ -111,8 +111,8 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
         if (!this.eElementos.isEmpty()) {
             this.cControle.desenhaTudo(eElementos);
             this.cControle.processaTudo(eElementos);
-            this.cControle.checkLives(eElementos); //o processamento checa a vida do heroi
-            this.cControle.nextFase(hHero, cControle.getFase()); // checa se pode ir para a próxima fase
+            //this.cControle.checkLives(eElementos); //o processamento checa a vida do heroi
+            this.cControle.nextFase(eElementos, cControle.getFase()); // checa se pode ir para a próxima fase
         }
 
         g.dispose();
@@ -162,7 +162,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
 
 
 
-        this.setTitle("-> Cell: " + (hHero.getPosicao().getColuna()) + ", " + (hHero.getPosicao().getLinha()));
+        this.setTitle("-> Cell: " + (hHero.getPosicao().getColuna()) + ", " + (hHero.getPosicao().getLinha()) + "/ itens na fase: " + cControle.getFase().getnItens() + "  / heroi i: " +  hHero.getCollectedItens());
     }
 
     public void mousePressed(MouseEvent e) {

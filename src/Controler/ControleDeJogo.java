@@ -20,6 +20,8 @@ public class ControleDeJogo {
         setAllfases(new ArrayList<Fase>(4));
 
         Allfases.add(new FaseOne());
+        Allfases.add(new FaseTwo());
+        Allfases.add(new FaseThree());
         fase = getAllfases().get(0);
         //this.getAllfases().get(0).setAllElementos(, umElemento);
     }
@@ -37,20 +39,26 @@ public class ControleDeJogo {
         for(int i = 1; i < e.size(); i++){
             eTemp = e.get(i); /*Pega o i-esimo elemento do jogo*/
             /*Verifica se o heroi se sobrepoe ao i-ésimo elemento*/
-            if(hHero.getPosicao().estaNaMesmaPosicao(eTemp.getPosicao()))
+            if(hHero.getPosicao().estaNaMesmaPosicao(eTemp.getPosicao())){
                 /*Nem todos os elementos podem ser transpostos pelo heroi*/
                 if(eTemp.isbTransponivel())
                     e.remove(eTemp);
-                if(eTemp.isItem()){
+                if(eTemp.isItem() == true){
                     hHero.setCollectedItens(hHero.getCollectedItens() + 1);
                     e.remove(eTemp);
+                   /* if(this.getFase().getnItens() == hHero.getCollectedItens()){
+                        this.setFase(getFase().getnFase());  //como o número da fase começa em 1 e as posições em 0                   //então não é preciso colocar + 1               
+                        this.getFase().setAllElementos(e, hHero);
+                    } */
                 }
-                if(eTemp.isbMortal()){
+
+                if(eTemp.isbMortal() == true){
                     hHero.setLives(hHero.getLives() - 1);
                     this.killedHero = true;
                 }else{
                     this.killedHero = false;
                 }
+            }
         }
     }
     public boolean ehPosicaoValida(ArrayList<Elemento> e, Posicao p){
@@ -80,9 +88,12 @@ public class ControleDeJogo {
         }    
     }
 
-    public void nextFase(Hero hHero, Fase fFase){
+    public void nextFase(ArrayList<Elemento> elem, Fase fFase){
+        Hero hHero = (Hero)elem.get(0);
         if(hHero.getCollectedItens() == fFase.getnItens()){
-            this.setFase(getFase().getnFase());  //como o número da fase começa em 1 e as posições em 0                   //então não é preciso colocar + 1               
+            this.setFase(getFase().getnFase());  //como o número da fase começa em 1 e as posições em 0     
+            hHero.setCollectedItens(0);              //então não é preciso colocar + 1               
+            this.getFase().setAllElementos(elem, hHero);
         }                                      //na fase 1 (posição 0), o setFase(getFase().getnFase()) é igual setFase(1)
     }                                      
 

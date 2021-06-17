@@ -8,6 +8,7 @@ public class FaseOne extends Fase {
     
     public FaseOne(){
         super(1, "fundo.png");
+
     }
 
     @Override
@@ -90,8 +91,12 @@ public class FaseOne extends Fase {
         this.addElement(e, new BlocoVerdeMovivel(9, 6));
         this.addElement(e, new BlocoVerdeMovivel(9, 8));
         
-        this.addElement(e, new BlocoVerdeMovivel(10, 7));        
+        this.addElement(e, new BlocoVerdeMovivel(10, 7));  
+        
+        this.setnItens(this.numberOfItens(e));
     }
+
+    
 
     
 }
