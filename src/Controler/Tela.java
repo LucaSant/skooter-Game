@@ -9,6 +9,8 @@ import java.util.*;
 import java.util.logging.*;
 import java.util.zip.*;
 
+import javax.swing.text.Position;
+
 /**
  *
  * @author junio
@@ -72,6 +74,13 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                 try {
                     /*Linha para alterar o background*/
                     String bg =  cControle.getFase().getBackground();
+                    Posicao p = new Posicao (i, j);
+                    for(int k = 0; k < eElementos.size(); k++){
+                        if((p.estaNaMesmaPosicao(eElementos.get(k).getPosicao())) && (eElementos.get(k).isbSeta())){
+                            Seta s = (Seta) eElementos.get(k);
+                            bg = s.getFloor();
+                        }
+                    }
                     Image newImage = Toolkit.getDefaultToolkit().getImage(new java.io.File(".").getCanonicalPath() + Consts.PATH + bg); 
                     g2.drawImage(newImage,j*Consts.CELL_SIDE, i*Consts.CELL_SIDE, Consts.CELL_SIDE, Consts.CELL_SIDE, null);
 
@@ -123,31 +132,31 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
 
     public void keyPressed(KeyEvent e) {
         /*Movimento do heroi via teclado*/
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            hHero.moveUp();
-            cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
-            movimentoEmpurravel(eElementos, hHero.getPosicao());
-            hHero.setOrientacion(1);
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            hHero.moveDown();
-            cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
-            movimentoEmpurravel(eElementos, hHero.getPosicao());
-            hHero.setOrientacion(0);
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            hHero.moveLeft();
-            cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
-            movimentoEmpurravel(eElementos, hHero.getPosicao());
-            hHero.setOrientacion(2);
-        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            hHero.moveRight();
-            cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
-            movimentoEmpurravel(eElementos, hHero.getPosicao());
-            hHero.setOrientacion(3);
-        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                cControle.quebrarBloco(hHero, eElementos);
+        if(hHero.canMove() == true){
+            if (e.getKeyCode() == KeyEvent.VK_UP) {
+                hHero.moveUp();
+                //cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
+                movimentoEmpurravel(eElementos, hHero.getPosicao());
+                hHero.setOrientacion(1);
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                hHero.moveDown();
+                //cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
+                movimentoEmpurravel(eElementos, hHero.getPosicao());
+                hHero.setOrientacion(0);
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                hHero.moveLeft();
+                //cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
+                movimentoEmpurravel(eElementos, hHero.getPosicao());
+                hHero.setOrientacion(2);
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                hHero.moveRight();
+                //cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
+                movimentoEmpurravel(eElementos, hHero.getPosicao());
+                hHero.setOrientacion(3);
+            } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    cControle.quebrarBloco(hHero, eElementos);
+            }
         }
-    
-        
         
         /*Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava*/
         if (!cControle.ehPosicaoValida(this.eElementos,hHero.getPosicao())) {
@@ -312,10 +321,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                 if (p.getLinha() - p.getLinhaAnterior() < 0) {
                     eTemp.moveUp();
                     if(!cControle.ehPosicaoValidaEmpurravel(e, eTemp)) {
-                        if(eTemp.isTransponivel()) {
-                            e.remove(eTemp);
-                        }
-                        else {
+                        if(!eTemp.isTransponivel()) {
                             eTemp.getPosicao().volta();
                         }
                     }
@@ -323,10 +329,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                 else if (p.getLinha() - p.getLinhaAnterior() > 0) {
                     eTemp.moveDown();
                     if(!cControle.ehPosicaoValidaEmpurravel(e, eTemp)) {
-                        if(eTemp.isTransponivel()) {
-                            e.remove(eTemp);
-                        }
-                        else {
+                        if(!eTemp.isTransponivel()) {
                             eTemp.getPosicao().volta();
                         }
                     }
@@ -334,10 +337,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                 else if (p.getColuna() - p.getColunaAnterior() < 0) {
                         eTemp.moveLeft();
                     if(!cControle.ehPosicaoValidaEmpurravel(e, eTemp)) {
-                        if(eTemp.isTransponivel()) {
-                            e.remove(eTemp);
-                        }
-                        else {
+                        if(!eTemp.isTransponivel()) {
                             eTemp.getPosicao().volta();
                         }
                     }
@@ -345,10 +345,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                 else if (p.getColuna() - p.getColunaAnterior() > 0) {
                         eTemp.moveRight();
                     if(!cControle.ehPosicaoValidaEmpurravel(e, eTemp)) {
-                        if(eTemp.isTransponivel()) {
-                            e.remove(eTemp);
-                        }
-                        else {
+                        if(!eTemp.isTransponivel()) {
                             eTemp.getPosicao().volta();
                         }
                     }

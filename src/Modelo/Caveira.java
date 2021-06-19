@@ -24,7 +24,7 @@ public class Caveira extends Elemento implements Serializable{
             this.iContaFrames = 0;
             FakeNews f = new FakeNews("fakenews.png");
             f.setPosicao(this.pPosicao.getLinha()-1,this.pPosicao.getColuna());
-            Desenhador.getTelaDoJogo().addElemento(f);
+            //Desenhador.getTelaDoJogo().addElemento(f);
         }
     }    
 }

@@ -5,14 +5,11 @@ import Controler.Tela;
 import java.awt.Graphics;
 import java.io.Serializable;
 
-public class SetaEsquerda extends Elemento implements Serializable {
+public class SetaEsquerda extends Seta{
 
     public SetaEsquerda(int linha, int coluna) {
-        super("seta-esquerda.png");
-        this.setPosicao(linha, coluna);
-    }
-    
-    public void autoDesenho() {
-        super.autoDesenho();
+        super(linha, coluna);
+        this.orientacion = 2;
+        this.floor = "seta-esquerda.png";
     }
 }

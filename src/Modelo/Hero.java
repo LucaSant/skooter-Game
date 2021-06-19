@@ -19,6 +19,7 @@ public class Hero extends Elemento implements Cloneable{
     private int collectedItens;
     private int lives;
     private int orientacion; //0 - down, 1 - up, 2 - left, 3 - right
+    private boolean canMove;
 
     public Hero(int linha, int coluna) {
         super("heroi.png");
@@ -26,6 +27,7 @@ public class Hero extends Elemento implements Cloneable{
         this.lives = 3;
         this.collectedItens = 0;
         this.orientacion = 0; //começa na posição down
+        this.canMove = true;
     }
 
 
@@ -55,6 +57,14 @@ public class Hero extends Elemento implements Cloneable{
 
     public void setOrientacion(int orientacion) {
         this.orientacion = orientacion;
+    }
+
+    public boolean canMove(){
+        return this.canMove; 
+    }
+
+    public void setCanMove(boolean b){
+        this.canMove = b;
     }
 
 

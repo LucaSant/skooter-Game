@@ -8,11 +8,13 @@ import Fases.*;
 public class ControleDeJogo {
 
     private boolean killedHero;
+    private boolean waitedframe;
     private ArrayList<Fase> Allfases;
     private Fase fase;
     
     public ControleDeJogo(){
         this.killedHero = false;
+        this.waitedframe = false;
         setAllfases(new ArrayList<Fase>(4));
 
         Allfases.add(new FaseOne());
@@ -55,6 +57,9 @@ public class ControleDeJogo {
                         this.getFase().setAllElementos(e, hHero);
                     } */
                 }
+                if(eTemp.isbSeta()){
+                    this.movimentoSeta(e, hHero.getPosicao(), eTemp);
+                }
             }
         }
     }
@@ -64,9 +69,14 @@ public class ControleDeJogo {
         /*Validacao da posicao de todos os elementos com relacao a Posicao p*/
         for(int i = 1; i < e.size(); i++){ /*Olha todos os elementos*/
             eTemp = e.get(i); /*Pega o i-esimo elemento do jogo*/
-            if(!eTemp.isTransponivel())
-                if(eTemp.getPosicao().estaNaMesmaPosicao(p))
+            if(eTemp.isbSeta()){
+                return true;
+            }
+            if(!eTemp.isTransponivel()){
+                if(eTemp.getPosicao().estaNaMesmaPosicao(p)){
                     return false; /*A posicao p é invalida, pois ha um elemento (i-esimo eTemp) intransponivel lá*/
+                }
+            }       
         }
         return true;
     }
@@ -77,6 +87,7 @@ public class ControleDeJogo {
         qtdViloes = getFase().getnViloes() + 1;
         for(int i = qtdViloes; i < e.size(); i++) {
             eTemp = e.get(i);
+            
             if(eTemp.getPosicao().estaNaMesmaPosicao(p)) {
                 return false;
             }
@@ -97,32 +108,41 @@ public class ControleDeJogo {
         return true;
     }
     
-    public void movimentoSeta(ArrayList<Elemento> e, Posicao p, Hero h) {
-        Elemento eTemp;
-        for(int i = getFase().getnViloes()+1; i < e.size(); i++) {
-            eTemp = e.get(i);
-            if(eTemp.getPosicao().estaNaMesmaPosicao(p)) {
+    public void movimentoSeta(ArrayList<Elemento> e, Posicao p, Elemento eTemp) {
+
+       // for(int i = getFase().getnViloes()+1; i < e.size(); i++) {
+        Hero h = (Hero) e.get(0);
+        Seta s = (Seta) eTemp;
+        
                 //System.out.println(eTemp.getClass().getCanonicalName()); //Debug
-                switch(eTemp.getClass().getCanonicalName()) {
-                    case "Modelo.SetaAbaixo":
-                        h.moveDown();
-                        movimentoSeta(e, p, h);
-                        break;
-                    case "Modelo.SetaAcima":
-                        h.moveUp();
-                        movimentoSeta(e, p, h);
-                        break;
-                    case "Modelo.SetaDireita":
-                        h.moveRight();
-                        movimentoSeta(e, p, h);
-                        break;
-                    case "Modelo.SetaEsquerda":
-                        h.moveLeft();
-                        movimentoSeta(e, p, h);
-                        break;
-                }
+        h.setCanMove(false);
+        if(this.isWaitedframe()){
+            switch(s.getOrientacion()) {
+                case 0:
+                    h.moveDown();
+                    h.setCanMove(true);
+                    //movimentoSeta(e, p, eTemp);
+                    break;
+                case 1:
+                    h.moveUp();
+                    h.setCanMove(true);
+                    //movimentoSeta(e, p, eTemp);
+                    break;
+                case 3:
+                    h.moveRight();
+                    h.setCanMove(true);
+                    //movimentoSeta(e, p, eTemp);
+                    break;
+                case 2:
+                    h.moveLeft();
+                    h.setCanMove(true);
+                    //movimentoSeta(e, p, eTemp);
+                    break;
             }
+            
         }
+        this.setWaitedframe(true);
+        
     }
     
     public void checkLives(ArrayList<Elemento> e){
@@ -193,6 +213,16 @@ public class ControleDeJogo {
     public void setKilledHero(boolean killedHero) {
         this.killedHero = killedHero;
     }
+
+    public boolean isWaitedframe() {
+        return waitedframe;
+    }
+
+
+    public void setWaitedframe(boolean waitedframe) {
+        this.waitedframe = waitedframe;
+    }
+
 
     
     public ArrayList<Fase> getAllfases() {

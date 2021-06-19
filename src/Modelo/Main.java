@@ -20,8 +20,7 @@ public class Main {
                 tTela.go();
             }
         });
-
-        
+ 
     }
 }
 

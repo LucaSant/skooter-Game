@@ -5,14 +5,11 @@ import Controler.Tela;
 import java.awt.Graphics;
 import java.io.Serializable;
 
-public class SetaAcima extends Elemento implements Serializable {
+public class SetaAcima extends Seta {
 
     public SetaAcima(int linha, int coluna) {
-        super("seta-acima.png");
-        this.setPosicao(linha, coluna);
-    }
-    
-    public void autoDesenho() {
-        super.autoDesenho();
+        super(linha, coluna);
+        this.orientacion = 1;
+        this.floor = "seta-acima.png";
     }
 }
