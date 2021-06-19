@@ -2,7 +2,7 @@ package Modelo;
 
 import Auxiliar.Consts;
 import Auxiliar.Desenhador;
-import Controler.Tela;
+//import Controler.Tela;
 import Auxiliar.Posicao;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -29,7 +29,7 @@ public abstract class Elemento implements Serializable {
     
     protected Elemento(String sNomeImagePNG) {
         this.pPosicao = new Posicao(1, 1);
-        this.bTransponivel = true;
+        this.bTransponivel = false;
         this.bMortal = false;
         this.bQuebravel = false;
         this.bSeta = false;

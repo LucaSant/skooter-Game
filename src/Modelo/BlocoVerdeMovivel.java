@@ -1,12 +1,7 @@
 package Modelo;
 
-import java.io.Serializable;
-import Auxiliar.Desenhador;
-import Controler.Tela;
-import java.awt.Graphics;
-import java.io.Serializable;
 
-public class BlocoVerdeMovivel extends Elemento implements Serializable{
+public class BlocoVerdeMovivel extends Elemento {
     
     public BlocoVerdeMovivel(int linha, int coluna) {
         super("blocoverdelosango.png");

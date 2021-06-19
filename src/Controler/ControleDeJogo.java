@@ -47,7 +47,7 @@ public class ControleDeJogo {
                     this.killedHero = false;
                 }
                 if(eTemp.isTransponivel())
-                    e.remove(eTemp);
+                    //e.remove(eTemp);
                 if(eTemp.isItem() == true){
                     hHero.setCollectedItens(hHero.getCollectedItens() + 1);
                     System.out.println("Você coletou um item! Total coletado: " + hHero.getCollectedItens());

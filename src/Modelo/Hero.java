@@ -1,6 +1,6 @@
 package Modelo;
 
-import Auxiliar.*;
+/*import Auxiliar.*;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,7 +14,7 @@ import java.util.*;
  *
  * @author Junio
  */
-public class Hero extends Elemento implements Cloneable{
+public class Hero extends Elemento {
 
     private int collectedItens;
     private int lives;

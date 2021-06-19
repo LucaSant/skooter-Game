@@ -1,9 +1,6 @@
 package Modelo;
 
-import Auxiliar.Desenhador;
-import Controler.Tela;
-import java.awt.Graphics;
-import java.io.Serializable;
+
 
 public class SetaDireita extends Seta{
 

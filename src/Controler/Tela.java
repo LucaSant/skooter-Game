@@ -22,8 +22,6 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     private ControleDeJogo cControle = new ControleDeJogo();
     private Graphics g2;
     
-    Random rand = new Random(); //Para uso dos vilões
-    private int mv;
     private int iContagemVilao;
     
     /**
@@ -102,7 +100,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             if(iContagemVilao == Consts.TIMER_VILAO) {
                 iContagemVilao = 0;
                 for(int i = 0; i < cControle.getFase().getnViloes(); i++) {
-                    mv = rand.nextInt(4);
+                    
                     movimentoVilao(eElementos.get(i+1));
                 }
             }
@@ -247,6 +245,8 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     */
    public void movimentoVilao(Elemento e) {
         if(e.getClass().getCanonicalName() == "Modelo.Vilao") {
+            Random rand = new Random();
+            int mv = rand.nextInt(4);
             switch(mv) {
             case 0: //Tentando para baixo
                 if(e.getPosicao().getLinha() == 10) {
