@@ -92,4 +92,16 @@ public class Posicao implements Serializable{
     public boolean moveLeft(){
         return this.setPosicao(this.getLinha(), this.getColuna()-1);        
     }
+
+    @Override
+    public Posicao clone() {
+        try {
+            return (Posicao) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+            return this;
+    }
+
+    
 }

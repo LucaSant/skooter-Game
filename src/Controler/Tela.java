@@ -127,19 +127,27 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             hHero.moveUp();
             cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
             movimentoEmpurravel(eElementos, hHero.getPosicao());
+            hHero.setOrientacion(1);
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             hHero.moveDown();
             cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
             movimentoEmpurravel(eElementos, hHero.getPosicao());
+            hHero.setOrientacion(0);
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             hHero.moveLeft();
             cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
             movimentoEmpurravel(eElementos, hHero.getPosicao());
+            hHero.setOrientacion(2);
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             hHero.moveRight();
             cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
             movimentoEmpurravel(eElementos, hHero.getPosicao());
+            hHero.setOrientacion(3);
+        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                cControle.quebrarBloco(hHero, eElementos);
         }
+    
+        
         
         /*Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava*/
         if (!cControle.ehPosicaoValida(this.eElementos,hHero.getPosicao())) {

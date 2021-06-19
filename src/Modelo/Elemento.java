@@ -23,11 +23,13 @@ public abstract class Elemento implements Serializable {
     protected boolean bEmpurravel;   /*Pode empurrar?*/
     protected boolean bMortal;       /*Se encostar, morre?*/
     protected boolean bItem;         /*É um item?*/
-       
+    protected boolean bQuebravel;   
+   
     protected Elemento(String sNomeImagePNG) {
         this.pPosicao = new Posicao(1, 1);
         this.bTransponivel = true;
         this.bMortal = false;
+        this.bQuebravel = false;
         //this.bItem = false;
         try {   /*Procurar imagem para usar*/
             iImage = new ImageIcon(new java.io.File(".").getCanonicalPath() + Consts.PATH + sNomeImagePNG);
@@ -84,6 +86,15 @@ public abstract class Elemento implements Serializable {
     public boolean moveLeft() {
         return this.pPosicao.moveLeft();
     }
+
+    public boolean isbQuebravel() {
+        return bQuebravel;
+    }
+
+    public void setbQuebravel(boolean bQuebravel) {
+        this.bQuebravel = bQuebravel;
+    }
+
     
    public void autoDesenho(){
         Desenhador.desenhar(this.iImage, pPosicao.getColuna(), pPosicao.getLinha());        

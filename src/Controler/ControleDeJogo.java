@@ -152,7 +152,39 @@ public class ControleDeJogo {
             hHero.setCollectedItens(0);              //então não é preciso colocar + 1               
             this.getFase().setAllElementos(elem, hHero);
         }                                      //na fase 1 (posição 0), o setFase(getFase().getnFase()) é igual setFase(1)
-    }                                      
+    }   
+    
+    
+    public void quebrarBloco(Hero h, ArrayList<Elemento> elem){
+
+        Posicao p =  new Posicao(h.getPosicao().getLinha(), h.getPosicao().getColuna());
+        
+        
+        switch(h.getOrientacion()){
+            case 0: //ultimo movimento foi pra baixo
+                p.setLinha(p.getLinha() + 1);
+                break;
+            case 1: //ultimo movimento foi para cima
+                p.setLinha(p.getLinha() - 1);
+                break;
+            case 2: //ultimo movimento foi para esquerda
+                p.setColuna(p.getColuna() - 1);
+                break;
+            case 3: //ultimo movimento foi para direita
+                p.setColuna(p.getColuna() + 1);
+                break;
+            default:
+                System.out.println("Erro inesperado");
+                break;
+        }
+
+        for(int i = 1; i < elem.size(); i++){
+            if((elem.get(i).isbQuebravel()) && (elem.get(i).getPosicao().estaNaMesmaPosicao(p))){
+                elem.remove(elem.get(i));
+            }
+        }
+        
+    } 
 
     public boolean isKilledHero() {
         return killedHero;

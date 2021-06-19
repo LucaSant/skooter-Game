@@ -12,6 +12,7 @@ public class BlocoVerdeMovivel extends Elemento implements Serializable{
         super("blocoverdelosango.png");
         this.setPosicao(linha, coluna);
         this.bEmpurravel = true;
+        this.bQuebravel = true;
     }
     
     public void autoDesenho() {
