@@ -245,7 +245,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     */
    public void movimentoVilao(Elemento e) {
         if(e.getClass().getCanonicalName() == "Modelo.Vilao") {
-            Random rand = new Random();
+           /* Random rand = new Random();
             int mv = rand.nextInt(4);
             switch(mv) {
             case 0: //Tentando para baixo
@@ -305,7 +305,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                 }
                 break;
             }
-        }
+        */}
        
     }
    
