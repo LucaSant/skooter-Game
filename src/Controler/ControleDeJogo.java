@@ -9,6 +9,7 @@ public class ControleDeJogo {
 
     private boolean killedHero;
     private boolean waitedframe;
+    private int movtries;
     private ArrayList<Fase> Allfases;
     private Fase fase;
     
@@ -241,5 +242,16 @@ public class ControleDeJogo {
         this.fase = this.getAllfases().get(n);
     }
 
-    
+    public void setMoveTries(int mt){
+        this.movtries =mt;
+    }
+
+    public boolean increMoveTries(){
+        this.movtries ++;
+        if(this.movtries < 5){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

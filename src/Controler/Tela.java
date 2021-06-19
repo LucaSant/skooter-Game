@@ -100,8 +100,10 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             if(iContagemVilao == Consts.TIMER_VILAO) {
                 iContagemVilao = 0;
                 for(int i = 0; i < cControle.getFase().getnViloes(); i++) {
-                    
-                    movimentoVilao(eElementos.get(i+1));
+                    Random rand = new Random();
+                    int mv = rand.nextInt(4);
+                    cControle.setMoveTries(0);
+                    movimentoVilao(eElementos.get(i+1), mv);
                 }
             }
             
@@ -243,70 +245,76 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     * Ele ficou em Tela pois precisávamos conferir o espaço ao redor por obstáculos e 
     * atualizar o desenho de maneira que não ficasse "indo e voltando".
     */
-   public void movimentoVilao(Elemento e) {
+   public void movimentoVilao(Elemento e, int mv) {
         if(e.getClass().getCanonicalName() == "Modelo.Vilao") {
-           /* Random rand = new Random();
-            int mv = rand.nextInt(4);
+           Posicao ePos = e.getPosicao();
+        
+            if(cControle.increMoveTries()){
+                mv = 5;
+            }
+            
             switch(mv) {
             case 0: //Tentando para baixo
-                if(e.getPosicao().getLinha() == 10) {
+                if(ePos.getLinha() == 10) {
                     mv = 1;
-                    movimentoVilao(e);
+                    movimentoVilao(e, mv);
                 }
                 else {
                     e.moveDown();
-                    if (!cControle.ehPosicaoValidaVilao(this.eElementos, e.getPosicao())) {
-                        e.getPosicao().volta();
+                    if (!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) {
+                        ePos.volta();
                         mv = 1;
-                        movimentoVilao(e);
+                        movimentoVilao(e, mv);
                     }
                 }
                 break;
             case 1: //Tentando para cima
-                if(e.getPosicao().getLinha() == 0) {
+                if(ePos.getLinha() == 0) {
                     mv = 2;
-                    movimentoVilao(e);
+                    movimentoVilao(e, mv);
                 }
                 else {
                     e.moveUp();
-                    if (!cControle.ehPosicaoValidaVilao(this.eElementos, e.getPosicao())) {
-                        e.getPosicao().volta();
+                    if (!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) {
+                        ePos.volta();
                         mv = 2;
-                        movimentoVilao(e);
+                        movimentoVilao(e, mv);
                     }
                 }
                 break;
             case 2: //Tentando pra a direita
-                if(e.getPosicao().getColuna() == 10) {
+                if(ePos.getColuna() == 10) {
                     mv = 3;
-                    movimentoVilao(e);
+                    movimentoVilao(e, mv);
                 }
                 else {
                     e.moveRight();
-                    if (!cControle.ehPosicaoValidaVilao(this.eElementos, e.getPosicao())) {
-                        e.getPosicao().volta();
+                    if (!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) {
+                        ePos.volta();
                         mv = 3;
-                        movimentoVilao(e);
+                        movimentoVilao(e, mv);
                     }
                 }
                 break;
             case 3: //Tentando para a esquerda
-                if(e.getPosicao().getColuna() == 0) {
+                if(ePos.getColuna() == 0) {
                     mv = 0;
-                    movimentoVilao(e);
+                    movimentoVilao(e, mv);
                 }
                 else {
                     e.moveLeft();
-                    if (!cControle.ehPosicaoValidaVilao(this.eElementos, e.getPosicao())) {
-                        e.getPosicao().volta();
+                    if (!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) {
+                        ePos.volta();
                         mv = 0;
-                        movimentoVilao(e);
+                        movimentoVilao(e, mv);
                     }
                 }
                 break;
+
+            default:
+                break;
             }
-        */}
-       
+        }   
     }
    
     /**

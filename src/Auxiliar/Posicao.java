@@ -25,6 +25,16 @@ public class Posicao implements Serializable{
         this.coluna = coluna;
         return true;
     }
+
+    public void setPosicao(Posicao p)
+    {
+        this.linha = p.getLinha();
+        this.coluna = p.getColuna();
+    }
+
+    public Posicao getPosicao(){
+        return this;
+    }
    
     public boolean volta(){
         return this.setPosicao(linhaAnterior,colunaAnterior);
@@ -93,15 +103,4 @@ public class Posicao implements Serializable{
         return this.setPosicao(this.getLinha(), this.getColuna()-1);        
     }
 
-    @Override
-    public Posicao clone() {
-        try {
-            return (Posicao) super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-            return this;
-    }
-
-    
 }
