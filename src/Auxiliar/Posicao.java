@@ -76,8 +76,8 @@ public class Posicao implements Serializable{
         return (linha == posicao.getLinha() && coluna == posicao.getColuna());
     }
 
-    public boolean copia(Posicao posicao){
-        return this.setPosicao(posicao.getLinha(),posicao.getColuna());
+    public Posicao copia(){
+        return (new Posicao(this.getLinha(), this.getColuna()));
     }
     /*
     public int heroMovementDirection(Hero h) { //0 Norte - 1 Sul - 2 Leste - 3 Oeste
