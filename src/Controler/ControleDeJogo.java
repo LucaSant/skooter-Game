@@ -116,6 +116,7 @@ public class ControleDeJogo {
         
                 //System.out.println(eTemp.getClass().getCanonicalName()); //Debug
         h.setCanMove(false);
+        h.setOrientacion(s.getOrientacion());
         if(this.isWaitedframe()){
             switch(s.getOrientacion()) {
                 case 0:
