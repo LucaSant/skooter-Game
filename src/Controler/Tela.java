@@ -102,8 +102,8 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                 for(int i = 0; i < cControle.getFase().getnViloes(); i++) {
                     Random rand = new Random();
                     int mv = rand.nextInt(4);
-                    cControle.setMoveTries(0);
-                    movimentoVilao(eElementos.get(i+1), mv);
+                    int count = 0;
+                    movimentoVilao(eElementos.get(i+1), mv, count);
                 }
             }
             
@@ -245,76 +245,106 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     * Ele ficou em Tela pois precisávamos conferir o espaço ao redor por obstáculos e 
     * atualizar o desenho de maneira que não ficasse "indo e voltando".
     */
-   public void movimentoVilao(Elemento e, int mv) {
-        if(e.getClass().getCanonicalName() == "Modelo.Vilao") {
-           Posicao ePos = e.getPosicao();
+   public void movimentoVilao(Elemento e, int mv, int countMove) {
         
-            if(cControle.increMoveTries()){
-                mv = 5;
-            }
+
+        if(e.getClass().getCanonicalName() == "Modelo.Vilao") {
+            Vilao v = (Vilao) e;
+            Posicao ePos = v.getPosicao();
+            Posicao pAtual = new Posicao(ePos.getLinha(), ePos.getColuna());
+
+            mv = v.endTest(countMove, mv);      
             
             switch(mv) {
             case 0: //Tentando para baixo
+                
                 if(ePos.getLinha() == 10) {
                     mv = 1;
-                    movimentoVilao(e, mv);
+                    countMove++;
+                    movimentoVilao(e, mv, countMove);
+                    
                 }
                 else {
-                    e.moveDown();
-                    if (!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) {
+                    v.moveDown();
+                    boolean isLastPos = v.checkLastPosicao(countMove, cControle,  eElementos, ePos);
+                    if((!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) || (isLastPos)) {
                         ePos.volta();
                         mv = 1;
-                        movimentoVilao(e, mv);
+                        countMove++;
+                        movimentoVilao(e, mv, countMove);
                     }
                 }
+                v.setLastPosition(pAtual);
                 break;
             case 1: //Tentando para cima
                 if(ePos.getLinha() == 0) {
                     mv = 2;
-                    movimentoVilao(e, mv);
+                    countMove++;
+                    movimentoVilao(e, mv, countMove);
                 }
                 else {
-                    e.moveUp();
-                    if (!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) {
+                    v.moveUp();
+                    boolean isLastPos = v.checkLastPosicao(countMove, cControle,  eElementos, ePos);
+                    if((!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) || (isLastPos)) {
                         ePos.volta();
                         mv = 2;
-                        movimentoVilao(e, mv);
+                        countMove++;
+                        movimentoVilao(e, mv, countMove);
                     }
                 }
+                v.setLastPosition(pAtual);
                 break;
             case 2: //Tentando pra a direita
                 if(ePos.getColuna() == 10) {
                     mv = 3;
-                    movimentoVilao(e, mv);
+                    countMove++;
+                    movimentoVilao(e, mv, countMove);
                 }
                 else {
-                    e.moveRight();
-                    if (!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) {
+                    v.moveRight();
+                    boolean isLastPos = v.checkLastPosicao(countMove, cControle,  eElementos, ePos);
+                    if((!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) || (isLastPos)) {
                         ePos.volta();
                         mv = 3;
-                        movimentoVilao(e, mv);
+                        countMove++;
+                        movimentoVilao(e, mv, countMove);
                     }
                 }
+                v.setLastPosition(pAtual);
                 break;
             case 3: //Tentando para a esquerda
                 if(ePos.getColuna() == 0) {
                     mv = 0;
-                    movimentoVilao(e, mv);
+                    countMove++;
+                    movimentoVilao(e, mv, countMove);
                 }
                 else {
-                    e.moveLeft();
-                    if (!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) {
+                    v.moveLeft();
+                    boolean isLastPos = v.checkLastPosicao(countMove, cControle,  eElementos, ePos);
+                    if((!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) || (isLastPos)) {
                         ePos.volta();
                         mv = 0;
-                        movimentoVilao(e, mv);
+                        countMove++;
+                        movimentoVilao(e, mv, countMove);
                     }
                 }
+                v.setLastPosition(pAtual);
                 break;
 
-            default:
+            case 4:
+                v.setPosicao(ePos.getLinha(), ePos.getColuna());
+                if(!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) {
+                    ePos.volta();
+                    //countMove++;
+                    //movimentoVilao(e, mv, countMove);
+                }
+                v.setLastPosition(pAtual);
                 break;
             }
-        }   
+        
+            
+
+        } 
     }
    
     /**
