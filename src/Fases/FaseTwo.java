@@ -13,7 +13,7 @@ public class FaseTwo extends Fase {
     @Override
     public void setAllElementos(ArrayList<Elemento> e, Hero hero) { //Ajeita os elementos para a Fase 2
         e.clear();
-        
+        this.setnViloes(0);
         e.add(hero);
         hero.setPosicao(5, 5);
         
