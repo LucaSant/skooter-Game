@@ -63,6 +63,10 @@ public abstract class Elemento implements Serializable {
         return pPosicao.setPosicao(linha, coluna);
     }
 
+    public void setPosicao(Posicao p){
+        this.pPosicao = new Posicao(p.getLinha(), p.getColuna());
+    }
+
     public  boolean isItem(){
         return this.bItem;
     }
