@@ -19,22 +19,20 @@ public class Fase {
         this.setBackground(background);
     }
 
-
-    public void addElement(ArrayList <Elemento> elem, Elemento umElemento){
-        elem.add(umElemento);
-        if(umElemento.isMortal() == true){
-            this.setnViloes(this.getnViloes() + 1);
-        }
-        if(umElemento.isMortal() == true){
-            this.setnItens(this.getnItens() + 1);
-        }
-
-    }
-
     public int numberOfItens(ArrayList<Elemento> elem){
         int n = 0;
         for(int i = 0; i < elem.size(); i++){
             if(elem.get(i).isItem()){
+                n++;
+            }
+        }
+        return n;
+    }
+
+    public int numberOfVillans(ArrayList<Elemento> elem){
+        int n = 0;
+        for(int i = 0; i < elem.size(); i++){
+            if(elem.get(i).isMortal()){
                 n++;
             }
         }

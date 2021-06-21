@@ -13,79 +13,79 @@ public class FaseTwo extends Fase {
     @Override
     public void setAllElementos(ArrayList<Elemento> e, Hero hero) { //Ajeita os elementos para a Fase 2
         e.clear();
-        this.setnViloes(0);
         e.add(hero);
         hero.setPosicao(5, 5);
         
-        this.addElement(e, new Vilao(1, 1));
-        this.addElement(e, new Vilao(1, 9));
-        this.addElement(e, new Vilao(9, 1));
-        this.addElement(e, new Vilao(9, 9));
+        e.add(new Vilao(1, 1));
+        e.add(new Vilao(1, 9));
+        e.add(new Vilao(9, 1));
+        e.add(new Vilao(9, 9));
         
-        this.addElement(e, new Item(1, 5));
-        this.addElement(e, new Item(5, 1));
-        this.addElement(e, new Item(5, 9));
-        this.addElement(e, new Item(9, 5));
+        e.add(new Item(1, 5, 50));
+        e.add(new Item(5, 1, 100));
+        e.add(new Item(5, 9, 200));
+        e.add(new Item(9, 5, 250));
         
-        this.addElement(e, new BlocoVermelho(1, 3));
-        this.addElement(e, new BlocoVermelho(1, 7));
+        e.add(new BlocoVermelho(1, 3));
+        e.add(new BlocoVermelho(1, 7));
         
-        this.addElement(e, new BlocoVermelho(3, 1));
-        this.addElement(e, new BlocoVermelho(3, 3));
-        this.addElement(e, new BlocoVermelho(3, 5));
-        this.addElement(e, new BlocoVermelho(3, 7));
-        this.addElement(e, new BlocoVermelho(3, 9));
+        e.add(new BlocoVermelho(3, 1));
+        e.add(new BlocoVermelho(3, 3));
+        e.add(new BlocoVermelho(3, 5));
+        e.add(new BlocoVermelho(3, 7));
+        e.add(new BlocoVermelho(3, 9));
         
-        this.addElement(e, new BlocoVermelho(5, 3));
-        this.addElement(e, new BlocoVermelho(5, 7));
+        e.add(new BlocoVermelho(5, 3));
+        e.add(new BlocoVermelho(5, 7));
         
-        this.addElement(e, new BlocoVermelho(7, 1));
-        this.addElement(e, new BlocoVermelho(7, 3));
-        this.addElement(e, new BlocoVermelho(7, 5));
-        this.addElement(e, new BlocoVermelho(7, 7));
-        this.addElement(e, new BlocoVermelho(7, 9));
+        e.add(new BlocoVermelho(7, 1));
+        e.add(new BlocoVermelho(7, 3));
+        e.add(new BlocoVermelho(7, 5));
+        e.add(new BlocoVermelho(7, 7));
+        e.add(new BlocoVermelho(7, 9));
         
-        this.addElement(e, new BlocoVermelho(9, 3));
-        this.addElement(e, new BlocoVermelho(9, 7));
+        e.add(new BlocoVermelho(9, 3));
+        e.add(new BlocoVermelho(9, 7));
         
-        this.addElement(e, new SetaDireita(0, 3));
-        this.addElement(e, new SetaDireita(0, 7));
-        this.addElement(e, new SetaDireita(2, 3));
-        this.addElement(e, new SetaDireita(4, 3));
-        this.addElement(e, new SetaDireita(4, 7));
-        this.addElement(e, new SetaDireita(6, 3));
-        this.addElement(e, new SetaDireita(8, 3));
-        this.addElement(e, new SetaDireita(8, 7));
-        this.addElement(e, new SetaDireita(10, 7));
+        e.add(new SetaDireita(0, 3));
+        e.add(new SetaDireita(0, 7));
+        e.add(new SetaDireita(2, 3));
+        e.add(new SetaDireita(4, 3));
+        e.add(new SetaDireita(4, 7));
+        e.add(new SetaDireita(6, 3));
+        e.add(new SetaDireita(8, 3));
+        e.add(new SetaDireita(8, 7));
+        e.add(new SetaDireita(10, 7));
         
-        this.addElement(e, new SetaAbaixo(2, 4));
-        this.addElement(e, new SetaAbaixo(3, 2));
-        this.addElement(e, new SetaAbaixo(3, 4));
-        this.addElement(e, new SetaAbaixo(3, 10));
-        this.addElement(e, new SetaAbaixo(7, 2));
-        this.addElement(e, new SetaAbaixo(7, 4));
+        e.add(new SetaAbaixo(2, 4));
+        e.add(new SetaAbaixo(3, 2));
+        e.add(new SetaAbaixo(3, 4));
+        e.add(new SetaAbaixo(3, 10));
+        e.add(new SetaAbaixo(7, 2));
+        e.add(new SetaAbaixo(7, 4));
         
-        this.addElement(e, new SetaEsquerda(2, 5));
-        this.addElement(e, new SetaEsquerda(2, 6));
-        this.addElement(e, new SetaEsquerda(2, 7));
-        this.addElement(e, new SetaEsquerda(4, 9));
-        this.addElement(e, new SetaEsquerda(4, 10));
-        this.addElement(e, new SetaEsquerda(6, 7));
-        this.addElement(e, new SetaEsquerda(10, 3));
+        e.add(new SetaEsquerda(2, 5));
+        e.add(new SetaEsquerda(2, 6));
+        e.add(new SetaEsquerda(2, 7));
+        e.add(new SetaEsquerda(4, 9));
+        e.add(new SetaEsquerda(4, 10));
+        e.add(new SetaEsquerda(6, 7));
+        e.add(new SetaEsquerda(10, 3));
         
-        this.addElement(e, new SetaAcima(3, 0));
-        this.addElement(e, new SetaAcima(3, 6));
-        this.addElement(e, new SetaAcima(3, 8));
-        this.addElement(e, new SetaAcima(4, 0));
-        this.addElement(e, new SetaAcima(4, 8));
-        this.addElement(e, new SetaAcima(5, 0));
-        this.addElement(e, new SetaAcima(6, 0));
-        this.addElement(e, new SetaAcima(7, 0));
-        this.addElement(e, new SetaAcima(7, 6));
-        this.addElement(e, new SetaAcima(7, 8));
-        this.addElement(e, new SetaAcima(7, 10));
+        e.add(new SetaAcima(3, 0));
+        e.add(new SetaAcima(3, 6));
+        e.add(new SetaAcima(3, 8));
+        e.add(new SetaAcima(4, 0));
+        e.add(new SetaAcima(4, 8));
+        e.add(new SetaAcima(5, 0));
+        e.add(new SetaAcima(6, 0));
+        e.add(new SetaAcima(7, 0));
+        e.add(new SetaAcima(7, 6));
+        e.add(new SetaAcima(7, 8));
+        e.add(new SetaAcima(7, 10));
         
         this.setnItens(this.numberOfItens(e));
+        this.setnViloes(this.numberOfVillans(e));
     }
 
     

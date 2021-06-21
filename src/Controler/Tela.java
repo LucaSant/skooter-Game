@@ -8,7 +8,6 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.*;
 import java.util.zip.*;
-
 import javax.swing.text.Position;
 
 /**
@@ -21,9 +20,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     private ArrayList<Elemento> eElementos;
     private ControleDeJogo cControle = new ControleDeJogo();
     private Graphics g2;
-    
-    private int iContagemVilao;
-    //private int iContagemPressedKey;
+
     /**
      * Creates new form
      */
@@ -94,21 +91,10 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             
             this.cControle.desenhaTudo(eElementos);
             this.cControle.processaTudo(eElementos);
-            //this.cControle.vilaoMoveHabilitation(eElementos);
-            //A cada intervalo determinado pelo timer, faz os vilões andarem
-            iContagemVilao++;
-            if(iContagemVilao == Consts.TIMER_VILAO) {
-                iContagemVilao = 0;
-                for(int i = 0; i < cControle.getFase().getnViloes(); i++) {
-                    Random rand = new Random();
-                    int mv = rand.nextInt(4);
-                    int count = 0;
-                    movimentoVilao(eElementos.get(i+1), mv, count);
-                }
-            }
+            this.cControle.vilaoMoveHabilitation(eElementos);
             this.cControle.heroMoveHabilitation(hHero);
             this.cControle.checkLives(eElementos); //o processamento checa a vida do heroi
-            this.cControle.nextFase(eElementos, cControle.getFase()); // checa se pode ir para a próxima fase
+            this.cControle.nextFase(eElementos); // checa se pode ir para a próxima fase
         }
 
         g.dispose();
@@ -136,26 +122,26 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             hHero.setCanMove(false);
             if (e.getKeyCode() == KeyEvent.VK_UP) {
                 hHero.moveUp();
-                //cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
-                movimentoEmpurravel(eElementos, hHero.getPosicao());
+                cControle.movimentoEmpurravel(eElementos, hHero.getPosicao());
                 hHero.setOrientacion(1);
+
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 hHero.moveDown();
-                //cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
-                movimentoEmpurravel(eElementos, hHero.getPosicao());
+                cControle.movimentoEmpurravel(eElementos, hHero.getPosicao());
                 hHero.setOrientacion(0);
+
             } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                 hHero.moveLeft();
-                //cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
-                movimentoEmpurravel(eElementos, hHero.getPosicao());
+                cControle.movimentoEmpurravel(eElementos, hHero.getPosicao());
                 hHero.setOrientacion(2);
+
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                 hHero.moveRight();
-                //cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
-                movimentoEmpurravel(eElementos, hHero.getPosicao());
+                cControle.movimentoEmpurravel(eElementos, hHero.getPosicao());
                 hHero.setOrientacion(3);
+
             } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    cControle.quebrarBloco(hHero, eElementos);
+                    hHero.quebrarBloco(eElementos);
                     hHero.setCanMove(true);
             }
             
@@ -166,7 +152,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             hHero.voltaAUltimaPosicao();
         }
 
-        this.setTitle("-> Cell: " + (hHero.getPosicao().getColuna()) + ", " + (hHero.getPosicao().getLinha()) + "/ itens na fase: " + cControle.getFase().getnItens() + "  / heroi i: " +  hHero.getCollectedItens());
+        this.setTitle("-> Cell: " + (hHero.getPosicao().getColuna()) + ", " + (hHero.getPosicao().getLinha()) + "Fase: " + cControle.getFase().getnFase() +  "/ Vidas " + hHero.getLives() + "  / Pontos:  " +  hHero.getPontos());
     }
     
     /*public void mousePressed(MouseEvent e) {
@@ -242,158 +228,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
 
     public void keyReleased(KeyEvent e) {
     }
-
-    /**
-    * Método para que o vilão possa se mover aleatoriamente sem colidir ou escapar do mapa.
-    * Ele ficou em Tela pois precisávamos conferir o espaço ao redor por obstáculos e 
-    * atualizar o desenho de maneira que não ficasse "indo e voltando".
-    */
-   public void movimentoVilao(Elemento e, int mv, int countMove) {
-        
-
-        if(e.getClass().getCanonicalName() == "Modelo.Vilao") {
-            Vilao v = (Vilao) e;
-            Posicao ePos = v.getPosicao();
-            Posicao pAtual = new Posicao(ePos.getLinha(), ePos.getColuna());
-
-            mv = v.endTest(countMove, mv);      
-            
-            switch(mv) {
-            case 0: //Tentando para baixo
-                
-                if(ePos.getLinha() == 10) {
-                    mv = 1;
-                    countMove++;
-                    movimentoVilao(e, mv, countMove);
-                    
-                }
-                else {
-                    v.moveDown();
-                    boolean isLastPos = v.checkLastPosicao(countMove, cControle,  eElementos, ePos);
-                    if((!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) || (isLastPos)) {
-                        ePos.volta();
-                        mv = 1;
-                        countMove++;
-                        movimentoVilao(e, mv, countMove);
-                    }
-                }
-                v.setLastPosition(pAtual);
-                break;
-            case 1: //Tentando para cima
-                if(ePos.getLinha() == 0) {
-                    mv = 2;
-                    countMove++;
-                    movimentoVilao(e, mv, countMove);
-                }
-                else {
-                    v.moveUp();
-                    boolean isLastPos = v.checkLastPosicao(countMove, cControle,  eElementos, ePos);
-                    if((!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) || (isLastPos)) {
-                        ePos.volta();
-                        mv = 2;
-                        countMove++;
-                        movimentoVilao(e, mv, countMove);
-                    }
-                }
-                v.setLastPosition(pAtual);
-                break;
-            case 2: //Tentando pra a direita
-                if(ePos.getColuna() == 10) {
-                    mv = 3;
-                    countMove++;
-                    movimentoVilao(e, mv, countMove);
-                }
-                else {
-                    v.moveRight();
-                    boolean isLastPos = v.checkLastPosicao(countMove, cControle,  eElementos, ePos);
-                    if((!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) || (isLastPos)) {
-                        ePos.volta();
-                        mv = 3;
-                        countMove++;
-                        movimentoVilao(e, mv, countMove);
-                    }
-                }
-                v.setLastPosition(pAtual);
-                break;
-            case 3: //Tentando para a esquerda
-                if(ePos.getColuna() == 0) {
-                    mv = 0;
-                    countMove++;
-                    movimentoVilao(e, mv, countMove);
-                }
-                else {
-                    v.moveLeft();
-                    boolean isLastPos = v.checkLastPosicao(countMove, cControle,  eElementos, ePos);
-                    if((!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) || (isLastPos)) {
-                        ePos.volta();
-                        mv = 0;
-                        countMove++;
-                        movimentoVilao(e, mv, countMove);
-                    }
-                }
-                v.setLastPosition(pAtual);
-                break;
-
-            case 4:
-                v.setPosicao(ePos.getLinha(), ePos.getColuna());
-                if(!cControle.ehPosicaoValidaVilao(this.eElementos, ePos)) {
-                    ePos.volta();
-                    //countMove++;
-                    //movimentoVilao(e, mv, countMove);
-                }
-                v.setLastPosition(pAtual);
-                break;
-            }
-        
-            
-
-        } 
-    }
-   
-    /**
-    * Método para conferir se os blocos aonde você tentou se mover são empurráveis.
-    * Ele ficou em Tela por motivos similares ao de Vilões - precisávamos conferir obstáculos.
-    */
-    public void movimentoEmpurravel(ArrayList<Elemento> e, Posicao p) {
-        Elemento eTemp;
-        for(int i = cControle.getFase().getnViloes()+1; i < e.size(); i++) {
-            eTemp = e.get(i);
-            if(eTemp.getPosicao().estaNaMesmaPosicao(p) && eTemp.isEmpurravel()) {
-                if (p.getLinha() - p.getLinhaAnterior() < 0) {
-                    eTemp.moveUp();
-                    if(!cControle.ehPosicaoValidaEmpurravel(e, eTemp)) {
-                        if(!eTemp.isTransponivel()) {
-                            eTemp.getPosicao().volta();
-                        }
-                    }
-                }
-                else if (p.getLinha() - p.getLinhaAnterior() > 0) {
-                    eTemp.moveDown();
-                    if(!cControle.ehPosicaoValidaEmpurravel(e, eTemp)) {
-                        if(!eTemp.isTransponivel()) {
-                            eTemp.getPosicao().volta();
-                        }
-                    }
-                }
-                else if (p.getColuna() - p.getColunaAnterior() < 0) {
-                        eTemp.moveLeft();
-                    if(!cControle.ehPosicaoValidaEmpurravel(e, eTemp)) {
-                        if(!eTemp.isTransponivel()) {
-                            eTemp.getPosicao().volta();
-                        }
-                    }
-                }
-                else if (p.getColuna() - p.getColunaAnterior() > 0) {
-                        eTemp.moveRight();
-                    if(!cControle.ehPosicaoValidaEmpurravel(e, eTemp)) {
-                        if(!eTemp.isTransponivel()) {
-                            eTemp.getPosicao().volta();
-                        }
-                    }
-                }
-            }
-        }
-    }
+    
     /*
     public void procurarBlocoEmpurravel(ArrayList<Elemento> e, Posicao p) {
         Elemento eTemp;

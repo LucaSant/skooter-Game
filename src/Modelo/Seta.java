@@ -33,26 +33,21 @@ public class Seta extends Elemento {
              switch(s.getOrientacion()) {
                  case 0:
                      h.moveDown();
-                     //movimentoSeta(e, p, eTemp);
                      this.setWaitedframe(false);
                      break;
                  case 1:
                      h.moveUp();
-                     //movimentoSeta(e, p, eTemp);
                      this.setWaitedframe(false);
                      break;
                  case 3:
                      h.moveRight();
-                     //movimentoSeta(e, p, eTemp);
                      this.setWaitedframe(false);
                      break;
                  case 2:
                      h.moveLeft();
-                     //movimentoSeta(e, p, eTemp);
                      this.setWaitedframe(false);
                      break;
              }
-             
          }
          this.setWaitedframe(true);
          

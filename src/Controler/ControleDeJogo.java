@@ -4,12 +4,15 @@ import Modelo.*;
 import Auxiliar.Consts;
 import Auxiliar.Posicao;
 import java.util.ArrayList;
+import java.util.Random;
+
 import Fases.*;
 
 public class ControleDeJogo {
 
     private boolean killedHero;
     private boolean naturalHeroMove;
+    private int iContagemVilao;
     private int iContagemPressedKey;
     private ArrayList<Fase> Allfases;
     private Fase fase;
@@ -53,12 +56,10 @@ public class ControleDeJogo {
                     //e.remove(eTemp);
                 if(eTemp.isItem() == true){
                     hHero.setCollectedItens(hHero.getCollectedItens() + 1);
-                    System.out.println("Você coletou um item! Total coletado: " + hHero.getCollectedItens());
+                    System.out.println("Item de numero " + hHero.getCollectedItens());
+                    System.out.println("Ele valia " + ((Item) eTemp).getPontosEquiv() + ", entao voce ganhou: " + hHero.getCollectedItens() * ((Item) eTemp).getPontosEquiv() + " pontos.");
+                    hHero.setPontos(hHero.getPontos() + (hHero.getCollectedItens() * ((Item) eTemp).getPontosEquiv()));
                     e.remove(eTemp);
-                   /* if(this.getFase().getnItens() == hHero.getCollectedItens()){
-                        this.setFase(getFase().getnFase());  //como o número da fase começa em 1 e as posições em 0                   //então não é preciso colocar + 1               
-                        this.getFase().setAllElementos(e, hHero);
-                    } */
                 }
                 if(eTemp.isbSeta()){
                     Seta seta = (Seta) eTemp;
@@ -69,6 +70,31 @@ public class ControleDeJogo {
             }
         }
     }
+
+    public void heroMoveHabilitation(Hero hHero){
+        if((hHero.canMove() == false) && (this.isNaturalHeroMove())){
+            iContagemPressedKey++;
+            if(iContagemPressedKey == Consts.KEYPRESS_INTERVAL){
+                hHero.setCanMove(true);
+                iContagemPressedKey = 0;
+            }
+        }
+    }
+
+
+    public void vilaoMoveHabilitation(ArrayList<Elemento> elem){
+        iContagemVilao++;
+            if(iContagemVilao == Consts.TIMER_VILAO) {
+                iContagemVilao = 0;
+                for(int i = 0; i < this.getFase().getnViloes(); i++) {
+                    Random rand = new Random();
+                    int mv = rand.nextInt(4);
+                    int count = 0;
+                    this.movimentoVilao(elem.get(i+1), mv, count, elem);
+                }
+            }
+    }
+
     
     public boolean ehPosicaoValida(ArrayList<Elemento> e, Posicao p){
         Elemento eTemp;
@@ -100,7 +126,151 @@ public class ControleDeJogo {
         }
         return true;
     }
+
+
+    public void movimentoVilao(Elemento e, int mv, int countMove, ArrayList<Elemento> elem) {
+    /**
+    * Método para que o vilão possa se mover aleatoriamente sem colidir ou escapar do mapa.
+    * Ele ficou em Tela pois precisávamos conferir o espaço ao redor por obstáculos e 
+    * atualizar o desenho de maneira que não ficasse "indo e voltando".
+    */    
+        if(e.getClass().getCanonicalName() == "Modelo.Vilao") {
+            Vilao v = (Vilao) e;
+            Posicao ePos = v.getPosicao();
+            Posicao pAtual = new Posicao(ePos.getLinha(), ePos.getColuna());
+
+            mv = v.endTest(countMove, mv);      
+            
+            switch(mv) {
+            case 0: //Tentando para baixo
+                
+                if(ePos.getLinha() == 10) {
+                    mv = 1;
+                    countMove++;
+                    this.movimentoVilao(e, mv, countMove, elem);
+                    
+                }
+                else {
+                    v.moveDown();
+                    boolean isLastPos = v.checkLastPosicao(countMove, this, elem, ePos);
+                    if((!this.ehPosicaoValidaVilao(elem, ePos)) || (isLastPos)) {
+                        ePos.volta();
+                        mv = 1;
+                        countMove++;
+                        this.movimentoVilao(e, mv, countMove, elem);
+                    }
+                }
+                v.setLastPosition(pAtual);
+                break;
+            case 1: //Tentando para cima
+                if(ePos.getLinha() == 0) {
+                    mv = 2;
+                    countMove++;
+                    this.movimentoVilao(e, mv, countMove, elem);
+                }
+                else {
+                    v.moveUp();
+                    boolean isLastPos = v.checkLastPosicao(countMove, this, elem, ePos);
+                    if((!this.ehPosicaoValidaVilao(elem, ePos)) || (isLastPos)) {
+                        ePos.volta();
+                        mv = 2;
+                        countMove++;
+                        this.movimentoVilao(e, mv, countMove, elem);
+                    }
+                }
+                v.setLastPosition(pAtual);
+                break;
+            case 2: //Tentando pra a direita
+                if(ePos.getColuna() == 10) {
+                    mv = 3;
+                    countMove++;
+                    this.movimentoVilao(e, mv, countMove, elem);
+                }
+                else {
+                    v.moveRight();
+                    boolean isLastPos = v.checkLastPosicao(countMove, this,  elem, ePos);
+                    if((!this.ehPosicaoValidaVilao(elem, ePos)) || (isLastPos)) {
+                        ePos.volta();
+                        mv = 3;
+                        countMove++;
+                        this.movimentoVilao(e, mv, countMove, elem);
+                    }
+                }
+                v.setLastPosition(pAtual);
+                break;
+            case 3: //Tentando para a esquerda
+                if(ePos.getColuna() == 0) {
+                    mv = 0;
+                    countMove++;
+                    this.movimentoVilao(e, mv, countMove, elem);
+                }
+                else {
+                    v.moveLeft();
+                    boolean isLastPos = v.checkLastPosicao(countMove, this,  elem, ePos);
+                    if((!this.ehPosicaoValidaVilao(elem, ePos)) || (isLastPos)) {
+                        ePos.volta();
+                        mv = 0;
+                        countMove++;
+                        this.movimentoVilao(e, mv, countMove, elem);
+                    }
+                }
+                v.setLastPosition(pAtual);
+                break;
+
+            case 4:
+                v.setPosicao(ePos.getLinha(), ePos.getColuna());
+                if(!this.ehPosicaoValidaVilao(elem, ePos)) {
+                    ePos.volta();
+                }
+                v.setLastPosition(pAtual);
+                break;
+            }
+        } 
+    }
+
+
+    public void movimentoEmpurravel(ArrayList<Elemento> e, Posicao p) {
+        Elemento eTemp;
+        for(int i = this.getFase().getnViloes()+1; i < e.size(); i++) {
+            eTemp = e.get(i);
+            if(eTemp.getPosicao().estaNaMesmaPosicao(p) && eTemp.isEmpurravel()) {
+                if (p.getLinha() - p.getLinhaAnterior() < 0) {
+                    eTemp.moveUp();
+                    if(!this.ehPosicaoValidaEmpurravel(e, eTemp)) {
+                        if(!eTemp.isTransponivel()) {
+                            eTemp.getPosicao().volta();
+                        }
+                    }
+                }
+                else if (p.getLinha() - p.getLinhaAnterior() > 0) {
+                    eTemp.moveDown();
+                    if(!this.ehPosicaoValidaEmpurravel(e, eTemp)) {
+                        if(!eTemp.isTransponivel()) {
+                            eTemp.getPosicao().volta();
+                        }
+                    }
+                }
+                else if (p.getColuna() - p.getColunaAnterior() < 0) {
+                        eTemp.moveLeft();
+                    if(!this.ehPosicaoValidaEmpurravel(e, eTemp)) {
+                        if(!eTemp.isTransponivel()) {
+                            eTemp.getPosicao().volta();
+                        }
+                    }
+                }
+                else if (p.getColuna() - p.getColunaAnterior() > 0) {
+                        eTemp.moveRight();
+                    if(!this.ehPosicaoValidaEmpurravel(e, eTemp)) {
+                        if(!eTemp.isTransponivel()) {
+                            eTemp.getPosicao().volta();
+                        }
+                    }
+                }
+            }
+        }
+    }
     
+
     public boolean ehPosicaoValidaEmpurravel(ArrayList<Elemento> e, Elemento b) {
         Elemento eTemp;
         int mesmoElemento;
@@ -116,15 +286,9 @@ public class ControleDeJogo {
     
     
 
-    public void heroMoveHabilitation(Hero hHero){
-        if((hHero.canMove() == false) && (this.isNaturalHeroMove())){
-            iContagemPressedKey++;
-            if(iContagemPressedKey == Consts.KEYPRESS_INTERVAL){
-                hHero.setCanMove(true);
-                iContagemPressedKey = 0;
-            }
-        }
-    }
+    
+
+
     
     public void checkLives(ArrayList<Elemento> e){
         
@@ -132,9 +296,10 @@ public class ControleDeJogo {
             Hero hHero = (Hero)e.get(0);
             System.out.println("Herói perdeu uma vida! Restam agora " + hHero.getLives());
             if(hHero.getLives() == 0){
-                System.out.println("Última vida perdida! Jogo reiniciando...");
+                System.out.println("Última vida perdida! \n - - - Game Over - - - ");
                 this.setFase(0);
                 hHero.setLives(3);
+                hHero.setPontos(0);
             }
             hHero.setCollectedItens(0);
             this.getFase().setAllElementos(e, hHero);
@@ -142,51 +307,23 @@ public class ControleDeJogo {
         }    
     }
 
-    public void nextFase(ArrayList<Elemento> elem, Fase fFase){
+    public void nextFase(ArrayList<Elemento> elem){
         Hero hHero = (Hero)elem.get(0);
+        Fase fFase = this.getFase();
         if(hHero.getCollectedItens() == fFase.getnItens()){
             if(this.getFase().getnFase() == 4) {
             //Fim de jogo e agradecimentos
+            System.out.println("Você zerou o jogo. Parabens");
+            }else{
+                System.out.println("Você completou a fase " + this.getFase().getnFase() + "!");
+                this.setFase(getFase().getnFase());  //como o número da fase começa em 1 e as posições em 0     
+                hHero.setCollectedItens(0);              //então não é preciso colocar + 1               
+                this.getFase().setAllElementos(elem, hHero);
             }
-            System.out.println("Você completou a fase " + this.getFase().getnFase() + "!");
-            this.setFase(getFase().getnFase());  //como o número da fase começa em 1 e as posições em 0     
-            hHero.setCollectedItens(0);              //então não é preciso colocar + 1               
-            this.getFase().setAllElementos(elem, hHero);
+            
         }                                      //na fase 1 (posição 0), o setFase(getFase().getnFase()) é igual setFase(1)
     }   
     
-    
-    public void quebrarBloco(Hero h, ArrayList<Elemento> elem){
-
-        Posicao p =  new Posicao(h.getPosicao().getLinha(), h.getPosicao().getColuna());
-        
-        
-        switch(h.getOrientacion()){
-            case 0: //ultimo movimento foi pra baixo
-                p.setLinha(p.getLinha() + 1);
-                break;
-            case 1: //ultimo movimento foi para cima
-                p.setLinha(p.getLinha() - 1);
-                break;
-            case 2: //ultimo movimento foi para esquerda
-                p.setColuna(p.getColuna() - 1);
-                break;
-            case 3: //ultimo movimento foi para direita
-                p.setColuna(p.getColuna() + 1);
-                break;
-            default:
-                System.out.println("Erro inesperado");
-                break;
-        }
-
-        for(int i = 1; i < elem.size(); i++){
-            if((elem.get(i).isbQuebravel()) && (elem.get(i).getPosicao().estaNaMesmaPosicao(p))){
-                elem.remove(elem.get(i));
-            }
-        }
-        
-    } 
-
     public boolean isKilledHero() {
         return killedHero;
     }

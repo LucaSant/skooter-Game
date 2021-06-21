@@ -1,13 +1,11 @@
 package Modelo;
 
 
-public class BlocoVermelhoMovivel extends Elemento {
+public class BlocoVermelhoMovivel extends BlocoMovivel {
     
     public BlocoVermelhoMovivel(int linha, int coluna) {
-        super("blocovermelholosango.png");
-        this.setPosicao(linha, coluna);
+        super("blocovermelholosango.png", linha, coluna);
         this.bTransponivel = false;
-        this.bEmpurravel = true;
     }
     
     public void autoDesenho() {
