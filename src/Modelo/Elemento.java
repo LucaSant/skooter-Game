@@ -33,8 +33,12 @@ public abstract class Elemento implements Serializable {
         this.bMortal = false;
         this.bQuebravel = false;
         this.bSeta = false;
-        
-        //this.bItem = false;
+        this.setImage(sNomeImagePNG);
+
+    }
+
+    
+    public void setImage(String sNomeImagePNG){
         try {   /*Procurar imagem para usar*/
             iImage = new ImageIcon(new java.io.File(".").getCanonicalPath() + Consts.PATH + sNomeImagePNG);
             Image img = iImage.getImage();

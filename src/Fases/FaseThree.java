@@ -30,10 +30,10 @@ public class FaseThree extends Fase{
          e.add( new Vilao(8, 5));
          e.add( new Vilao(10, 5));
 
-         e.add( new Item(5, 0, 120));
-         e.add( new Item(5, 2, 180));
-         e.add( new Item(5, 8, 225));
-         e.add( new Item(5, 10, 300));
+         e.add( new Item(5, 0, 5));
+         e.add( new Item(5, 2, 6));
+         e.add( new Item(5, 8, 7));
+         e.add( new Item(5, 10, 8));
 
          e.add( new BlocoVermelhoMovivel(1, 1));
          e.add( new BlocoVermelhoMovivel(1, 2));

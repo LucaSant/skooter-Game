@@ -21,10 +21,10 @@ public class FaseFour extends Fase {
          e.add( new Vilao(5, 10));
          e.add( new Vilao(10, 5));
         
-         e.add( new Item(0, 0, 150 ));
-         e.add( new Item(0, 10, 100));
-         e.add( new Item(10, 0, 120));
-         e.add( new Item(10, 10, 250));
+         e.add( new Item(0, 0, 6));
+         e.add( new Item(0, 10, 7));
+         e.add( new Item(10, 0, 8));
+         e.add( new Item(10, 10, 9));
         
          e.add( new BlocoVermelho(0, 3));
          e.add( new BlocoVermelho(0, 7));

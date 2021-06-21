@@ -22,10 +22,10 @@ public class FaseOne extends Fase {
          e.add( new Vilao(10, 1));
          e.add( new Vilao(10, 9));
         
-         e.add( new Item(0, 0, 50));
-         e.add( new Item(0, 10, 75));
-         e.add( new Item(10, 0, 150));
-         e.add( new Item(10, 10, 175));
+         e.add( new Item(0, 0, 1));
+         e.add( new Item(0, 10, 2));
+         e.add( new Item(10, 0, 3));
+         e.add( new Item(10, 10, 4));
         
          e.add( new BlocoVermelho(1, 1));
          e.add( new BlocoVermelho(1, 3));

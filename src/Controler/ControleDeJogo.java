@@ -27,7 +27,6 @@ public class ControleDeJogo {
         Allfases.add(new FaseThree());
         Allfases.add(new FaseFour());
         fase = getAllfases().get(0);
-        //this.getAllfases().get(0).setAllElementos(, umElemento);
     }
 
 
