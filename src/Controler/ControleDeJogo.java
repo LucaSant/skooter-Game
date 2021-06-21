@@ -9,7 +9,6 @@ import Fases.*;
 public class ControleDeJogo {
 
     private boolean killedHero;
-    private boolean waitedframe;
     private boolean naturalHeroMove;
     private int iContagemPressedKey;
     private ArrayList<Fase> Allfases;
@@ -17,7 +16,6 @@ public class ControleDeJogo {
     
     public ControleDeJogo(){
         this.killedHero = false;
-        this.waitedframe = false;
         this.naturalHeroMove = true;
         setAllfases(new ArrayList<Fase>(4));
 
@@ -63,7 +61,8 @@ public class ControleDeJogo {
                     } */
                 }
                 if(eTemp.isbSeta()){
-                    this.movimentoSeta(e, hHero.getPosicao(), eTemp);
+                    Seta seta = (Seta) eTemp;
+                    seta.movimentoSeta(e, hHero.getPosicao(), seta);
                     hHero.setCanMove(false);
                     this.setNaturalHeroMove(false);
                 }
@@ -115,43 +114,7 @@ public class ControleDeJogo {
         return true;
     }
     
-    public void movimentoSeta(ArrayList<Elemento> e, Posicao p, Elemento eTemp) {
-
-       // for(int i = getFase().getnViloes()+1; i < e.size(); i++) {
-        Hero h = (Hero) e.get(0);
-        Seta s = (Seta) eTemp;
-        
-                //System.out.println(eTemp.getClass().getCanonicalName()); //Debug
-
-        h.setOrientacion(s.getOrientacion()); //------------------------------Talvez eu apague, o jogo original não faz isso
-        if(this.isWaitedframe()){
-            switch(s.getOrientacion()) {
-                case 0:
-                    h.moveDown();
-                    //movimentoSeta(e, p, eTemp);
-                    this.setWaitedframe(false);
-                    break;
-                case 1:
-                    h.moveUp();
-                    //movimentoSeta(e, p, eTemp);
-                    this.setWaitedframe(false);
-                    break;
-                case 3:
-                    h.moveRight();
-                    //movimentoSeta(e, p, eTemp);
-                    this.setWaitedframe(false);
-                    break;
-                case 2:
-                    h.moveLeft();
-                    //movimentoSeta(e, p, eTemp);
-                    this.setWaitedframe(false);
-                    break;
-            }
-            
-        }
-        this.setWaitedframe(true);
-        
-    }
+    
 
     public void heroMoveHabilitation(Hero hHero){
         if((hHero.canMove() == false) && (this.isNaturalHeroMove())){
@@ -232,17 +195,7 @@ public class ControleDeJogo {
         this.killedHero = killedHero;
     }
 
-    public boolean isWaitedframe() {
-        return waitedframe;
-    }
 
-
-    public void setWaitedframe(boolean waitedframe) {
-        this.waitedframe = waitedframe;
-    }
-
-
-    
     public ArrayList<Fase> getAllfases() {
         return Allfases;
     }
