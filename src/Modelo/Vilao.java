@@ -42,7 +42,7 @@ public class Vilao extends Elemento {
     }
 
     public int endTest(int count, int mv){
-        if(count == 3){
+        if(count == 4){
             return 4;
         }
         return mv;

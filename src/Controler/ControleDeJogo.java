@@ -1,6 +1,7 @@
 package Controler;
 
 import Modelo.*;
+import Auxiliar.Consts;
 import Auxiliar.Posicao;
 import java.util.ArrayList;
 import Fases.*;
@@ -9,12 +10,15 @@ public class ControleDeJogo {
 
     private boolean killedHero;
     private boolean waitedframe;
+    private boolean naturalHeroMove;
+    private int iContagemPressedKey;
     private ArrayList<Fase> Allfases;
     private Fase fase;
     
     public ControleDeJogo(){
         this.killedHero = false;
         this.waitedframe = false;
+        this.naturalHeroMove = true;
         setAllfases(new ArrayList<Fase>(4));
 
         Allfases.add(new FaseOne());
@@ -34,6 +38,7 @@ public class ControleDeJogo {
     public void processaTudo(ArrayList<Elemento> e){
         Hero hHero = (Hero)e.get(0); /*O heroi (protagonista) eh sempre o primeiro do array*/
         Elemento eTemp;
+        this.setNaturalHeroMove(true);
         /*Processa todos os demais em relacao ao heroi*/
         for(int i = 1; i < e.size(); i++){
             eTemp = e.get(i); /*Pega o i-esimo elemento do jogo*/
@@ -59,6 +64,8 @@ public class ControleDeJogo {
                 }
                 if(eTemp.isbSeta()){
                     this.movimentoSeta(e, hHero.getPosicao(), eTemp);
+                    hHero.setCanMove(false);
+                    this.setNaturalHeroMove(false);
                 }
             }
         }
@@ -115,35 +122,45 @@ public class ControleDeJogo {
         Seta s = (Seta) eTemp;
         
                 //System.out.println(eTemp.getClass().getCanonicalName()); //Debug
-        h.setCanMove(false);
-        h.setOrientacion(s.getOrientacion());
+
+        h.setOrientacion(s.getOrientacion()); //------------------------------Talvez eu apague, o jogo original não faz isso
         if(this.isWaitedframe()){
             switch(s.getOrientacion()) {
                 case 0:
                     h.moveDown();
-                    h.setCanMove(true);
                     //movimentoSeta(e, p, eTemp);
+                    this.setWaitedframe(false);
                     break;
                 case 1:
                     h.moveUp();
-                    h.setCanMove(true);
                     //movimentoSeta(e, p, eTemp);
+                    this.setWaitedframe(false);
                     break;
                 case 3:
                     h.moveRight();
-                    h.setCanMove(true);
                     //movimentoSeta(e, p, eTemp);
+                    this.setWaitedframe(false);
                     break;
                 case 2:
                     h.moveLeft();
-                    h.setCanMove(true);
                     //movimentoSeta(e, p, eTemp);
+                    this.setWaitedframe(false);
                     break;
             }
             
         }
         this.setWaitedframe(true);
         
+    }
+
+    public void heroMoveHabilitation(Hero hHero){
+        if((hHero.canMove() == false) && (this.isNaturalHeroMove())){
+            iContagemPressedKey++;
+            if(iContagemPressedKey == Consts.KEYPRESS_INTERVAL){
+                hHero.setCanMove(true);
+                iContagemPressedKey = 0;
+            }
+        }
     }
     
     public void checkLives(ArrayList<Elemento> e){
@@ -240,6 +257,14 @@ public class ControleDeJogo {
 
     public void setFase(int n) {
         this.fase = this.getAllfases().get(n);
+    }
+
+    public boolean isNaturalHeroMove() {
+        return naturalHeroMove;
+    }
+
+    public void setNaturalHeroMove(boolean naturalHeroMove) {
+        this.naturalHeroMove = naturalHeroMove;
     }
 
     

@@ -23,7 +23,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     private Graphics g2;
     
     private int iContagemVilao;
-    
+    //private int iContagemPressedKey;
     /**
      * Creates new form
      */
@@ -94,7 +94,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             
             this.cControle.desenhaTudo(eElementos);
             this.cControle.processaTudo(eElementos);
-            
+            //this.cControle.vilaoMoveHabilitation(eElementos);
             //A cada intervalo determinado pelo timer, faz os vilões andarem
             iContagemVilao++;
             if(iContagemVilao == Consts.TIMER_VILAO) {
@@ -106,7 +106,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                     movimentoVilao(eElementos.get(i+1), mv, count);
                 }
             }
-            
+            this.cControle.heroMoveHabilitation(hHero);
             this.cControle.checkLives(eElementos); //o processamento checa a vida do heroi
             this.cControle.nextFase(eElementos, cControle.getFase()); // checa se pode ir para a próxima fase
         }
@@ -133,6 +133,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     public void keyPressed(KeyEvent e) {
         /*Movimento do heroi via teclado*/
         if(hHero.canMove() == true){
+            hHero.setCanMove(false);
             if (e.getKeyCode() == KeyEvent.VK_UP) {
                 hHero.moveUp();
                 //cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
@@ -155,7 +156,9 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                 hHero.setOrientacion(3);
             } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     cControle.quebrarBloco(hHero, eElementos);
+                    hHero.setCanMove(true);
             }
+            
         }
         
         /*Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava*/
@@ -165,8 +168,8 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
 
         this.setTitle("-> Cell: " + (hHero.getPosicao().getColuna()) + ", " + (hHero.getPosicao().getLinha()) + "/ itens na fase: " + cControle.getFase().getnItens() + "  / heroi i: " +  hHero.getCollectedItens());
     }
-
-    public void mousePressed(MouseEvent e) {
+    
+    /*public void mousePressed(MouseEvent e) {
          //Movimento via mouse
          int x = e.getX();
          int y = e.getY();
@@ -176,7 +179,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
         
          this.hHero.getPosicao().setPosicao(y/Consts.CELL_SIDE, x/Consts.CELL_SIDE);
 
-        /*Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava*/
+        //Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava
         if (!cControle.ehPosicaoValida(this.eElementos,hHero.getPosicao())) {
             hHero.voltaAUltimaPosicao();
         }
@@ -184,7 +187,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
         cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
         
         repaint();
-    }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
