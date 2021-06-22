@@ -8,7 +8,6 @@ public class FaseOne extends Fase {
     
     public FaseOne(){
         super(1, "fundo.png");
-
     }
 
     @Override

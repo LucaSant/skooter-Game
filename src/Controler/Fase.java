@@ -74,7 +74,4 @@ public class Fase {
     private void setBackground(String background) {
         this.background = background;
     }
-
-
-
 }

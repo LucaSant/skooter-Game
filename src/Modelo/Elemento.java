@@ -2,7 +2,6 @@ package Modelo;
 
 import Auxiliar.Consts;
 import Auxiliar.Desenhador;
-//import Controler.Tela;
 import Auxiliar.Posicao;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -11,10 +10,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author Junio
- */
 public abstract class Elemento implements Serializable {
 
     protected ImageIcon iImage;
@@ -115,7 +110,6 @@ public abstract class Elemento implements Serializable {
         this.bQuebravel = bQuebravel;
     }
 
-    
    public void autoDesenho(){
         Desenhador.desenhar(this.iImage, pPosicao.getColuna(), pPosicao.getLinha());        
     }

@@ -67,6 +67,7 @@ public class Item extends Elemento{
             case 10:
                 this.pontosEquiv = 0;
                 this.setImage("transparente.png");
+                break;
             default:
                 this.pontosEquiv = 150;
                 super.setImage("fruta.png");

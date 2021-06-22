@@ -58,8 +58,6 @@ public class ControleDeJogo {
                 }else{
                     this.killedHero = false;
                 }
-                if(eTemp.isTransponivel())
-                    //e.remove(eTemp);
                 if(eTemp.isItem() == true){
                     hHero.setCollectedItens(hHero.getCollectedItens() + 1);
                     System.out.println("Item de numero " + hHero.getCollectedItens());
@@ -141,10 +139,8 @@ public class ControleDeJogo {
 
 
     public void movimentoVilao(Elemento e, int mv, int countMove, ArrayList<Elemento> elem) {
-    /**
-    * Método para que o vilão possa se mover aleatoriamente sem colidir ou escapar do mapa.
-    * Ele ficou em Tela pois precisávamos conferir o espaço ao redor por obstáculos e 
-    * atualizar o desenho de maneira que não ficasse "indo e voltando".
+    /*
+    * Método para que o vilão possa se mover "aleatoriamente" sem colidir ou escapar do mapa.
     */    
         if(e.getClass().getCanonicalName() == "Modelo.Vilao") {
             Vilao v = (Vilao) e;
@@ -240,7 +236,6 @@ public class ControleDeJogo {
         } 
     }
 
-
     public void movimentoEmpurravel(ArrayList<Elemento> e, Posicao p) {
         Elemento eTemp;
         for(int i = this.getFase().getnViloes()+1; i < e.size(); i++) {
@@ -282,7 +277,6 @@ public class ControleDeJogo {
         }
     }
     
-
     public boolean ehPosicaoValidaEmpurravel(ArrayList<Elemento> e, Elemento b) {
         Elemento eTemp;
         int mesmoElemento;
@@ -295,8 +289,6 @@ public class ControleDeJogo {
         }
         return true;
     }
-    
-
     
     public void checkLives(ArrayList<Elemento> e){
     
@@ -321,7 +313,6 @@ public class ControleDeJogo {
             
         }     
     }
-
 
     public void nextFase(ArrayList<Elemento> elem){
         Hero hHero = (Hero)elem.get(0);
@@ -384,6 +375,5 @@ public class ControleDeJogo {
     public void setLastFase(int lastFase) {
         this.lastFase = lastFase;
     }
-
     
 }

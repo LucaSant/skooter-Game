@@ -79,16 +79,6 @@ public class Posicao implements Serializable{
     public Posicao copia(){
         return (new Posicao(this.getLinha(), this.getColuna()));
     }
-    /*
-    public int heroMovementDirection(Hero h) { //0 Norte - 1 Sul - 2 Leste - 3 Oeste
-        Posicao p;
-        p = h.getPosicao();
-        if (p.linha - p.linhaAnterior < 0) return 0;
-        else if (p.linha - p.linhaAnterior > 0) return 1;
-        else if (p.coluna - p.colunaAnterior < 0) return 2;
-        else if (p.coluna - p.colunaAnterior > 0) return 3;
-        else return -1;
-    }*/
     
     public boolean moveUp(){
         return this.setPosicao(this.getLinha()-1, this.getColuna());

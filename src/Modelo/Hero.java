@@ -46,7 +46,7 @@ public class Hero extends Elemento {
         Posicao p =  new Posicao(this.getPosicao().getLinha(), this.getPosicao().getColuna());
         
         
-        switch(this.getOrientacion()){
+        switch(this.getOrientation()){
             case 0: //ultimo movimento foi pra baixo
                 p.setLinha(p.getLinha() + 1);
                 break;
@@ -92,13 +92,13 @@ public class Hero extends Elemento {
         this.lives = lives;
     }
 
-    public int getOrientacion() {
+    public int getOrientation() {
         
         return orientation;
 
     }
 
-    public void setOrientacion(int orientation) {
+    public void setOrientation(int orientation) {
         String img = "heroi-" + orientation + ".png";
         try {
             this.iImage = new ImageIcon(new java.io.File(".").getCanonicalPath() + Consts.PATH + img);

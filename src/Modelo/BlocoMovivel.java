@@ -8,8 +8,6 @@ public class BlocoMovivel extends Elemento{
         this.bEmpurravel = true;
         this.bQuebravel = true;
     }
-
-    
     
     public void autoDesenho() {
         super.autoDesenho();

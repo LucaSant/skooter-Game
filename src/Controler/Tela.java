@@ -7,15 +7,8 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 import java.util.logging.*;
-import java.util.zip.*;
-import javax.swing.text.Position;
-import Fases.TelaInicial;
 
-/**
- *
- * @author junio
- */
-public class Tela extends javax.swing.JFrame implements MouseListener, KeyListener {
+public class Tela extends javax.swing.JFrame implements KeyListener {
 
     private Hero hHero;
     private ArrayList<Elemento> eElementos;
@@ -29,25 +22,18 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
         Desenhador.setCenario(this); /*Desenhador funciona no modo estatico*/
         initComponents();
  
-        this.addMouseListener(this); /*mouse*/
         this.addKeyListener(this);   /*teclado*/
         
         /*Cria a janela do tamanho do cenario + insets (bordas) da janela*/
         this.setSize(Consts.RES * Consts.CELL_SIDE + getInsets().left + getInsets().right,
                 Consts.RES * Consts.CELL_SIDE + getInsets().top + getInsets().bottom);
 
-        /*
-
-        eElements = cControle.getFase().getElem();
-        hHero = eElements.get(0);
-        */
         hHero = new Hero(0,0);
         hHero.setCollectedItens(0);
         hHero.setLives(3);
 
         /*Este array vai guardar os elementos graficos*/
         eElementos = new ArrayList<Elemento>(100);
-        //cControle.getFase().setAllElementos(eElementos, hHero);
     }
 
     public void removeElemento(Elemento umElemento) { //exclusivo da classe Tela, os elementos da fase são o estado inicial, não podendo excluir elementos
@@ -132,22 +118,22 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             if (e.getKeyCode() == KeyEvent.VK_UP) {
                 hHero.moveUp();
                 cControle.movimentoEmpurravel(eElementos, hHero.getPosicao());
-                hHero.setOrientacion(1);
+                hHero.setOrientation(1);
 
             } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
                 hHero.moveDown();
                 cControle.movimentoEmpurravel(eElementos, hHero.getPosicao());
-                hHero.setOrientacion(0);
+                hHero.setOrientation(0);
 
             } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                 hHero.moveLeft();
                 cControle.movimentoEmpurravel(eElementos, hHero.getPosicao());
-                hHero.setOrientacion(2);
+                hHero.setOrientation(2);
 
             } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                 hHero.moveRight();
                 cControle.movimentoEmpurravel(eElementos, hHero.getPosicao());
-                hHero.setOrientacion(3);
+                hHero.setOrientation(3);
 
             } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     if(cControle.getFase().getnFase() == 0){
@@ -156,9 +142,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                         hHero.quebrarBloco(eElementos);
                         hHero.setCanMove(true);
                     }
-                
             }
-            
         }
         
         /*Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava*/
@@ -168,26 +152,6 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
 
         this.setTitle("-> Cell: " + (hHero.getPosicao().getColuna()) + ", " + (hHero.getPosicao().getLinha()) + "Fase: " + cControle.getFase().getnFase() +  "/ Vidas " + hHero.getLives() + "  / Pontos:  " +  hHero.getPontos());
     }
-    
-    /*public void mousePressed(MouseEvent e) {
-         //Movimento via mouse
-         int x = e.getX();
-         int y = e.getY();
-     
-         this.setTitle("X: "+ x + ", Y: " + y +
-         " -> Cell: " + (y/Consts.CELL_SIDE) + ", " + (x/Consts.CELL_SIDE));
-        
-         this.hHero.getPosicao().setPosicao(y/Consts.CELL_SIDE, x/Consts.CELL_SIDE);
-
-        //Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava
-        if (!cControle.ehPosicaoValida(this.eElementos,hHero.getPosicao())) {
-            hHero.voltaAUltimaPosicao();
-        }
-        
-        cControle.movimentoSeta(eElementos, hHero.getPosicao(), hHero);
-        
-        repaint();
-    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -219,38 +183,9 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 
-    public void mouseMoved(MouseEvent e) {
-    }
-
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    public void mouseExited(MouseEvent e) {
-    }
-
-    public void mouseDragged(MouseEvent e) {
-    }
-
     public void keyTyped(KeyEvent e) {
     }
 
     public void keyReleased(KeyEvent e) {
     }
-    
-    /*
-    public void procurarBlocoEmpurravel(ArrayList<Elemento> e, Posicao p) {
-        Elemento eTemp;
-        for (int i = 1; i < e.size(); i++) {
-            eTemp = e.get(i);
-            if (eTemp.getPosicao().estaNaMesmaPosicao(p)) {
-                return i;
-            }
-        }
-    }*/
 }

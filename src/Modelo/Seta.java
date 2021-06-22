@@ -6,7 +6,7 @@ import Auxiliar.Posicao;
 
 public class Seta extends Elemento {
 
-    protected int orientacion;
+    protected int orientation;
     protected String floor;
     protected boolean waitedframe;
    
@@ -28,9 +28,9 @@ public class Seta extends Elemento {
          Hero h = (Hero) e.get(0);
          Seta s = (Seta) eTemp;
          
-         h.setOrientacion(s.getOrientacion()); //------------------------------Talvez eu apague, o jogo original não faz isso
+         h.setOrientation(s.getOrientation());
          if(this.isWaitedframe()){
-             switch(s.getOrientacion()) {
+             switch(s.getOrientation()) {
                  case 0:
                      h.moveDown();
                      this.setWaitedframe(false);
@@ -61,12 +61,12 @@ public class Seta extends Elemento {
         this.bSeta = bSeta;
     }
 
-    public int getOrientacion() {
-        return orientacion;
+    public int getOrientation() {
+        return orientation;
     }
 
-    public void setOrientacion(int orientacion) {
-        this.orientacion = orientacion;
+    public void setOrientation(int orientation) {
+        this.orientation = orientation;
     }
 
     public String getFloor() {
@@ -80,7 +80,6 @@ public class Seta extends Elemento {
     public boolean isWaitedframe() {
         return waitedframe;
     }
-
 
     public void setWaitedframe(boolean waitedframe) {
         this.waitedframe = waitedframe;
