@@ -16,17 +16,24 @@ public class ControleDeJogo {
     private int iContagemPressedKey;
     private ArrayList<Fase> Allfases;
     private Fase fase;
+    private int lastFase;
     
+   
+
     public ControleDeJogo(){
         this.killedHero = false;
         this.naturalHeroMove = true;
+
         setAllfases(new ArrayList<Fase>(4));
 
         Allfases.add(new FaseOne());
         Allfases.add(new FaseTwo());
         Allfases.add(new FaseThree());
         Allfases.add(new FaseFour());
-        fase = getAllfases().get(0);
+        Allfases.add(new TelaInicial());
+        
+        fase = getAllfases().get(Allfases.size() - 1);
+        lastFase = getAllfases().get(Allfases.size() -2).getnFase();
     }
 
 
@@ -69,6 +76,12 @@ public class ControleDeJogo {
             }
         }
     }
+
+    public void beginGame(ArrayList<Elemento> elem, Hero hHero){
+        this.setFase(0);
+        this.getFase().setAllElementos(elem, hHero);
+    }
+
 
     public void heroMoveHabilitation(Hero hHero){
         if((hHero.canMove() == false) && (this.isNaturalHeroMove())){
@@ -283,44 +296,52 @@ public class ControleDeJogo {
         return true;
     }
     
-    
-
-    
-
 
     
     public void checkLives(ArrayList<Elemento> e){
-        
+    
         if(this.isKilledHero() == true){
             Hero hHero = (Hero)e.get(0);
+            
             System.out.println("Herói perdeu uma vida! Restam agora " + hHero.getLives());
+            
             if(hHero.getLives() == 0){
                 System.out.println("Última vida perdida! \n - - - Game Over - - - ");
-                this.setFase(0);
-                hHero.setLives(3);
-                hHero.setPontos(0);
+    
+                hHero.setCollectedItens(0);
+                hHero.setLives(0);
+                hHero.setPontos(3);
+                hHero.setImage("heroi-0.png");
+                this.beginGame(e, hHero);
+            }else{
+                hHero.setCollectedItens(0);
+                this.getFase().setAllElementos(e, hHero);
             }
-            hHero.setCollectedItens(0);
-            this.getFase().setAllElementos(e, hHero);
             setKilledHero(false);
-        }    
+            
+        }     
     }
+
 
     public void nextFase(ArrayList<Elemento> elem){
         Hero hHero = (Hero)elem.get(0);
         Fase fFase = this.getFase();
         if(hHero.getCollectedItens() == fFase.getnItens()){
-            if(this.getFase().getnFase() == 4) {
-            //Fim de jogo e agradecimentos
-            System.out.println("Você zerou o jogo. Parabens");
+            if(this.getFase().getnFase() == this.getLastFase()) {
+                //Fim de jogo e agradecimentos
+                System.out.println("Você zerou o jogo. Parabens");
+                hHero.setCollectedItens(0);
+                hHero.setLives(0);
+                hHero.setPontos(3);
+                hHero.setImage("heroi-0.png");
+                this.beginGame(elem, hHero);
             }else{
                 System.out.println("Você completou a fase " + this.getFase().getnFase() + "!");
                 this.setFase(getFase().getnFase());  //como o número da fase começa em 1 e as posições em 0     
                 hHero.setCollectedItens(0);              //então não é preciso colocar + 1               
                 this.getFase().setAllElementos(elem, hHero);
             }
-            
-        }                                      //na fase 1 (posição 0), o setFase(getFase().getnFase()) é igual setFase(1)
+        }                                  //na fase 1 (posição 0), o setFase(getFase().getnFase()) é igual setFase(1)
     }   
     
     public boolean isKilledHero() {
@@ -354,6 +375,14 @@ public class ControleDeJogo {
 
     public void setNaturalHeroMove(boolean naturalHeroMove) {
         this.naturalHeroMove = naturalHeroMove;
+    }
+
+    public int getLastFase() {
+        return lastFase;
+    }
+
+    public void setLastFase(int lastFase) {
+        this.lastFase = lastFase;
     }
 
     

@@ -7,10 +7,10 @@ import Modelo.Hero;
 
 public class Fase {
 
-    private int nFase;
-    private int nItens;
-    private int nViloes;
-    private String background;
+    protected int nFase;
+    protected int nItens;
+    protected int nViloes;
+    protected String background;
 
     public Fase(int fase, String background){
         this.setnFase(fase);

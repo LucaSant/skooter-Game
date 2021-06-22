@@ -9,6 +9,7 @@ import java.util.*;
 import java.util.logging.*;
 import java.util.zip.*;
 import javax.swing.text.Position;
+import Fases.TelaInicial;
 
 /**
  *
@@ -46,7 +47,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
 
         /*Este array vai guardar os elementos graficos*/
         eElementos = new ArrayList<Elemento>(100);
-        cControle.getFase().setAllElementos(eElementos, hHero);
+        //cControle.getFase().setAllElementos(eElementos, hHero);
     }
 
     public void removeElemento(Elemento umElemento) { //exclusivo da classe Tela, os elementos da fase são o estado inicial, não podendo excluir elementos
@@ -62,10 +63,18 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
         Graphics g = this.getBufferStrategy().getDrawGraphics();
         /*Criamos um contexto gráfico*/
         g2 = g.create(getInsets().left, getInsets().top, getWidth() - getInsets().right, getHeight() - getInsets().top);
-
+        Fase f = this.cControle.getFase();
+        int res, cell_side;
+        if(f.getnFase() == 0){
+            res = 1;
+            cell_side = 605;
+        }else{
+            res = Consts.RES;
+            cell_side = Consts.CELL_SIDE;
+        }
         /*Desenha cenário*/
-        for (int i = 0; i < Consts.RES; i++) {
-            for (int j = 0; j < Consts.RES; j++) {
+        for (int i = 0; i < res; i++) {
+            for (int j = 0; j < res; j++) {
                 try {
                     /*Linha para alterar o background*/
                     String bg =  cControle.getFase().getBackground();
@@ -77,7 +86,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                         }
                     }
                     Image newImage = Toolkit.getDefaultToolkit().getImage(new java.io.File(".").getCanonicalPath() + Consts.PATH + bg); 
-                    g2.drawImage(newImage,j*Consts.CELL_SIDE, i*Consts.CELL_SIDE, Consts.CELL_SIDE, Consts.CELL_SIDE, null);
+                    g2.drawImage(newImage,j*cell_side, i*cell_side, cell_side, cell_side, null);
 
                 } catch (IOException ex) {
                     Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
@@ -141,8 +150,13 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                 hHero.setOrientacion(3);
 
             } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    hHero.quebrarBloco(eElementos);
-                    hHero.setCanMove(true);
+                    if(cControle.getFase().getnFase() == 0){
+                        cControle.beginGame(eElementos, hHero);
+                    }else{
+                        hHero.quebrarBloco(eElementos);
+                        hHero.setCanMove(true);
+                    }
+                
             }
             
         }
