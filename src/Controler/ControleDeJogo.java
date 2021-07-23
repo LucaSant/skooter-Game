@@ -322,8 +322,8 @@ public class ControleDeJogo {
                 //Fim de jogo e agradecimentos
                 System.out.println("Você zerou o jogo. Parabens");
                 hHero.setCollectedItens(0);
-                hHero.setLives(0);
-                hHero.setPontos(3);
+                hHero.setLives(3);
+                hHero.setPontos(0);
                 hHero.setImage("heroi-0.png");
                 this.beginGame(elem, hHero);
             }else{
