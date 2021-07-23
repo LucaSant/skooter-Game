@@ -301,8 +301,8 @@ public class ControleDeJogo {
                 System.out.println("Última vida perdida! \n - - - Game Over - - - ");
     
                 hHero.setCollectedItens(0);
-                hHero.setLives(0);
-                hHero.setPontos(3);
+                hHero.setLives(3);
+                hHero.setPontos(0);
                 hHero.setImage("heroi-0.png");
                 this.beginGame(e, hHero);
             }else{

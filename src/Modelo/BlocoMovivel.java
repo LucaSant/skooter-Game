@@ -6,7 +6,6 @@ public class BlocoMovivel extends Elemento{
         super(img);
         this.setPosicao(linha, coluna);
         this.bEmpurravel = true;
-        this.bQuebravel = true;
     }
     
     public void autoDesenho() {
