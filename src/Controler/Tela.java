@@ -86,8 +86,7 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
             
             this.cControle.desenhaTudo(eElementos);
             this.cControle.processaTudo(eElementos);
-            this.cControle.vilaoMoveHabilitation(eElementos);
-            this.cControle.heroMoveHabilitation(hHero);
+            this.cControle.heroMoveHabilitation(hHero);  
             this.cControle.checkLives(eElementos); //o processamento checa a vida do heroi
             this.cControle.nextFase(eElementos); // checa se pode ir para a próxima fase
         }
@@ -142,7 +141,7 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
                         hHero.quebrarBloco(eElementos);
                         hHero.setCanMove(true);
                     }
-            }else if(e.getKeyCode() == KeyEvent.VK_Z){
+            } else if (e.getKeyCode() == KeyEvent.VK_Z){
                 if(cControle.getFase().getnFase() == cControle.getLastFase()) {
                     hHero.setCollectedItens(0);
                     hHero.setLives(0);

@@ -73,6 +73,7 @@ public class ControleDeJogo {
                 }
             }
         }
+        this.vilaoMoveHabilitation(e);
     }
 
     public void beginGame(ArrayList<Elemento> elem, Hero hHero){
@@ -94,18 +95,24 @@ public class ControleDeJogo {
 
     public void vilaoMoveHabilitation(ArrayList<Elemento> elem){
         iContagemVilao++;
-            if(iContagemVilao == Consts.TIMER_VILAO) {
+        if(iContagemVilao == Consts.TIMER_VILAO) {
                 iContagemVilao = 0;
-                for(int i = 0; i < this.getFase().getnViloes(); i++) {
-                    Random rand = new Random();
-                    int mv = rand.nextInt(4);
-                    int count = 0;
-                    this.movimentoVilao(elem.get(i+1), mv, count, elem);
+                int nViloes = this.getFase().getnViloes();
+                for(int i = 0; i < nViloes; i++) {
+                    Elemento e = elem.get(i+1);
+                        Random rand = new Random();
+                        int mv = rand.nextInt(4);
+                        int count = 0;
+                    if(e.getClass().getCanonicalName() == "Modelo.Vilao") {
+                        Vilao v;
+                        v = (Vilao)e;
+                        v.movimentoVilao(mv, count, elem, nViloes);
+                    }
                 }
-            }
+        }
     }
 
-    
+   
     public boolean ehPosicaoValida(ArrayList<Elemento> e, Posicao p){
         Elemento eTemp;
         /*Validacao da posicao de todos os elementos com relacao a Posicao p*/
@@ -123,119 +130,6 @@ public class ControleDeJogo {
         return true;
     }
     
-    public boolean ehPosicaoValidaVilao(ArrayList<Elemento> e, Posicao p) {
-        Elemento eTemp;
-        int qtdViloes;
-        qtdViloes = getFase().getnViloes() + 1;
-        for(int i = qtdViloes; i < e.size(); i++) {
-            eTemp = e.get(i);
-            
-            if(eTemp.getPosicao().estaNaMesmaPosicao(p)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-    public void movimentoVilao(Elemento e, int mv, int countMove, ArrayList<Elemento> elem) {
-    /*
-    * Método para que o vilão possa se mover "aleatoriamente" sem colidir ou escapar do mapa.
-    */    
-        if(e.getClass().getCanonicalName() == "Modelo.Vilao") {
-            Vilao v = (Vilao) e;
-            Posicao ePos = v.getPosicao();
-            Posicao pAtual = new Posicao(ePos.getLinha(), ePos.getColuna());
-
-            mv = v.endTest(countMove, mv);      
-            
-            switch(mv) {
-            case 0: //Tentando para baixo
-                
-                if(ePos.getLinha() == 10) {
-                    mv = 1;
-                    countMove++;
-                    this.movimentoVilao(e, mv, countMove, elem);
-                    
-                }
-                else {
-                    v.moveDown();
-                    boolean isLastPos = v.checkLastPosicao(countMove, this, elem, ePos);
-                    if((!this.ehPosicaoValidaVilao(elem, ePos)) || (isLastPos)) {
-                        ePos.volta();
-                        mv = 1;
-                        countMove++;
-                        this.movimentoVilao(e, mv, countMove, elem);
-                    }
-                }
-                v.setLastPosition(pAtual);
-                break;
-            case 1: //Tentando para cima
-                if(ePos.getLinha() == 0) {
-                    mv = 2;
-                    countMove++;
-                    this.movimentoVilao(e, mv, countMove, elem);
-                }
-                else {
-                    v.moveUp();
-                    boolean isLastPos = v.checkLastPosicao(countMove, this, elem, ePos);
-                    if((!this.ehPosicaoValidaVilao(elem, ePos)) || (isLastPos)) {
-                        ePos.volta();
-                        mv = 2;
-                        countMove++;
-                        this.movimentoVilao(e, mv, countMove, elem);
-                    }
-                }
-                v.setLastPosition(pAtual);
-                break;
-            case 2: //Tentando pra a direita
-                if(ePos.getColuna() == 10) {
-                    mv = 3;
-                    countMove++;
-                    this.movimentoVilao(e, mv, countMove, elem);
-                }
-                else {
-                    v.moveRight();
-                    boolean isLastPos = v.checkLastPosicao(countMove, this,  elem, ePos);
-                    if((!this.ehPosicaoValidaVilao(elem, ePos)) || (isLastPos)) {
-                        ePos.volta();
-                        mv = 3;
-                        countMove++;
-                        this.movimentoVilao(e, mv, countMove, elem);
-                    }
-                }
-                v.setLastPosition(pAtual);
-                break;
-            case 3: //Tentando para a esquerda
-                if(ePos.getColuna() == 0) {
-                    mv = 0;
-                    countMove++;
-                    this.movimentoVilao(e, mv, countMove, elem);
-                }
-                else {
-                    v.moveLeft();
-                    boolean isLastPos = v.checkLastPosicao(countMove, this,  elem, ePos);
-                    if((!this.ehPosicaoValidaVilao(elem, ePos)) || (isLastPos)) {
-                        ePos.volta();
-                        mv = 0;
-                        countMove++;
-                        this.movimentoVilao(e, mv, countMove, elem);
-                    }
-                }
-                v.setLastPosition(pAtual);
-                break;
-
-            case 4:
-                v.setPosicao(ePos.getLinha(), ePos.getColuna());
-                if(!this.ehPosicaoValidaVilao(elem, ePos)) {
-                    ePos.volta();
-                }
-                v.setLastPosition(pAtual);
-                break;
-            }
-        } 
-    }
-
     public void movimentoEmpurravel(ArrayList<Elemento> e, Posicao p) {
         Elemento eTemp;
         for(int i = this.getFase().getnViloes()+1; i < e.size(); i++) {
