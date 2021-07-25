@@ -12,33 +12,30 @@ public class FaseFour extends Fase {
 
     @Override
     public void setAllElementos(ArrayList<Elemento> e, Hero hero) { //Ajeita os elementos para a Fase 4
+        FactoryElemento fe = new FactoryElemento(e);
+        
         e.clear();
-        e.add(hero);
-        hero.setPosicao(4, 5);
+        fe.setHero(hero, 4, 5);
         
-         e.add( new Vilao(0, 5));
-         e.add( new Vilao(5, 0));
-         e.add( new Vilao(5, 10));
-         e.add( new Vilao(10, 5));
+        fe.mk("vilao", 0, 5);
+        fe.mk("vilao", 5, 0);
+        fe.mk("vilao", 5, 10);
+        fe.mk("vilao", 10, 5);
         
-         e.add( new Item(0, 0, 6));
-         e.add( new Item(0, 10, 7));
-         e.add( new Item(10, 0, 8));
-         e.add( new Item(10, 10, 9));
+        fe.mk("item-6", 0, 0);
+        fe.mk("item-7", 0, 10);
+        fe.mk("item-8", 10, 0);
+        fe.mk("item-9", 10, 10);
         
-         e.add( new BlocoVermelho(0, 3));
-         e.add( new BlocoVermelho(0, 7));
-        
-         e.add( new BlocoVermelho(1, 0));
-         e.add( new BlocoVermelho(1, 8));
-        
-         e.add( new BlocoVermelho(2, 5));
-        
-         e.add( new BlocoVermelho(3, 2));
-         e.add( new BlocoVermelho(3, 10));
-        
-         e.add( new BlocoVermelho(5, 2));
-         e.add( new BlocoVermelho(5, 8));
+        fe.mk("bloco vermelho", 0, 3);
+        fe.mk("Bloco vermelho", 0, 7);
+        fe.mk("bloco vermelho", 1, 0);
+        fe.mk("vermelho bloco", 1, 8);
+        fe.mk("bloco vermelho", 2, 5);
+        fe.mk("bloco vermelho", 3, 2);
+        fe.mk("bloco vermelho", 3, 10);
+        fe.mk("bloco vermelho", 5, 2);
+        fe.mk("BlocoVermelho",5, 8);
         
          e.add( new BlocoVermelho(6, 3));
         

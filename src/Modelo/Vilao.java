@@ -8,7 +8,7 @@ public class Vilao extends Elemento {
     private Posicao lastposition;
 
     public Vilao(int linha, int coluna) {
-        super("trooper.png");
+        super("trooper.png", "vilao");
         this.setPosicao(linha, coluna);
         this.bMortal = true;
         this.bTransponivel = true;

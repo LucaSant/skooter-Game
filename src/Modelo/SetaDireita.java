@@ -1,12 +1,22 @@
 package Modelo;
 
+public class SetaDireita extends TapeteDecorator{
 
-
-public class SetaDireita extends Seta{
-
-    public SetaDireita(int linha, int coluna) {
-        super(linha, coluna);
-        this.orientation = 3;
-        this.floor = "seta-direita.png";
+    public SetaDireita(Tapete tap) {
+        super(tap);
+        t.floor = "seta-direita.png";
+        t.setLabel(t.getLabel()+";seta;direita");
     }
+    
+    @Override
+    public void action(Hero h) {
+       if(t.isWaitedframe()){
+            h.moveRight();
+            h.setOrientation(3);
+            t.setWaitedframe(false);
+       }
+       t.setWaitedframe(true);
+       t.action(h);
+    } 
+    
 }

@@ -12,21 +12,24 @@ public class FaseOne extends Fase {
 
     @Override
     public void setAllElementos(ArrayList<Elemento> e, Hero hero) { //Ajeita os elementos para a Fase 1
+        
+        FactoryElemento fe = new FactoryElemento(e);
         e.clear();
-        e.add(hero);
-        hero.setPosicao(4, 4);
+        
+        fe.setHero(hero, 4, 4);
         
          e.add( new Vilao(2, 0));
          e.add( new Vilao(0, 9));
          e.add( new Vilao(10, 1));
          e.add( new Vilao(10, 9));
         
-         e.add( new Item(0, 0, 1));
-         e.add( new Item(0, 10, 2));
-         e.add( new Item(10, 0, 3));
-         e.add( new Item(10, 10, 4));
+        fe.mk("item-1", 0,0);
+        fe.mk("item-2", 0, 10);
+        fe.mk("Item-3",10, 0);
+        fe.mk("item-4", 10, 10);
         
-         e.add( new BlocoVermelho(1, 1));
+        
+        fe.mk("bloco vermelho", 1, 1);
          e.add( new BlocoVermelho(1, 3));
          e.add( new BlocoVermelho(1, 5));
          e.add( new BlocoVermelho(1, 7));
@@ -56,8 +59,8 @@ public class FaseOne extends Fase {
          e.add( new BlocoVermelho(9, 7));
          e.add( new BlocoVermelho(9, 9));
         
-         e.add( new BlocoVerdeMovivel(0, 1));
-         e.add( new BlocoVerdeMovivel(0, 5));
+        fe.mk("bloco verde movel", 0, 1);
+        fe.mk("Bloco verde movel", 0, 5);
         
          e.add( new BlocoVerdeMovivel(1, 2));
          e.add( new BlocoVerdeMovivel(1, 8));

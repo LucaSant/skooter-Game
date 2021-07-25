@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import Controler.Fase;
 import Modelo.Elemento;
+import Modelo.FactoryElemento;
 import Modelo.Hero;
-import Modelo.Item;
+
 
 public class TelaInicial extends Fase {    
   
@@ -16,7 +17,8 @@ public class TelaInicial extends Fase {
     @Override
     public void setAllElementos(ArrayList<Elemento> e, Hero hero) {
         e.clear();
-        e.add(new Item(0, 0, 10));
+        FactoryElemento fe = new FactoryElemento(e);
+        fe.mk("item-10", 0, 0);
     }
 
     

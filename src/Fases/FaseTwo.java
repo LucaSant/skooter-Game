@@ -12,19 +12,21 @@ public class FaseTwo extends Fase {
 
     @Override
     public void setAllElementos(ArrayList<Elemento> e, Hero hero) { //Ajeita os elementos para a Fase 2
-        e.clear();
-        e.add(hero);
-        hero.setPosicao(5, 5);
         
-        e.add(new Vilao(1, 1));
-        e.add(new Vilao(1, 9));
+        FactoryElemento fe = new FactoryElemento(e);
+        
+        e.clear();
+        fe.setHero(hero, 5,5);
+        
+        fe.mk("Vilao",1, 1);
+        fe.mk("Vilao",1, 9);
         e.add(new Vilao(9, 1));
         e.add(new Vilao(9, 9));
         
-        e.add(new Item(1, 5, 1));
-        e.add(new Item(5, 1, 2));
-        e.add(new Item(5, 9, 3));
-        e.add(new Item(9, 5, 4));
+        fe.mk("Item-1", 1, 5);
+        fe.mk("item-2",5 , 1);
+        fe.mk("item-3", 5, 9);
+        fe.mk("item-4", 9, 5);
         
         e.add(new BlocoVermelho(1, 3));
         e.add(new BlocoVermelho(1, 7));
@@ -47,9 +49,9 @@ public class FaseTwo extends Fase {
         e.add(new BlocoVermelho(9, 3));
         e.add(new BlocoVermelho(9, 7));
         
-        e.add(new SetaDireita(0, 3));
-        e.add(new SetaDireita(0, 7));
-        e.add(new SetaDireita(2, 3));
+        fe.mk("seta Direita",0, 3);
+        fe.mk("setadireita", 0, 7);
+        fe.mk("SetaDireita", 2, 3);
         e.add(new SetaDireita(4, 3));
         e.add(new SetaDireita(4, 7));
         e.add(new SetaDireita(6, 3));
@@ -57,7 +59,7 @@ public class FaseTwo extends Fase {
         e.add(new SetaDireita(8, 7));
         e.add(new SetaDireita(10, 7));
         
-        e.add(new SetaAbaixo(2, 4));
+        fe.mk("seta baixo", 2, 4);
         e.add(new SetaAbaixo(3, 2));
         e.add(new SetaAbaixo(3, 4));
         e.add(new SetaAbaixo(3, 10));
@@ -72,7 +74,7 @@ public class FaseTwo extends Fase {
         e.add(new SetaEsquerda(6, 7));
         e.add(new SetaEsquerda(10, 3));
         
-        e.add(new SetaAcima(3, 0));
+        fe.mk("seta cima", 3, 0);
         e.add(new SetaAcima(3, 6));
         e.add(new SetaAcima(3, 8));
         e.add(new SetaAcima(4, 0));

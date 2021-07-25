@@ -1,14 +1,14 @@
 package Modelo;
 
 
-public class BlocoVermelho extends Elemento {
+public class BlocoVermelho extends Bloco {
     
     public BlocoVermelho(int linha, int coluna) {
-        super("blocovermelho.png");
+        super("blocovermelho.png",";vermelho");
         this.setPosicao(linha, coluna);
-        this.bTransponivel = false;
     }
     
+    @Override
     public void autoDesenho() {
         super.autoDesenho();
     }

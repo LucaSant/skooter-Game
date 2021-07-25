@@ -1,17 +1,17 @@
+
 package Modelo;
 
-public class BlocoMovivel extends Elemento{
+public class Movel extends BlocoDecorator{
 
-    public BlocoMovivel(String img, int linha, int coluna) {
-        super(img);
-        this.setPosicao(linha, coluna);
-        this.bEmpurravel = true;
+    public Movel(Bloco b) {
+        b.setLabel(b.getLabel()+";movel");
+        b.bEmpurravel = true;
     }
     
+    @Override
     public void autoDesenho() {
         super.autoDesenho();
     }
-
-
+    
 }
 

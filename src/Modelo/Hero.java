@@ -32,7 +32,7 @@ public class Hero extends Elemento {
 
 
     public Hero(int linha, int coluna) {
-        super("heroi-0.png");
+        super("heroi-0.png", "heroi");
         this.setPosicao(linha, coluna);
         this.lives = 3;
         this.collectedItens = 0;

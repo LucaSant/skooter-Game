@@ -52,22 +52,22 @@ public class ControleDeJogo {
             /*Verifica se o heroi se sobrepoe ao i-ésimo elemento*/
             if(hHero.getPosicao().estaNaMesmaPosicao(eTemp.getPosicao())){
                 /*Nem todos os elementos podem ser transpostos pelo heroi*/
-                if(eTemp.isMortal()){
+                if(eTemp.getLabel().contains("vilao")){
                     hHero.setLives(hHero.getLives() - 1);
                     this.killedHero = true;
                 }else{
                     this.killedHero = false;
                 }
-                if(eTemp.isItem() == true){
+                if(eTemp.getLabel().contains("item")){
                     hHero.setCollectedItens(hHero.getCollectedItens() + 1);
                     System.out.println("Item de numero " + hHero.getCollectedItens());
                     System.out.println("Ele valia " + ((Item) eTemp).getPontosEquiv() + ", entao voce ganhou: " + hHero.getCollectedItens() * ((Item) eTemp).getPontosEquiv() + " pontos.");
                     hHero.setPontos(hHero.getPontos() + (hHero.getCollectedItens() * ((Item) eTemp).getPontosEquiv()));
                     e.remove(eTemp);
                 }
-                if(eTemp.isbSeta()){
-                    Seta seta = (Seta) eTemp;
-                    seta.movimentoSeta(e, hHero.getPosicao(), seta);
+                if(eTemp.getLabel().contains("seta")){
+                    Tapete n = (Tapete) eTemp;
+                    n.action(hHero);
                     hHero.setCanMove(false);
                     this.setNaturalHeroMove(false);
                 }
@@ -103,7 +103,7 @@ public class ControleDeJogo {
                         Random rand = new Random();
                         int mv = rand.nextInt(4);
                         int count = 0;
-                    if(e.getClass().getCanonicalName() == "Modelo.Vilao") {
+                    if(e.getLabel().contains("vilao")) {
                         Vilao v;
                         v = (Vilao)e;
                         v.movimentoVilao(mv, count, elem, nViloes);
