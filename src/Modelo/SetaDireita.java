@@ -18,5 +18,4 @@ public class SetaDireita extends TapeteDecorator{
        t.setWaitedframe(true);
        t.action(h);
     } 
-    
 }

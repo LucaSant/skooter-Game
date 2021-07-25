@@ -1,14 +1,11 @@
 package Modelo;
 
-
 public class Chao extends Tapete{
-
 
     protected Chao(int linha, int coluna) {
         super("transparente.png", "");
         this.setPosicao(linha, coluna);
         this.bSeta = true;
-        
     }
 
     @Override
@@ -20,8 +17,4 @@ public class Chao extends Tapete{
     public void action(Hero hHero) {
         System.out.println("Passou pelo tapete");
     }
-    
-    
-
-  
 }

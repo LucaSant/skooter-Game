@@ -1,6 +1,5 @@
 package Modelo;
 
-
 public class BlocoVermelho extends Bloco {
     
     public BlocoVermelho(int linha, int coluna) {

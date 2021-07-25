@@ -1,13 +1,5 @@
- 
 package Modelo;
 
-import Auxiliar.Posicao;
-import java.util.ArrayList;
-
-/**
- *
- * @author lucas
- */
 public abstract class Tapete extends Elemento{
     
     protected String floor;

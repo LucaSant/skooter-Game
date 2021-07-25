@@ -1,10 +1,5 @@
-
 package Modelo;
 
-/**
- *
- * @author lucas
- */
 public abstract class TapeteDecorator extends Tapete {
     protected Tapete t;
     protected boolean waitedframe;
@@ -15,5 +10,4 @@ public abstract class TapeteDecorator extends Tapete {
 
     @Override
     public abstract void action(Hero hHero);
-       
 }

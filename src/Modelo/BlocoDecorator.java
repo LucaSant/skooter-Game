@@ -1,10 +1,5 @@
-
 package Modelo;
 
-/**
- *
- * @author lucas
- */
 public abstract class BlocoDecorator extends Bloco{
     protected Bloco b;
 
@@ -16,6 +11,4 @@ public abstract class BlocoDecorator extends Bloco{
     public void autoDesenho() {
         super.autoDesenho();
     }
-   
-    
 }

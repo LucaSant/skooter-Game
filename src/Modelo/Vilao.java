@@ -29,14 +29,12 @@ public class Vilao extends Elemento {
         return lastposition;
     }
     
-    
     public int endTest(int count, int mv){
         if(count == 4){
             return 4;
         }
         return mv;
     }
-    
     
     public boolean ehPosicaoValidaVilao(ArrayList<Elemento> e, Posicao p, int nviloes) {
         Elemento eTemp;
@@ -59,8 +57,6 @@ public class Vilao extends Elemento {
             return !this.ehPosicaoValidaVilao(e, p, nviloes);  
         }
     }
-
-    
     
     public void movimentoVilao(int mv, int countMove, ArrayList<Elemento> elem, int nviloes) {
     /*
@@ -92,6 +88,7 @@ public class Vilao extends Elemento {
                 }
                 this.setLastPosition(pAtual);
                 break;
+                
             case 1: //Tentando para cima
                 if(ePos.getLinha() == 0) {
                     mv = 2;
@@ -110,6 +107,7 @@ public class Vilao extends Elemento {
                 }
                 this.setLastPosition(pAtual);
                 break;
+                
             case 2: //Tentando pra a direita
                 if(ePos.getColuna() == 10) {
                     mv = 3;
@@ -128,6 +126,7 @@ public class Vilao extends Elemento {
                 }
                 this.setLastPosition(pAtual);
                 break;
+                
             case 3: //Tentando para a esquerda
                 if(ePos.getColuna() == 0) {
                     mv = 0;
@@ -154,7 +153,6 @@ public class Vilao extends Elemento {
                 }
                 this.setLastPosition(pAtual);
                 break;
-            
         } 
     }
 }      

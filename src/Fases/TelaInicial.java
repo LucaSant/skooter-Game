@@ -1,12 +1,10 @@
 package Fases;
 
 import java.util.ArrayList;
-
 import Controler.Fase;
 import Modelo.Elemento;
 import Modelo.FactoryElemento;
 import Modelo.Hero;
-
 
 public class TelaInicial extends Fase {    
   
@@ -20,9 +18,4 @@ public class TelaInicial extends Fase {
         FactoryElemento fe = new FactoryElemento(e);
         fe.mk("item-10", 0, 0);
     }
-
-    
-
-
-   
 }

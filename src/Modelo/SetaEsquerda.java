@@ -1,9 +1,5 @@
 package Modelo;
 
-import Auxiliar.Posicao;
-import java.util.ArrayList;
-
-
 public class SetaEsquerda extends TapeteDecorator{
 
     public SetaEsquerda(Tapete tap) {

@@ -1,7 +1,4 @@
-
-
 package Modelo;
-
 
 public class SetaBaixo extends TapeteDecorator {
 
@@ -21,7 +18,4 @@ public class SetaBaixo extends TapeteDecorator {
        t.setWaitedframe(true);
        t.action(h);
     }
-    
-    
-    
 }

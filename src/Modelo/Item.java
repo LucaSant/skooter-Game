@@ -23,9 +23,4 @@ public class Item extends Elemento{
     public void setPontosEquiv(int pontosEquiv) {
         this.setPontosEquiv = pontosEquiv;
     }
-    
-    
-   
-    
-
 }

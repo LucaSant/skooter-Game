@@ -6,7 +6,6 @@ public class BlocoVerde extends Bloco {
         super("blocoverde.png", ";verde");
         this.setPosicao(linha, coluna);
         this.bQuebravel = true;
-       
     }
     
     @Override

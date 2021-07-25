@@ -5,10 +5,6 @@ import java.io.Serializable;
 import javax.swing.ImageIcon;
 import Controler.Tela;
 
-/**
- *
- * @author junio
- */
 public class Desenhador implements Serializable {
     static Tela tCenarioOndeSeDesenha;
     public static void setCenario(Tela umTCenarioOndeDesenhar) {
@@ -27,6 +23,4 @@ public class Desenhador implements Serializable {
     private static Graphics getGraphicsDaTela() {
         return tCenarioOndeSeDesenha.getGraphicsBuffer();
     }
-    
-
 }

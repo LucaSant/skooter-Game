@@ -2,26 +2,10 @@ package Modelo;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
-
 import Auxiliar.Consts;
 import Auxiliar.Posicao;
 
-/*import Auxiliar.*;
-
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.io.IOException;
-import java.io.Serializable;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.util.*;
-/**
- *
- * @author Junio
- */
 public class Hero extends Elemento {
 
     private int collectedItens;
@@ -44,7 +28,6 @@ public class Hero extends Elemento {
     public void quebrarBloco(ArrayList<Elemento> elem){
         
         Posicao p =  new Posicao(this.getPosicao().getLinha(), this.getPosicao().getColuna());
-        
         
         switch(this.getOrientation()){
             case 0: //ultimo movimento foi pra baixo
@@ -93,9 +76,7 @@ public class Hero extends Elemento {
     }
 
     public int getOrientation() {
-        
         return orientation;
-
     }
 
     public void setOrientation(int orientation) {
@@ -116,7 +97,6 @@ public class Hero extends Elemento {
         this.canMove = b;
     }
 
-    
     public int getPontos() {
         return pontos;
     }
@@ -124,6 +104,4 @@ public class Hero extends Elemento {
     public void setPontos(int pontos) {
         this.pontos = pontos;
     }
-
-
 }

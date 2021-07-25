@@ -23,7 +23,6 @@ public abstract class Elemento implements Serializable {
     protected boolean bQuebravel;
     protected boolean bSeta;
    
-    
     protected Elemento(String sNomeImagePNG, String label) {
         this.pPosicao = new Posicao(1, 1);
         this.imagepath = sNomeImagePNG;
@@ -36,7 +35,6 @@ public abstract class Elemento implements Serializable {
         
     }
 
-    
     public void setImage(String sNomeImagePNG){
         try {   /*Procurar imagem para usar*/
             iImage = new ImageIcon(new java.io.File(".").getCanonicalPath() + Consts.PATH + sNomeImagePNG);
@@ -138,5 +136,4 @@ public abstract class Elemento implements Serializable {
     public void setLabel(String label) {
         this.label = label;
     }
-
 }

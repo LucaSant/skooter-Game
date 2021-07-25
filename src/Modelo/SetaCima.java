@@ -1,6 +1,5 @@
 package Modelo;
 
-
 public class SetaCima extends TapeteDecorator {
 
     public SetaCima(Tapete tap) {
@@ -18,9 +17,6 @@ public class SetaCima extends TapeteDecorator {
        }
        t.setWaitedframe(true);
        t.action(h);
-       
     }
-    
-    
 }
 
