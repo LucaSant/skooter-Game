@@ -28,7 +28,6 @@ public abstract class Elemento implements Serializable {
         this.bQuebravel = false;
         this.bSeta = false;
         this.setImage(sNomeImagePNG);
-
     }
     
     public void setImage(String sNomeImagePNG){
