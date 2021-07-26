@@ -1,4 +1,3 @@
- 
 package Auxiliar;
 
 import Modelo.Elemento;
@@ -13,12 +12,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author lucas
- */
 public class Save implements Serializable{
-    
     
     public void SaveGame(ArrayList<Elemento> elem){
         try {
@@ -37,7 +31,6 @@ public class Save implements Serializable{
             pipeOut.close();
             
         } catch (IOException exc) {
-            
         }
     }
     
@@ -62,22 +55,18 @@ public class Save implements Serializable{
         }catch (IOException exc) {
             exc.printStackTrace();
         }
-        
        return(elem);
     }
-    
     
     public void deleteSave(){
         File fAux = new File("saves/jogo-save.txt");
             if (fAux.exists()) {
                 fAux.delete();
             }
-            
     }
     
     public boolean  saveExists(){
         File fAux = new File("saves/jogo-save.txt");
         return fAux.exists();
     }
-     
 }

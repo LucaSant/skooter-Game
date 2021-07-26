@@ -122,6 +122,4 @@ public class Hero extends Elemento {
     public void setFase(int fase) {
         this.fase = fase;
     }
-    
-    
 }

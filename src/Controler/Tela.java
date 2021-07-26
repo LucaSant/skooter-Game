@@ -15,6 +15,7 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
     private ControleDeJogo cControle = new ControleDeJogo();
     private Graphics g2;
     private Save save;
+    private KeyProxy kp = new KeyProxy(this);
 
     /**
      * Creates new form
@@ -22,7 +23,6 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
     public Tela() {
         Desenhador.setCenario(this); /*Desenhador funciona no modo estatico*/
         initComponents();
- 
         this.addKeyListener(this);   /*teclado*/
         
         /*Cria a janela do tamanho do cenario + insets (bordas) da janela*/
@@ -33,10 +33,8 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
         hHero.setCollectedItens(0);
         hHero.setLives(3);
 
-        /*Este array vai guardar os elementos graficos*/
         eElementos = new ArrayList<Elemento>(100);
         save =  new Save();
-       
     }
 
     public void removeElemento(Elemento umElemento) { //exclusivo da classe Tela, os elementos da fase são o estado inicial, não podendo excluir elementos
@@ -76,7 +74,6 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
                     }
                     Image newImage = Toolkit.getDefaultToolkit().getImage(new java.io.File(".").getCanonicalPath() + Consts.PATH + bg); 
                     g2.drawImage(newImage,j*cell_side, i*cell_side, cell_side, cell_side, null);
-
                 } catch (IOException ex) {
                     Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -84,9 +81,7 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
         }
         
         /*Aqui podem ser inseridos novos processamentos de controle*/
-        
         if (!this.eElementos.isEmpty()) {
-            
             this.cControle.desenhaTudo(eElementos);
             this.cControle.processaTudo(eElementos);
             this.cControle.heroMoveHabilitation(hHero);  
@@ -112,78 +107,9 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
         Timer timer = new Timer();
         timer.schedule(redesenhar, 0, Consts.FRAME_INTERVAL);
     }
-
+    
     public void keyPressed(KeyEvent e) {
-        /*Movimento do heroi via teclado*/
-        if(hHero.canMove() == true){
-            hHero.setCanMove(false);
-            if (e.getKeyCode() == KeyEvent.VK_UP) {
-                hHero.moveUp();
-                cControle.movimentoEmpurravel(eElementos, hHero.getPosicao());
-                hHero.setOrientation(1);
-
-            } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                hHero.moveDown();
-                cControle.movimentoEmpurravel(eElementos, hHero.getPosicao());
-                hHero.setOrientation(0);
-
-            } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                hHero.moveLeft();
-                cControle.movimentoEmpurravel(eElementos, hHero.getPosicao());
-                hHero.setOrientation(2);
-
-            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                hHero.moveRight();
-                cControle.movimentoEmpurravel(eElementos, hHero.getPosicao());
-                hHero.setOrientation(3);
-
-            } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    if(cControle.getFase().getnFase() == 0){
-                        save.deleteSave();
-                        cControle.beginGame(eElementos, hHero, save);
-                    }else{
-                        hHero.quebrarBloco(eElementos);
-                        hHero.setCanMove(true);
-                    }
-            } else if (e.getKeyCode() == KeyEvent.VK_Z){
-                if(cControle.getFase().getnFase() == cControle.getLastFase()) {
-                    hHero.setCollectedItens(0);
-                    hHero.setLives(0);
-                    hHero.setPontos(3);
-                    hHero.setFase(0);
-                    hHero.setImage("heroi-0.png");
-                    save.deleteSave();
-                    cControle.beginGame(eElementos, hHero, save);
-                    
-                }else{
-                    cControle.setFase(cControle.getFase().getnFase()); 
-                    hHero.setFase(cControle.getFase().getnFase() - 1);
-                    hHero.setCollectedItens(0);                          
-                    cControle.getFase().setAllElementos(eElementos, hHero);
-                }
-            } else if(e.getKeyCode() == KeyEvent.VK_S){
-                if(cControle.getFase().getnFase() == 0){
-                    if(save.saveExists()){
-                       cControle.beginGame(eElementos, hHero, save); 
-                    }else{
-                        System.out.println("Não há jogo salvo. Por favor aperte 'Enter'");
-                    }
-                    
-                }else{
-                    save.SaveGame(eElementos);
-                    System.out.println("Jogo salvo s");
-                }
-            }
-        }
-        
-        /*Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava*/
-        if (!cControle.ehPosicaoValida(this.eElementos,hHero.getPosicao())) {
-            hHero.voltaAUltimaPosicao();
-        }
-
-        this.setTitle("-> Cell: " + (hHero.getPosicao().getColuna()) + ", " 
-                + (hHero.getPosicao().getLinha()) + "Fase: " + cControle.getFase().getnFase() 
-                +  "/ Vidas " + hHero.getLives() + "  / Pontos:  " +  hHero.getPontos());
+        kp.keyPressed(e);
     }
 
     /**
@@ -220,5 +146,21 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
     }
 
     public void keyReleased(KeyEvent e) {
+    }
+
+    public Hero getHero() {
+        return hHero;
+    }
+
+    public ArrayList<Elemento> getElementos() {
+        return eElementos;
+    }
+
+    public ControleDeJogo getControle() {
+        return cControle;
+    }
+
+    public Save getSave() {
+        return save;
     }
 }
