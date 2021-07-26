@@ -22,7 +22,7 @@ public class Fase {
     public int numberOfItens(ArrayList<Elemento> elem){
         int n = 0;
         for(int i = 0; i < elem.size(); i++){
-            if(elem.get(i).isItem()){
+            if(elem.get(i).getLabel().contains("item")){
                 n++;
             }
         }
@@ -32,7 +32,7 @@ public class Fase {
     public int numberOfVillans(ArrayList<Elemento> elem){
         int n = 0;
         for(int i = 0; i < elem.size(); i++){
-            if(elem.get(i).isMortal()){
+            if(elem.get(i).getLabel().contains("vilao")){
                 n++;
             }
         }

@@ -9,7 +9,7 @@ public class FaseTwo extends Fase {
     public FaseTwo(){
         super(2, "fundo2.png");
     }
-
+ 
     @Override
     public void setAllElementos(ArrayList<Elemento> e, Hero hero) { //Ajeita os elementos para a Fase 2
         

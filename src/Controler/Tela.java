@@ -66,7 +66,7 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
                     String bg =  cControle.getFase().getBackground();
                     Posicao p = new Posicao (i, j);
                     for(int k = 0; k < eElementos.size(); k++){
-                        if((p.estaNaMesmaPosicao(eElementos.get(k).getPosicao())) && (eElementos.get(k).isbSeta())){
+                        if((p.estaNaMesmaPosicao(eElementos.get(k).getPosicao())) && (eElementos.get(k).getLabel().contains("seta"))){
                             Seta s = (Seta) eElementos.get(k);
                             bg = s.getFloor();
                         }

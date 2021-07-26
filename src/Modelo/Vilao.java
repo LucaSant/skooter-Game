@@ -9,7 +9,7 @@ public class Vilao extends Elemento {
     public Vilao(int linha, int coluna) {
         super("trooper.png");
         this.setPosicao(linha, coluna);
-        this.bMortal = true;
+        this.setLabel("vilao");
         this.bTransponivel = true;
         this.lastposition = getPosicao();
     }

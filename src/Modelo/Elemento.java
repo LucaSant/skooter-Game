@@ -14,19 +14,13 @@ public abstract class Elemento implements Serializable {
 
     protected ImageIcon iImage;
     protected Posicao pPosicao;
+    protected String label = "";
     protected boolean bTransponivel; /*Pode passar por cima?*/
-    protected boolean bEmpurravel;   /*Pode empurrar?*/
-    protected boolean bMortal;       /*Se encostar, morre?*/
-    protected boolean bItem;         /*É um item?*/
-    protected boolean bQuebravel;
-    protected boolean bSeta;
+    
    
     protected Elemento(String sNomeImagePNG) {
         this.pPosicao = new Posicao(1, 1);
         this.bTransponivel = false;
-        this.bMortal = false;
-        this.bQuebravel = false;
-        this.bSeta = false;
         this.setImage(sNomeImagePNG);
     }
     
@@ -47,6 +41,14 @@ public abstract class Elemento implements Serializable {
         return pPosicao;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+    
     public boolean isTransponivel() {
         return bTransponivel;
     }
@@ -63,25 +65,6 @@ public abstract class Elemento implements Serializable {
         this.pPosicao = new Posicao(p.getLinha(), p.getColuna());
     }
 
-    public  boolean isItem(){
-        return this.bItem;
-    }
-
-    public boolean isMortal() {
-        return bMortal;
-    }
-
-    public boolean isEmpurravel() {
-        return bEmpurravel;
-    }
-
-    public boolean isbSeta() {
-        return bSeta;
-    }
-
-    public void setbSeta(boolean bSeta) {
-        this.bSeta = bSeta;
-    }
 
     public boolean moveUp() {
         return this.pPosicao.moveUp();
@@ -99,13 +82,6 @@ public abstract class Elemento implements Serializable {
         return this.pPosicao.moveLeft();
     }
 
-    public boolean isbQuebravel() {
-        return bQuebravel;
-    }
-
-    public void setbQuebravel(boolean bQuebravel) {
-        this.bQuebravel = bQuebravel;
-    }
 
    public void autoDesenho(){
         Desenhador.desenhar(this.iImage, pPosicao.getColuna(), pPosicao.getLinha());        

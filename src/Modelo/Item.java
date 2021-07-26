@@ -6,7 +6,7 @@ public class Item extends Elemento{
     public Item(int linha, int coluna) {
         super("");
         this.setPosicao(linha, coluna);
-        this.bItem = true;
+        this.setLabel("item");
         this.bTransponivel = true;
     }
 

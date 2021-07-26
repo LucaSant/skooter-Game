@@ -48,22 +48,22 @@ public class ControleDeJogo {
             /*Verifica se o heroi se sobrepoe ao i-ésimo elemento*/
             if(hHero.getPosicao().estaNaMesmaPosicao(eTemp.getPosicao())){
                 /*Nem todos os elementos podem ser transpostos pelo heroi*/
-                if(eTemp.isMortal()){
+                if(eTemp.getLabel().contains("vilao")){
                     hHero.setLives(hHero.getLives() - 1);
                     this.killedHero = true;
                 }else{
                     this.killedHero = false;
                 }
-                if(eTemp.isItem() == true){
+                if(eTemp.getLabel().contains("item")){
                     hHero.setCollectedItens(hHero.getCollectedItens() + 1);
                     System.out.println("Item de numero " + hHero.getCollectedItens());
                     System.out.println("Ele valia " + ((Item) eTemp).getPontosEquiv() + ", entao voce ganhou: " + hHero.getCollectedItens() * ((Item) eTemp).getPontosEquiv() + " pontos.");
                     hHero.setPontos(hHero.getPontos() + (hHero.getCollectedItens() * ((Item) eTemp).getPontosEquiv()));
                     e.remove(eTemp);
                 }
-                if(eTemp.isbSeta()){
-                    Seta seta = (Seta) eTemp;
-                    seta.movimentoSeta(e, hHero.getPosicao(), seta);
+                if(eTemp.getLabel().contains("seta")){
+                    Seta s = (Seta) eTemp;
+                    s.movimentoSeta(hHero);
                     hHero.setCanMove(false);
                     this.setNaturalHeroMove(false);
                 }
@@ -97,9 +97,9 @@ public class ControleDeJogo {
                         Random rand = new Random();
                         int mv = rand.nextInt(4);
                         int count = 0;
-                    if(e.getClass().getCanonicalName() == "Modelo.Vilao") {
-                        Vilao v;
-                        v = (Vilao)e;
+                    if(e.getLabel().contains("vilao")) {
+                        
+                        Vilao v = (Vilao)e;
                         v.movimentoVilao(mv, count, elem, nViloes);
                     }
                 }
@@ -111,7 +111,7 @@ public class ControleDeJogo {
         /*Validacao da posicao de todos os elementos com relacao a Posicao p*/
         for(int i = 1; i < e.size(); i++){ /*Olha todos os elementos*/
             eTemp = e.get(i); /*Pega o i-esimo elemento do jogo*/
-            if(eTemp.isbSeta()){
+            if(eTemp.getLabel().contains("seta")){
                 return true;
             }
             if(!eTemp.isTransponivel()){
@@ -127,7 +127,7 @@ public class ControleDeJogo {
         Elemento eTemp;
         for(int i = this.getFase().getnViloes()+1; i < e.size(); i++) {
             eTemp = e.get(i);
-            if(eTemp.getPosicao().estaNaMesmaPosicao(p) && eTemp.isEmpurravel()) {
+            if(eTemp.getPosicao().estaNaMesmaPosicao(p) && eTemp.getLabel().contains("movel")) {
                 if (p.getLinha() - p.getLinhaAnterior() < 0) {
                     eTemp.moveUp();
                     if(!this.ehPosicaoValidaEmpurravel(e, eTemp)) {

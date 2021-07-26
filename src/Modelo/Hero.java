@@ -25,6 +25,7 @@ public class Hero extends Elemento {
     private Hero(int linha, int coluna) {
         super("heroi-0.png");
         this.setPosicao(linha, coluna);
+        this.setLabel("heroi");
         this.lives = 3;
         this.collectedItens = 0;
         this.orientation = 0; //começa na posição down
@@ -55,7 +56,7 @@ public class Hero extends Elemento {
         }
         
         for(int i = 1; i < elem.size(); i++){
-            if((elem.get(i).isbQuebravel()) && (elem.get(i).getPosicao().estaNaMesmaPosicao(p))){
+            if((elem.get(i).getLabel().contains("verde")) && (elem.get(i).getPosicao().estaNaMesmaPosicao(p))){
                 this.setPontos(this.getPontos() + 10);
                 elem.remove(elem.get(i));
             }
