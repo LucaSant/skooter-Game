@@ -8,7 +8,7 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.*;
 
-public class Tela extends javax.swing.JFrame implements KeyListener {
+public class Tela extends javax.swing.JFrame implements MouseListener, KeyListener {
 
     private Hero hHero;
     private ArrayList<Elemento> eElementos;
@@ -24,6 +24,7 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
         Desenhador.setCenario(this); /*Desenhador funciona no modo estatico*/
         initComponents();
         this.addKeyListener(this);   /*teclado*/
+        this.addMouseListener(this); /*mouse*/
         
         /*Cria a janela do tamanho do cenario + insets (bordas) da janela*/
         this.setSize(Consts.RES * Consts.CELL_SIDE + getInsets().left + getInsets().right,
@@ -135,6 +136,34 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
     public void keyPressed(KeyEvent e) {
         kp.keyPressed(e);
     }
+    
+    public void mousePressed(MouseEvent e) {
+         //Movimento via mouse
+         int x = e.getX();
+         int y = e.getY();
+         Posicao p = new Posicao(y/Consts.CELL_SIDE, x/Consts.CELL_SIDE);
+         if (e.getModifiers() == MouseEvent.BUTTON3_MASK && e.getClickCount() == 1) {
+            System.out.println("E O BRAD");
+            for(int i = 1; i < eElementos.size(); i++){
+                if(eElementos.get(i).getPosicao().equals(p)){
+                    System.out.println(eElementos.get(i).getLabel());
+                }
+            }
+             
+             
+        }
+         this.setTitle("X: "+ x + ", Y: " + y +
+         " -> Cell: " + (y/Consts.CELL_SIDE) + ", " + (x/Consts.CELL_SIDE));
+        
+         this.hHero.getPosicao().setPosicao(y/Consts.CELL_SIDE, x/Consts.CELL_SIDE);
+
+        /*Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava*/
+        if (!cControle.ehPosicaoValida(this.eElementos,hHero.getPosicao())) {
+            hHero.voltaAUltimaPosicao();
+        }         
+         
+        repaint();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -186,5 +215,21 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
 
     public Save getSave() {
         return save;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
 }
