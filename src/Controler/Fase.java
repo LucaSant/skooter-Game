@@ -1,5 +1,6 @@
 package Controler;
 
+import Auxiliar.Save;
 import java.util.ArrayList;
 
 import Modelo.Elemento;
@@ -42,6 +43,26 @@ public class Fase {
     public void setAllElementos(ArrayList<Elemento> e, Hero hero){
      
     }
+    
+    
+    public void setAllElementos(ArrayList<Elemento> elem, Hero hHero, Save s){
+         elem.clear();
+            ArrayList<Elemento> elemSave = s.readSave();
+            Hero h = (Hero) s.readSave().get(0);
+            hHero.setFase(h.getFase());
+            this.setAllElementos(elem,hHero);
+            elem.clear();
+            hHero.setOrientation(h.getOrientation());
+            hHero.setPontos(h.getPontos());
+            hHero.setLives(h.getLives());
+            hHero.setPosicao(h.getPosicao());
+            
+            elem.add(hHero);
+            for(int i = 1; i < elemSave.size(); i++){
+                elem.add(elemSave.get(i));
+            }
+    }
+   
 
     public int getnFase() {
         return nFase;

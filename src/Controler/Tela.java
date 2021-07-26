@@ -14,6 +14,7 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
     private ArrayList<Elemento> eElementos;
     private ControleDeJogo cControle = new ControleDeJogo();
     private Graphics g2;
+    private Save save;
 
     /**
      * Creates new form
@@ -34,6 +35,8 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
 
         /*Este array vai guardar os elementos graficos*/
         eElementos = new ArrayList<Elemento>(100);
+        save =  new Save();
+       
     }
 
     public void removeElemento(Elemento umElemento) { //exclusivo da classe Tela, os elementos da fase são o estado inicial, não podendo excluir elementos
@@ -87,8 +90,8 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
             this.cControle.desenhaTudo(eElementos);
             this.cControle.processaTudo(eElementos);
             this.cControle.heroMoveHabilitation(hHero);  
-            this.cControle.checkLives(eElementos); //o processamento checa a vida do heroi
-            this.cControle.nextFase(eElementos); // checa se pode ir para a próxima fase
+            this.cControle.checkLives(eElementos, save); //o processamento checa a vida do heroi
+            this.cControle.nextFase(eElementos, save); // checa se pode ir para a próxima fase
         }
 
         g.dispose();
@@ -136,7 +139,8 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
 
             } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     if(cControle.getFase().getnFase() == 0){
-                        cControle.beginGame(eElementos, hHero);
+                        save.deleteSave();
+                        cControle.beginGame(eElementos, hHero, save);
                     }else{
                         hHero.quebrarBloco(eElementos);
                         hHero.setCanMove(true);
@@ -146,13 +150,28 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
                     hHero.setCollectedItens(0);
                     hHero.setLives(0);
                     hHero.setPontos(3);
+                    hHero.setFase(0);
                     hHero.setImage("heroi-0.png");
-                    cControle.beginGame(eElementos, hHero);
+                    save.deleteSave();
+                    cControle.beginGame(eElementos, hHero, save);
                     
                 }else{
-                    cControle.setFase(cControle.getFase().getnFase());   
+                    cControle.setFase(cControle.getFase().getnFase()); 
+                    hHero.setFase(cControle.getFase().getnFase() - 1);
                     hHero.setCollectedItens(0);                          
                     cControle.getFase().setAllElementos(eElementos, hHero);
+                }
+            } else if(e.getKeyCode() == KeyEvent.VK_S){
+                if(cControle.getFase().getnFase() == 0){
+                    if(save.saveExists()){
+                       cControle.beginGame(eElementos, hHero, save); 
+                    }else{
+                        System.out.println("Não há jogo salvo. Por favor aperte 'Enter'");
+                    }
+                    
+                }else{
+                    save.SaveGame(eElementos);
+                    System.out.println("Jogo salvo s");
                 }
             }
         }

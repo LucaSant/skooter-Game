@@ -3,6 +3,7 @@ package Controler;
 import Modelo.*;
 import Auxiliar.Consts;
 import Auxiliar.Posicao;
+import Auxiliar.Save;
 import java.util.ArrayList;
 import java.util.Random;
 import Fases.*;
@@ -72,9 +73,17 @@ public class ControleDeJogo {
         this.vilaoMoveHabilitation(e);
     }
 
-    public void beginGame(ArrayList<Elemento> elem, Hero hHero){
-        this.setFase(0);
-        this.getFase().setAllElementos(elem, hHero);
+    public void beginGame(ArrayList<Elemento> elem, Hero hHero, Save s){
+       
+        if(!s.saveExists()){
+            this.setFase(0);
+            this.getFase().setAllElementos(elem, hHero);
+        }else{
+            
+            this.setFase( (int) ((Hero)s.readSave().get(0)).getFase());
+            this.getFase().setAllElementos(elem, hHero, s);
+        }
+        
     }
 
     public void heroMoveHabilitation(Hero hHero){
@@ -177,7 +186,7 @@ public class ControleDeJogo {
         return true;
     }
     
-    public void checkLives(ArrayList<Elemento> e){
+    public void checkLives(ArrayList<Elemento> e, Save s){
     
         if(this.isKilledHero() == true){
             Hero hHero = (Hero)e.get(0);
@@ -190,8 +199,10 @@ public class ControleDeJogo {
                 hHero.setCollectedItens(0);
                 hHero.setLives(3);
                 hHero.setPontos(0);
+                hHero.setFase(0);
                 hHero.setImage("heroi-0.png");
-                this.beginGame(e, hHero);
+                s.deleteSave();
+                this.beginGame(e, hHero, s);
             }else{
                 hHero.setCollectedItens(0);
                 this.getFase().setAllElementos(e, hHero);
@@ -201,7 +212,7 @@ public class ControleDeJogo {
         }     
     }
 
-    public void nextFase(ArrayList<Elemento> elem){
+    public void nextFase(ArrayList<Elemento> elem, Save s){
         Hero hHero = (Hero)elem.get(0);
         Fase fFase = this.getFase();
         if(hHero.getCollectedItens() == fFase.getnItens()){
@@ -212,12 +223,15 @@ public class ControleDeJogo {
                 hHero.setLives(3);
                 hHero.setPontos(0);
                 hHero.setImage("heroi-0.png");
-                this.beginGame(elem, hHero);
+                hHero.setFase(0);
+                this.beginGame(elem, hHero, s);
             }else{
                 System.out.println("Você completou a fase " + this.getFase().getnFase() + "!");
-                this.setFase(getFase().getnFase());  //como o número da fase começa em 1 e as posições em 0     
+                this.setFase(getFase().getnFase());  //como o número da fase começa em 1 e as posições em 0
+                hHero.setFase(this.getFase().getnFase()-1);
                 hHero.setCollectedItens(0);              //então não é preciso colocar + 1               
                 this.getFase().setAllElementos(elem, hHero);
+                
             }
         }                                  //na fase 1 (posição 0), o setFase(getFase().getnFase()) é igual setFase(1)
     }   
@@ -261,4 +275,5 @@ public class ControleDeJogo {
     public void setLastFase(int lastFase) {
         this.lastFase = lastFase;
     }
+
 }

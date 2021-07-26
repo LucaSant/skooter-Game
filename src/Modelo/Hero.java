@@ -18,6 +18,7 @@ public class Hero extends Elemento {
     
     private int collectedItens;
     private int lives;
+    private int fase;
     private int orientation; //0 - down, 1 - up, 2 - left, 3 - right
     private boolean canMove;
     private int pontos;
@@ -113,4 +114,14 @@ public class Hero extends Elemento {
     public void setPontos(int pontos) {
         this.pontos = pontos;
     }
+
+    public int getFase() {
+        return fase;
+    }
+
+    public void setFase(int fase) {
+        this.fase = fase;
+    }
+    
+    
 }
