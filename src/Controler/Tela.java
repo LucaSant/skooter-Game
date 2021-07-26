@@ -5,6 +5,7 @@ import Auxiliar.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import static java.lang.Math.floor;
 import java.util.*;
 import java.util.logging.*;
 
@@ -139,30 +140,29 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     
     public void mousePressed(MouseEvent e) {
          //Movimento via mouse
-         int x = e.getX();
-         int y = e.getY();
-         Posicao p = new Posicao(y/Consts.CELL_SIDE, x/Consts.CELL_SIDE);
+         int x = e.getX()-8;
+         int y = e.getY()-31;
+         //System.out.println(y + ", " + x);
+         Posicao p = new Posicao((int) floor(y/Consts.CELL_SIDE), (int) floor(x/Consts.CELL_SIDE));
+         //System.out.println(p.getLinha() + ", " + p.getColuna());
          if (e.getModifiers() == MouseEvent.BUTTON3_MASK && e.getClickCount() == 1) {
-            System.out.println("E O BRAD");
+            //System.out.println("E O BRAD");
             for(int i = 1; i < eElementos.size(); i++){
-                if(eElementos.get(i).getPosicao().equals(p)){
+                if(eElementos.get(i).getPosicao().estaNaMesmaPosicao(p)){
                     System.out.println(eElementos.get(i).getLabel());
                 }
             }
-             
-             
-        }
+        }/*
          this.setTitle("X: "+ x + ", Y: " + y +
          " -> Cell: " + (y/Consts.CELL_SIDE) + ", " + (x/Consts.CELL_SIDE));
         
          this.hHero.getPosicao().setPosicao(y/Consts.CELL_SIDE, x/Consts.CELL_SIDE);
 
-        /*Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava*/
+        //Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava
         if (!cControle.ehPosicaoValida(this.eElementos,hHero.getPosicao())) {
             hHero.voltaAUltimaPosicao();
         }         
-         
-        repaint();
+        repaint();*/
     }
 
     /**
