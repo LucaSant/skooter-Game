@@ -7,16 +7,23 @@ import Auxiliar.Consts;
 import Auxiliar.Posicao;
 
 public class Hero extends Elemento {
-
+    
+    private static Hero hero = null;
+    
+    public static Hero getHero() {
+        if (hero == null)
+            hero = new Hero(0,0);
+        return hero;
+    }
+    
     private int collectedItens;
     private int lives;
     private int orientation; //0 - down, 1 - up, 2 - left, 3 - right
     private boolean canMove;
     private int pontos;
 
-
-    public Hero(int linha, int coluna) {
-        super("heroi-0.png", "heroi");
+    private Hero(int linha, int coluna) {
+        super("heroi-0.png");
         this.setPosicao(linha, coluna);
         this.lives = 3;
         this.collectedItens = 0;
@@ -76,6 +83,7 @@ public class Hero extends Elemento {
     }
 
     public int getOrientation() {
+        
         return orientation;
     }
 

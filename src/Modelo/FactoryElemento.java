@@ -19,24 +19,33 @@ public class FactoryElemento {
         
         if(s.contains("bloco")){
             if(s.contains("verde")){
-                BlocoVerde bv = new BlocoVerde(linha,coluna);
-                e.add(this.blockFunctions(bv, s));
+                if(s.contains("movel")){
+                    e.add(new BlocoVerdeMovel(linha, coluna));
+                }else{
+                    e.add(new BlocoVerde(linha, coluna));
+                }
             }else if(s.contains("vermelho")){
-                BlocoVermelho bv = new BlocoVermelho(linha,coluna);
-                e.add(this.blockFunctions(bv, s));
+               if(s.contains("movel")){
+                    e.add(new BlocoVermelhoMovel(linha, coluna));
+                }else{
+                    e.add(new BlocoVermelho(linha, coluna));
+                }
             } 
         }
         
-        if(s.contains("seta")){
-            Chao t = new Chao(linha, coluna);
-            e.add(this.carpetFunctions(t, s));  
-        }
+        if(s.contains("seta"))
+            e.add(this.carpetFunctions(s, linha, coluna));
         
         if(s.contains("item")){
             String[] desc = s.split("-");
-            int x = parseInt(desc[1], 10);
             Item item = new Item(linha, coluna);
-            this.ItemTypeSelection(x, item);
+            
+            if(desc.length > 1){
+                int x = parseInt(desc[1], 10);
+                this.ItemTypeSelection(x, item);
+            }else{
+                this.ItemTypeSelection(1, item);   
+            }
             e.add(item);   
         }
         
@@ -44,31 +53,20 @@ public class FactoryElemento {
             Vilao v = new Vilao(linha, coluna);
             e.add(v);
         }
-    } 
-        
-    private Bloco blockFunctions(Bloco bv, String s){
-        if(s.contains("movel")){
-            Movel bvm = new Movel(bv);
-            String path = bv.getImagepath();
-            bv.setImagepath(path.substring(0, path.length() - 5) + "M.png");
-            return bvm;
-        }else {return bv;}
     }
-    
-    private Tapete carpetFunctions(Tapete tp, String s){
-        Tapete seta;
+        
+    private Seta carpetFunctions(String s, int linha, int coluna){
         if(s.contains("cima")){
-            seta = new SetaCima(tp);
+            return  new SetaCima(linha, coluna);
         }else if(s.contains("baixo")){
-            seta = new SetaBaixo(tp);
+            return  new SetaBaixo(linha, coluna);
         }else if(s.contains("esquerda")){
-            seta = new SetaEsquerda(tp);
+            return new SetaEsquerda(linha, coluna);
         }else if(s.contains("direita")){
-            seta = new SetaDireita(tp);
+            return new SetaDireita(linha, coluna);
         }else{
-            seta = (SetaCima) tp;
+            return new SetaCima(linha, coluna);
         }
-        return seta;
     }
     
     public void ItemTypeSelection(int tipo, Item item){
@@ -77,42 +75,52 @@ public class FactoryElemento {
                 item.setPontosEquiv(100);
                 item.setImage("fita2.png");
                 break;
+
             case 2:
                 item.setPontosEquiv(150);
                 item.setImage("rainbow.png");
                 break;
+
             case 3:
                 item.setPontosEquiv(200);
                 item.setImage("magiccub.png");
                 break;
+
             case 4:
                 item.setPontosEquiv(250);
                 item.setImage("gameboy.png");
                 break;
+
             case 5: 
                 item.setPontosEquiv(100);
                 item.setImage("disquete.png");
                 break;
+
             case 6: 
                 item.setPontosEquiv(150);
                 item.setImage("fita1.png");
                 break;
+
             case 7: 
                 item.setPontosEquiv(200);
                 item.setImage("oculos3d.png");
                 break;
+                
             case 8:
                 item.setPontosEquiv(300);
                 item.setImage("som.png");
                 break;
+            
             case 9:
                 item.setPontosEquiv(500);
                 item.setImage("pacman.png");
                 break;
+                
             case 10:
                 item.setPontosEquiv(0);
                 item.setImage("transparente.png");
                 break;
+                
             default:
                 item.setPontosEquiv(150);
                 item.setImage("fruta.png");

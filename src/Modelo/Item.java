@@ -4,8 +4,7 @@ public class Item extends Elemento{
     private int setPontosEquiv;
 
     public Item(int linha, int coluna) {
-        super("", "item");
-        //this.selecionaTipo(tipo);
+        super("");
         this.setPosicao(linha, coluna);
         this.bItem = true;
         this.bTransponivel = true;
@@ -23,4 +22,5 @@ public class Item extends Elemento{
     public void setPontosEquiv(int pontosEquiv) {
         this.setPontosEquiv = pontosEquiv;
     }
+
 }

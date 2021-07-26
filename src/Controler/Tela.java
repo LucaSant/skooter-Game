@@ -28,7 +28,7 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
         this.setSize(Consts.RES * Consts.CELL_SIDE + getInsets().left + getInsets().right,
                 Consts.RES * Consts.CELL_SIDE + getInsets().top + getInsets().bottom);
 
-        hHero = new Hero(0,0);
+        hHero = Hero.getHero();
         hHero.setCollectedItens(0);
         hHero.setLives(3);
 
@@ -67,7 +67,7 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
                     Posicao p = new Posicao (i, j);
                     for(int k = 0; k < eElementos.size(); k++){
                         if((p.estaNaMesmaPosicao(eElementos.get(k).getPosicao())) && (eElementos.get(k).isbSeta())){
-                            Tapete s = (Tapete) eElementos.get(k);
+                            Seta s = (Seta) eElementos.get(k);
                             bg = s.getFloor();
                         }
                     }
@@ -162,7 +162,9 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
             hHero.voltaAUltimaPosicao();
         }
 
-        this.setTitle("-> Cell: " + (hHero.getPosicao().getColuna()) + ", " + (hHero.getPosicao().getLinha()) + "Fase: " + cControle.getFase().getnFase() +  "/ Vidas " + hHero.getLives() + "  / Pontos:  " +  hHero.getPontos());
+        this.setTitle("-> Cell: " + (hHero.getPosicao().getColuna()) + ", " 
+                + (hHero.getPosicao().getLinha()) + "Fase: " + cControle.getFase().getnFase() 
+                +  "/ Vidas " + hHero.getLives() + "  / Pontos:  " +  hHero.getPontos());
     }
 
     /**

@@ -90,6 +90,4 @@ public class FaseTwo extends Fase {
         this.setnItens(this.numberOfItens(e));
         this.setnViloes(this.numberOfVillans(e));
     }
-
-    
 }

@@ -1,19 +1,17 @@
 package Modelo;
 
 import java.util.ArrayList;
-
 import Auxiliar.Posicao;
 
 public class Vilao extends Elemento {
     private Posicao lastposition;
 
     public Vilao(int linha, int coluna) {
-        super("trooper.png", "vilao");
+        super("trooper.png");
         this.setPosicao(linha, coluna);
         this.bMortal = true;
         this.bTransponivel = true;
         this.lastposition = getPosicao();
-
     }
     
     @Override
@@ -30,9 +28,8 @@ public class Vilao extends Elemento {
     }
     
     public int endTest(int count, int mv){
-        if(count == 4){
+        if(count == 4)
             return 4;
-        }
         return mv;
     }
     
@@ -42,10 +39,8 @@ public class Vilao extends Elemento {
         qtdViloes = nviloes + 1;
         for(int i = qtdViloes; i < e.size(); i++) {
             eTemp = e.get(i);
-            
-            if(eTemp.getPosicao().estaNaMesmaPosicao(p)) {
+            if(eTemp.getPosicao().estaNaMesmaPosicao(p))
                 return false;
-            }
         }
         return true;
     }
@@ -53,15 +48,11 @@ public class Vilao extends Elemento {
     public boolean checkLastPosicao(int count, ArrayList <Elemento> e, Posicao p, int nviloes){
         if(this.getPosicao().estaNaMesmaPosicao(this.lastposition)){
             return true;
-        }else{
-            return !this.ehPosicaoValidaVilao(e, p, nviloes);  
-        }
+        } else return !this.ehPosicaoValidaVilao(e, p, nviloes);
     }
     
+    //Método para que o vilão possa se mover "aleatoriamente" sem colidir ou escapar do mapa.
     public void movimentoVilao(int mv, int countMove, ArrayList<Elemento> elem, int nviloes) {
-    /*
-    * Método para que o vilão possa se mover "aleatoriamente" sem colidir ou escapar do mapa.
-    */    
         Posicao ePos = this.getPosicao();
         Posicao pAtual = new Posicao(ePos.getLinha(), ePos.getColuna());
 
@@ -74,7 +65,6 @@ public class Vilao extends Elemento {
                     mv = 1;
                     countMove++;
                     this.movimentoVilao(mv, countMove, elem, nviloes);
-                    
                 }
                 else {
                     this.moveDown();
@@ -155,6 +145,4 @@ public class Vilao extends Elemento {
                 break;
         } 
     }
-}      
-    
-   
+}

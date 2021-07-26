@@ -14,8 +14,6 @@ public abstract class Elemento implements Serializable {
 
     protected ImageIcon iImage;
     protected Posicao pPosicao;
-    protected String label ;
-    protected String imagepath;
     protected boolean bTransponivel; /*Pode passar por cima?*/
     protected boolean bEmpurravel;   /*Pode empurrar?*/
     protected boolean bMortal;       /*Se encostar, morre?*/
@@ -23,18 +21,16 @@ public abstract class Elemento implements Serializable {
     protected boolean bQuebravel;
     protected boolean bSeta;
    
-    protected Elemento(String sNomeImagePNG, String label) {
+    protected Elemento(String sNomeImagePNG) {
         this.pPosicao = new Posicao(1, 1);
-        this.imagepath = sNomeImagePNG;
         this.bTransponivel = false;
         this.bMortal = false;
         this.bQuebravel = false;
         this.bSeta = false;
-        this.label = label;
         this.setImage(sNomeImagePNG);
-        
-    }
 
+    }
+    
     public void setImage(String sNomeImagePNG){
         try {   /*Procurar imagem para usar*/
             iImage = new ImageIcon(new java.io.File(".").getCanonicalPath() + Consts.PATH + sNomeImagePNG);
@@ -50,15 +46,6 @@ public abstract class Elemento implements Serializable {
 
     public Posicao getPosicao() {
         return pPosicao;
-    }
-    
-    public String getImagepath() {
-        return imagepath;
-    }
-
-    public void setImagepath(String imagepath) {
-        this.imagepath = imagepath;
-        this.setImage(imagepath);
     }
 
     public boolean isTransponivel() {
@@ -127,13 +114,5 @@ public abstract class Elemento implements Serializable {
 
     public String getCanonicalName() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
     }
 }

@@ -1,21 +1,10 @@
 package Modelo;
 
-public class SetaBaixo extends TapeteDecorator {
+public class SetaBaixo extends Seta {
 
-    public SetaBaixo(Tapete tap) {
-        super(tap);
-        t.floor = "seta-abaixo.png";
-        t.setLabel(t.getLabel()+";seta;baixo");   
-    }
-    
-    @Override
-    public void action(Hero h) {
-       if(t.isWaitedframe()){
-            h.moveDown();
-            h.setOrientation(0);
-            t.setWaitedframe(false);
-       }
-       t.setWaitedframe(true);
-       t.action(h);
+    public SetaBaixo(int linha, int coluna) {
+        super(linha, coluna);
+        this.orientation = 0;
+        this.floor = "seta-abaixo.png";
     }
 }

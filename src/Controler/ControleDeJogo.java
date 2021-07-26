@@ -5,7 +5,6 @@ import Auxiliar.Consts;
 import Auxiliar.Posicao;
 import java.util.ArrayList;
 import java.util.Random;
-
 import Fases.*;
 
 public class ControleDeJogo {
@@ -18,8 +17,6 @@ public class ControleDeJogo {
     private Fase fase;
     private int lastFase;
     
-   
-
     public ControleDeJogo(){
         this.killedHero = false;
         this.naturalHeroMove = true;
@@ -36,7 +33,6 @@ public class ControleDeJogo {
         lastFase = getAllfases().get(Allfases.size() -2).getnFase();
     }
 
-
     public void desenhaTudo(ArrayList<Elemento> e){
         for(int i = 0; i < e.size(); i++){
             e.get(i).autoDesenho();
@@ -52,22 +48,22 @@ public class ControleDeJogo {
             /*Verifica se o heroi se sobrepoe ao i-ésimo elemento*/
             if(hHero.getPosicao().estaNaMesmaPosicao(eTemp.getPosicao())){
                 /*Nem todos os elementos podem ser transpostos pelo heroi*/
-                if(eTemp.getLabel().contains("vilao")){
+                if(eTemp.isMortal()){
                     hHero.setLives(hHero.getLives() - 1);
                     this.killedHero = true;
                 }else{
                     this.killedHero = false;
                 }
-                if(eTemp.getLabel().contains("item")){
+                if(eTemp.isItem() == true){
                     hHero.setCollectedItens(hHero.getCollectedItens() + 1);
                     System.out.println("Item de numero " + hHero.getCollectedItens());
                     System.out.println("Ele valia " + ((Item) eTemp).getPontosEquiv() + ", entao voce ganhou: " + hHero.getCollectedItens() * ((Item) eTemp).getPontosEquiv() + " pontos.");
                     hHero.setPontos(hHero.getPontos() + (hHero.getCollectedItens() * ((Item) eTemp).getPontosEquiv()));
                     e.remove(eTemp);
                 }
-                if(eTemp.getLabel().contains("seta")){
-                    Tapete n = (Tapete) eTemp;
-                    n.action(hHero);
+                if(eTemp.isbSeta()){
+                    Seta seta = (Seta) eTemp;
+                    seta.movimentoSeta(e, hHero.getPosicao(), seta);
                     hHero.setCanMove(false);
                     this.setNaturalHeroMove(false);
                 }
@@ -81,7 +77,6 @@ public class ControleDeJogo {
         this.getFase().setAllElementos(elem, hHero);
     }
 
-
     public void heroMoveHabilitation(Hero hHero){
         if((hHero.canMove() == false) && (this.isNaturalHeroMove())){
             iContagemPressedKey++;
@@ -91,7 +86,6 @@ public class ControleDeJogo {
             }
         }
     }
-
 
     public void vilaoMoveHabilitation(ArrayList<Elemento> elem){
         iContagemVilao++;
@@ -103,7 +97,7 @@ public class ControleDeJogo {
                         Random rand = new Random();
                         int mv = rand.nextInt(4);
                         int count = 0;
-                    if(e.getLabel().contains("vilao")) {
+                    if(e.getClass().getCanonicalName() == "Modelo.Vilao") {
                         Vilao v;
                         v = (Vilao)e;
                         v.movimentoVilao(mv, count, elem, nViloes);
@@ -111,7 +105,6 @@ public class ControleDeJogo {
                 }
         }
     }
-
    
     public boolean ehPosicaoValida(ArrayList<Elemento> e, Posicao p){
         Elemento eTemp;
@@ -237,7 +230,6 @@ public class ControleDeJogo {
         this.killedHero = killedHero;
     }
 
-
     public ArrayList<Fase> getAllfases() {
         return Allfases;
     }
@@ -269,5 +261,4 @@ public class ControleDeJogo {
     public void setLastFase(int lastFase) {
         this.lastFase = lastFase;
     }
-    
 }

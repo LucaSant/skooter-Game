@@ -3,8 +3,8 @@ package Fases;
 import java.util.ArrayList;
 import Controler.Fase;
 import Modelo.Elemento;
-import Modelo.FactoryElemento;
 import Modelo.Hero;
+import Modelo.Item;
 
 public class TelaInicial extends Fase {    
   
@@ -15,7 +15,6 @@ public class TelaInicial extends Fase {
     @Override
     public void setAllElementos(ArrayList<Elemento> e, Hero hero) {
         e.clear();
-        FactoryElemento fe = new FactoryElemento(e);
-        fe.mk("item-10", 0, 0);
+        e.add(new Item(0, 0));
     }
 }
