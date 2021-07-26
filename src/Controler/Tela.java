@@ -35,6 +35,7 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
 
         eElementos = new ArrayList<Elemento>(100);
         save =  new Save();
+        this.AutoSave();
     }
 
     public void removeElemento(Elemento umElemento) { //exclusivo da classe Tela, os elementos da fase são o estado inicial, não podendo excluir elementos
@@ -44,6 +45,29 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
     public Graphics getGraphicsBuffer(){
         return g2;
     }
+    
+    public void AutoSave(){
+    new Thread() {
+        public void run() {
+            while(true){
+                
+              if(cControle.getFase().getnFase() >  0) {
+                  save.SaveGame(eElementos);
+                  System.out.println("auto save ...");
+              }
+              
+              try {
+                Thread.sleep(save.readFile("saves/saveconfig.txt") * 1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+                    
+        }
+      }.start();
+    }
+    
+    
     
     /*Este metodo eh executado a cada Consts.FRAME_INTERVAL milissegundos*/    
     public void paint(Graphics gOld) {
@@ -147,7 +171,7 @@ public class Tela extends javax.swing.JFrame implements KeyListener {
 
     public void keyReleased(KeyEvent e) {
     }
-
+    
     public Hero getHero() {
         return hHero;
     }

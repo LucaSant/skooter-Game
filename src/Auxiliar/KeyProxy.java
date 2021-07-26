@@ -61,6 +61,7 @@ public class KeyProxy {
                     tela.getHero().setCollectedItens(0);                          
                     tela.getControle().getFase().setAllElementos(tela.getElementos(), tela.getHero());
                 }
+                
             } else if(e.getKeyCode() == KeyEvent.VK_S){
                 if(tela.getControle().getFase().getnFase() == 0){
                     if(tela.getSave().saveExists()){

@@ -7,6 +7,7 @@ import java.io.File;
  * @author Junio
  */ 
 public class Consts {
+    
     public static final int CELL_SIDE = 55;
     public static final int RES = 11;
     public static final int FRAME_INTERVAL = 100;   
