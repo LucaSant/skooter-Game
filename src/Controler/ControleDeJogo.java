@@ -77,6 +77,7 @@ public class ControleDeJogo {
                 }
             }
         }
+        this.atualizaPortal(e);
         this.vilaoMoveHabilitation(e);
         this.bombaExplodir(e);
     }
@@ -262,6 +263,14 @@ public class ControleDeJogo {
                     }
                     elem.remove(i);
                 }
+            }
+        }
+    }
+    
+    public void atualizaPortal(ArrayList<Elemento> e){
+        for(int i = 5; i < e.size();i++){
+            if((e.get(i).getLabel().contains("portal")) && !(e.get(i).getLabel().contains("pareado"))){
+                ((Portal)e.get(i)).match(e);
             }
         }
     }
