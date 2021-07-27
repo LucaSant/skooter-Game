@@ -89,13 +89,6 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                 try {
                     //Linha para alterar o background
                     String bg =  cControle.getFase().getBackground();
-                    Posicao p = new Posicao (i, j);
-                    for(int k = 0; k < eElementos.size(); k++){
-                        if((p.estaNaMesmaPosicao(eElementos.get(k).getPosicao())) && (eElementos.get(k).getLabel().contains("seta"))){
-                            Seta s = (Seta) eElementos.get(k);
-                            bg = s.getFloor();
-                        }
-                    }
                     Image newImage = Toolkit.getDefaultToolkit().getImage(new java.io.File(".").getCanonicalPath() + Consts.PATH + bg); 
                     g2.drawImage(newImage,j*cell_side, i*cell_side, cell_side, cell_side, null);
                 } catch (IOException ex) {

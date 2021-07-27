@@ -7,7 +7,6 @@ public class SetaDireita extends Seta{
     public SetaDireita(int linha, int coluna) {
         super(linha, coluna,"direita");
         this.orientation = 3;
-        this.floor = "seta-direita.png";
     }
     
      @Override

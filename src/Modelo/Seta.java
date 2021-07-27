@@ -4,11 +4,10 @@ package Modelo;
 public abstract class Seta extends Elemento {
 
     protected int orientation;
-    protected String floor;
     protected boolean waitedframe;
    
     protected Seta(int linha, int coluna, String label) {
-        super("transparente.png");
+        super("seta-"+label+".png");
         this.setPosicao(linha, coluna);
         this.setLabel("seta;"+label);
         this.bTransponivel = false;
@@ -28,14 +27,6 @@ public abstract class Seta extends Elemento {
 
     public void setOrientation(int orientation) {
         this.orientation = orientation;
-    }
-
-    public String getFloor() {
-        return floor;
-    }
-
-    public void setFloor(String floor) {
-        this.floor = floor;
     }
 
     public boolean isWaitedframe() {
