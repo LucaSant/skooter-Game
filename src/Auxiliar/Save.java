@@ -123,7 +123,6 @@ public class Save implements Serializable{
             {
             ex.printStackTrace();
         }
-         
          return segundos;
     }
     
@@ -143,8 +142,6 @@ public class Save implements Serializable{
             pipeOut.close();
             
         } catch (IOException exc) {
-        
         }   
-            
     }
 }

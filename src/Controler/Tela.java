@@ -21,11 +21,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     private Graphics g2;
     private Save save;
     private KeyProxy kp = new KeyProxy(this);
-    
 
-    /**
-     * Creates new form
-     */
     public Tela() {
         Desenhador.setCenario(this); /*Desenhador funciona no modo estatico*/
         initComponents();
@@ -69,17 +65,14 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
                     Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-                    
         }
       }.start();
     }
     
-    
-    
-    /*Este metodo eh executado a cada Consts.FRAME_INTERVAL milissegundos*/    
+    // Este metodo eh executado a cada Consts.FRAME_INTERVAL milissegundos    
     public void paint(Graphics gOld) {
         Graphics g = this.getBufferStrategy().getDrawGraphics();
-        /*Criamos um contexto gráfico*/
+        // Criamos um contexto gráfico
         g2 = g.create(getInsets().left, getInsets().top, getWidth() - getInsets().right, getHeight() - getInsets().top);
         Fase f = this.cControle.getFase();
         int res, cell_side;
@@ -90,11 +83,11 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             res = Consts.RES;
             cell_side = Consts.CELL_SIDE;
         }
-        /*Desenha cenário*/
+        // Desenha cenário
         for (int i = 0; i < res; i++) {
             for (int j = 0; j < res; j++) {
                 try {
-                    /*Linha para alterar o background*/
+                    //Linha para alterar o background
                     String bg =  cControle.getFase().getBackground();
                     Posicao p = new Posicao (i, j);
                     for(int k = 0; k < eElementos.size(); k++){
@@ -111,12 +104,12 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             }
         }
         
-        /*Aqui podem ser inseridos novos processamentos de controle*/
+        //Aqui podem ser inseridos novos processamentos de controle
         if (!this.eElementos.isEmpty()) {
             this.cControle.desenhaTudo(eElementos);
             this.cControle.processaTudo(eElementos);
-            this.cControle.heroMoveHabilitation(hHero);  
-            this.cControle.checkLives(eElementos, save); //o processamento checa a vida do heroi
+            this.cControle.heroMoveHabilitation(hHero); // checa se ele pode se mover
+            this.cControle.checkLives(eElementos, save); // checa a vida do heroi
             this.cControle.nextFase(eElementos, save); // checa se pode ir para a próxima fase
         }
 
@@ -130,11 +123,11 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     public void go() {
         TimerTask redesenhar = new TimerTask() {
             public void run() {
-                repaint(); /*(executa o metodo paint)*/
+                repaint(); // Executa o metodo paint
             }
         };        
         
-        /*Redesenha (executa o metodo paint) tudo a cada Consts.FRAME_INTERVAL milissegundos*/
+        //Redesenha (executa o metodo paint) tudo a cada Consts.FRAME_INTERVAL milissegundos
         Timer timer = new Timer();
         timer.schedule(redesenhar, 0, Consts.FRAME_INTERVAL);
     }
@@ -144,35 +137,33 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     }
     
     public void mousePressed(MouseEvent e) {
-         //Movimento via mouse
          int x = e.getX()-8;
          int y = e.getY()-31;
-         //System.out.println(y + ", " + x);
          Posicao p = new Posicao((int) floor(y/Consts.CELL_SIDE), (int) floor(x/Consts.CELL_SIDE));
-         //System.out.println(p.getLinha() + ", " + p.getColuna());
          if (e.getModifiers() == MouseEvent.BUTTON3_MASK && e.getClickCount() == 1) {
-            //System.out.println("E O BRAD");
             for(int i = 1; i < eElementos.size(); i++){
                 if(eElementos.get(i).getPosicao().estaNaMesmaPosicao(p)){
-                    System.out.println(eElementos.get(i).getLabel());
-                    
-                    JFileChooser fc = new JFileChooser();
-                    FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.txt","txt");
-                    fc.setFileFilter(filtro);
-                    
-                    fc.setCurrentDirectory(new File("."+ File.separator + "objetos"));
-                    int resp = fc.showOpenDialog(new JDialog());
-                    File fObj = new File("");
-                    
-                    if(resp == JFileChooser.APPROVE_OPTION){
-                        fObj = fc.getSelectedFile();
-                        Elemento obj = save.readFile(fObj);
-                        obj.setPosicao(eElementos.get(i).getPosicao());
-                        eElementos.set(i, obj);
-                        break;
-                        
-                    }else if(resp == JFileChooser.CANCEL_OPTION){
-                        JOptionPane.showMessageDialog(null, "Cancelado");
+                    //Nao queremos que se possa substituir viloes ou itens pois isso quebra a logica do jogo
+                    if(!(eElementos.get(i).getLabel().contains("vilao")) && !(eElementos.get(i).getLabel().contains("item"))) {
+                        //Criacao do filechooser para escolher o objeto serializado e coloca-lo no lugar do selecionado
+                        JFileChooser fc = new JFileChooser();
+                        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.txt","txt");
+                        fc.setFileFilter(filtro);
+
+                        fc.setCurrentDirectory(new File("."+ File.separator + "objetos"));
+                        int resp = fc.showOpenDialog(new JDialog());
+                        File fObj = new File("");
+
+                        if(resp == JFileChooser.APPROVE_OPTION){
+                            fObj = fc.getSelectedFile();
+                            Elemento obj = save.readFile(fObj);
+                            obj.setPosicao(eElementos.get(i).getPosicao());
+                            eElementos.set(i, obj);
+                            break;
+                        }
+                        else if(resp == JFileChooser.CANCEL_OPTION){
+                            JOptionPane.showMessageDialog(null, "Cancelado");
+                        }
                     }
                 }
             }
