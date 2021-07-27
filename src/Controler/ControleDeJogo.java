@@ -65,6 +65,9 @@ public class ControleDeJogo {
                 if(eTemp.getLabel().contains("seta")){
                     Seta s = (Seta) eTemp;
                     s.movimentoSeta(hHero);
+                    if(!this.ehPosicaoValida(e, hHero.getPosicao())){
+                      hHero.voltaAUltimaPosicao();
+                    }
                     hHero.setCanMove(false);
                     this.setNaturalHeroMove(false);
                 }
@@ -79,11 +82,9 @@ public class ControleDeJogo {
             this.setFase(0);
             this.getFase().setAllElementos(elem, hHero);
         }else{
-            
-            this.setFase( (int) ((Hero)s.readSave().get(0)).getFase());
+            this.setFase((int) ((Hero)s.readSave().get(0)).getFase());
             this.getFase().setAllElementos(elem, hHero, s);
         }
-        
     }
 
     public void heroMoveHabilitation(Hero hHero){
@@ -195,7 +196,6 @@ public class ControleDeJogo {
             
             if(hHero.getLives() == 0){
                 System.out.println("Última vida perdida! \n - - - Game Over - - - ");
-    
                 hHero.setCollectedItens(0);
                 hHero.setLives(3);
                 hHero.setPontos(0);
@@ -208,7 +208,6 @@ public class ControleDeJogo {
                 this.getFase().setAllElementos(e, hHero);
             }
             setKilledHero(false);
-            
         }     
     }
 
@@ -231,7 +230,6 @@ public class ControleDeJogo {
                 hHero.setFase(this.getFase().getnFase()-1);
                 hHero.setCollectedItens(0);              //então não é preciso colocar + 1               
                 this.getFase().setAllElementos(elem, hHero);
-                
             }
         }                                  //na fase 1 (posição 0), o setFase(getFase().getnFase()) é igual setFase(1)
     }   
@@ -275,5 +273,4 @@ public class ControleDeJogo {
     public void setLastFase(int lastFase) {
         this.lastFase = lastFase;
     }
-
 }
