@@ -91,6 +91,8 @@ public class FaseOne extends Fase {
         fe.mk("Bloco verde movel", 9, 8);
         
         fe.mk("Bloco verde movel", 10, 7);
+        fe.mk("portal", 4, 0);
+        fe.mk("portal", 0, 6);
         
         this.setnItens(this.numberOfItens(e));
         this.setnViloes(this.numberOfVillans(e));

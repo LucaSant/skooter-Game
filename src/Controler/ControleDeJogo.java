@@ -65,8 +65,15 @@ public class ControleDeJogo {
                 if(eTemp.getLabel().contains("seta")){
                     Seta s = (Seta) eTemp;
                     s.movimentoSeta(hHero);
+                    if(!this.ehPosicaoValida(e, hHero.getPosicao())){
+                      hHero.voltaAUltimaPosicao();
+                    }
                     hHero.setCanMove(false);
                     this.setNaturalHeroMove(false);
+                }
+                if(eTemp.getLabel().contains("portal")){
+                    Portal p = (Portal) eTemp;
+                    p.movimentoPortal(hHero);
                 }
             }
         }

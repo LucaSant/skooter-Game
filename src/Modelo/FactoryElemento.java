@@ -57,6 +57,12 @@ public class FactoryElemento {
             Vilao v = new Vilao(linha, coluna);
             e.add(v);
         }
+        
+        if(s.contains("portal")){
+            Portal p = new Portal(linha, coluna);
+            p.match(e);
+            e.add(p);
+        }
     }
     
    

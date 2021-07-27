@@ -6,6 +6,7 @@ public class BlocoVerde extends Elemento {
         super("blocoverde.png");
         this.setPosicao(linha, coluna);
         this.setLabel("bloco;verde");
+        this.bTransponivel = false;
     }
     
     @Override
