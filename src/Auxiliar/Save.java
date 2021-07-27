@@ -36,6 +36,7 @@ public class Save implements Serializable{
         } catch (IOException exc) {
         }
     }
+   
     
     public ArrayList<Elemento> readSave(){
         ArrayList<Elemento> elem = new ArrayList<Elemento>();
@@ -59,6 +60,32 @@ public class Save implements Serializable{
             exc.printStackTrace();
         }
        return(elem);
+    }
+    
+    
+    public Elemento readFile(File f){
+        Elemento elem = null;
+        try {
+           
+            if(f.exists()){
+            
+                FileInputStream pipeIn = new FileInputStream(f);
+                ObjectInputStream deserializador = new ObjectInputStream(pipeIn);
+                
+                try {
+                elem = (Elemento) deserializador.readObject();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Save.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                pipeIn.close();
+                deserializador.close();
+            }
+        }catch (IOException exc) {
+            exc.printStackTrace();
+        }
+    
+       return elem;
     }
     
     public void deleteSave(){
@@ -98,5 +125,26 @@ public class Save implements Serializable{
         }
          
          return segundos;
+    }
+    
+    public void createFile(String s, Elemento e){
+        try {
+            File fAux = new File("objetos/"+s);
+            if (fAux.exists()) {
+                fAux.delete();
+                fAux.createNewFile();
+            }
+            FileOutputStream pipeOut = new FileOutputStream(fAux);
+            ObjectOutputStream serializador = new ObjectOutputStream(pipeOut);
+
+            serializador.writeObject(e);
+
+            serializador.close();
+            pipeOut.close();
+            
+        } catch (IOException exc) {
+        
+        }   
+            
     }
 }

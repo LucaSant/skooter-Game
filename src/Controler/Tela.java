@@ -8,6 +8,10 @@ import java.io.*;
 import static java.lang.Math.floor;
 import java.util.*;
 import java.util.logging.*;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Tela extends javax.swing.JFrame implements MouseListener, KeyListener {
 
@@ -17,6 +21,7 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
     private Graphics g2;
     private Save save;
     private KeyProxy kp = new KeyProxy(this);
+    
 
     /**
      * Creates new form
@@ -150,19 +155,28 @@ public class Tela extends javax.swing.JFrame implements MouseListener, KeyListen
             for(int i = 1; i < eElementos.size(); i++){
                 if(eElementos.get(i).getPosicao().estaNaMesmaPosicao(p)){
                     System.out.println(eElementos.get(i).getLabel());
+                    
+                    JFileChooser fc = new JFileChooser();
+                    FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.txt","txt");
+                    fc.setFileFilter(filtro);
+                    
+                    fc.setCurrentDirectory(new File("."+ File.separator + "objetos"));
+                    int resp = fc.showOpenDialog(new JDialog());
+                    File fObj = new File("");
+                    
+                    if(resp == JFileChooser.APPROVE_OPTION){
+                        fObj = fc.getSelectedFile();
+                        Elemento obj = save.readFile(fObj);
+                        obj.setPosicao(eElementos.get(i).getPosicao());
+                        eElementos.set(i, obj);
+                        break;
+                        
+                    }else if(resp == JFileChooser.CANCEL_OPTION){
+                        JOptionPane.showMessageDialog(null, "Cancelado");
+                    }
                 }
             }
-        }/*
-         this.setTitle("X: "+ x + ", Y: " + y +
-         " -> Cell: " + (y/Consts.CELL_SIDE) + ", " + (x/Consts.CELL_SIDE));
-        
-         this.hHero.getPosicao().setPosicao(y/Consts.CELL_SIDE, x/Consts.CELL_SIDE);
-
-        //Se o heroi for para uma posicao invalida, sobre um elemento intransponivel, volta para onde estava
-        if (!cControle.ehPosicaoValida(this.eElementos,hHero.getPosicao())) {
-            hHero.voltaAUltimaPosicao();
-        }         
-        repaint();*/
+        }
     }
 
     /**

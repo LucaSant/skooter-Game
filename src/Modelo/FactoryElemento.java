@@ -9,6 +9,10 @@ public class FactoryElemento {
         this.e = e;
     }
     
+    public FactoryElemento(){
+        
+    }
+    
     public void setHero(Hero hero, int linha, int coluna){
         e.add(hero);
         e.get(0).setPosicao(linha, coluna);
@@ -54,6 +58,8 @@ public class FactoryElemento {
             e.add(v);
         }
     }
+    
+   
         
     private Seta carpetFunctions(String s, int linha, int coluna){
         if(s.contains("cima")){
