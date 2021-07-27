@@ -29,5 +29,8 @@ public class FazObjeto {
         
         SetaDireita sd = new SetaDireita(0,0);
         s.createFile("seta_direita.txt", sd);
+        
+        Bomba bb = new Bomba(0,0);
+        s.createFile("bomba.txt", bb);
     }
 }

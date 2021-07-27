@@ -74,6 +74,7 @@ public class ControleDeJogo {
             }
         }
         this.vilaoMoveHabilitation(e);
+        this.bombaExplodir(e);
     }
 
     public void beginGame(ArrayList<Elemento> elem, Hero hHero, Save s){
@@ -232,7 +233,34 @@ public class ControleDeJogo {
                 this.getFase().setAllElementos(elem, hHero);
             }
         }                                  //na fase 1 (posição 0), o setFase(getFase().getnFase()) é igual setFase(1)
-    }   
+    }
+    
+    public void bombaExplodir(ArrayList<Elemento> elem) {
+        for (int i = 1; i < elem.size(); i++) {
+            if (elem.get(i).getLabel().contains("bomba")) {
+                Bomba b = (Bomba) elem.get(i);
+                if (b.pavio()) {
+                    for (int j = 0; j < elem.size(); j++) {
+                        if ((elem.get(j).getPosicao().getLinha() == b.getPosicao().getLinha()+1)
+                                || (elem.get(j).getPosicao().getLinha() == b.getPosicao().getLinha()-1)) {
+                            if (elem.get(j).getPosicao().getColuna() == b.getPosicao().getColuna()) {
+                                if (elem.get(j).getLabel().contains("bloco"))
+                                    elem.remove(j);
+                            }
+                        }
+                        else if ((elem.get(j).getPosicao().getColuna() == b.getPosicao().getColuna()+1)
+                                || (elem.get(j).getPosicao().getColuna() == b.getPosicao().getColuna()-1)) {
+                            if (elem.get(j).getPosicao().getLinha() == b.getPosicao().getLinha()) {
+                                if (elem.get(j).getLabel().contains("bloco"))
+                                    elem.remove(j);
+                            }
+                        }
+                    }
+                    elem.remove(i);
+                }
+            }
+        }
+    }
     
     public boolean isKilledHero() {
         return killedHero;
